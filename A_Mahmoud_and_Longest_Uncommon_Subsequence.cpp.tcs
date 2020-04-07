@@ -1,0 +1,1 @@
+[{"input":"abcd\ndefgh\n","output":"5\n"},{"input":"a\na\n","output":"-1\n"}]

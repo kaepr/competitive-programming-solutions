@@ -1,0 +1,10 @@
+{
+    "competitive-programming-helper.firstTime": false,
+    "files.associations": {
+        "iostream": "cpp",
+        "unordered_map": "cpp",
+        "ostream": "cpp"
+    },
+    "C_Cpp.clang_format_style": "",
+    "C_Cpp.formatting": "Disabled"
+}

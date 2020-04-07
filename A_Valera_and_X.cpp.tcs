@@ -1,0 +1,1 @@
+[{"input":"5\nxooox\noxoxo\nsoxoo\noxoxo\nxooox\n","output":"NO\n"},{"input":"3\nwsw\nsws\nwsw\n","output":"YES\n"},{"input":"3\nxpx\npxp\nxpe\n","output":"NO\n"}]

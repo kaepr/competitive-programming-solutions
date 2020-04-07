@@ -1,0 +1,1 @@
+[{"input":"3 5\n15 20\n63923 99999\n","output":"3\n5        Good Choice\n15\n20        Bad Choice\n63923         99999        Good Choice\n"}]

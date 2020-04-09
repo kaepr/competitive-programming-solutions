@@ -70,7 +70,6 @@ void visit(int i, int j){
 
 
 int main(){
-
     int c=0;
     while(scanf("%d",&n)==1){
         getchar();

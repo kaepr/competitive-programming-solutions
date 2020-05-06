@@ -1,0 +1,1 @@
+[{"input":"3 4\n*G*S\nG**S\n*G*S\n","output":"2\n"},{"input":"1 3\nS*G\n","output":"-1\n"}]

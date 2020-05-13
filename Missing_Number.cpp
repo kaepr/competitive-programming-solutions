@@ -54,30 +54,27 @@ int main()
 {
     ll n;
     cin >> n;
-    if (n == 1)
-    {
-        cout << 1;
-        return 0;
-    }
-    int flag = 1;
-    while (flag)
-    {
-        cout << n << " ";
-        if (n % 2 == 0)
-        {
-            n = n / 2;
-        }
-        else if (n % 2 != 0)
-        {
-            n = 3 * n + 1;
-        }
+    ll a[n + 1];
+    ll x;
 
-        if (n == 1)
+    for (ll i = 1; i <= n; i++)
+        a[i] = 0;
+
+    while (cin >> x)
+    {
+        a[x] = 1;
+    }
+
+    ll ans = 0;
+    for (int i = 1; i <= n; i++)
+    {
+        if (a[i] == 0)
         {
-            cout << 1;
-            flag = 0;
+            ans = i;
         }
     }
+
+    cout << ans;
 
     return 0;
 }

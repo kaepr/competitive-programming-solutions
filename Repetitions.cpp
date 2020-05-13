@@ -52,32 +52,26 @@ const double pi = acos(-1);
 
 int main()
 {
-    ll n;
-    cin >> n;
-    if (n == 1)
+    string s;
+    cin >> s;
+    int ans = 1;
+    char a = s[0];
+    int temp = 1;
+    for (int i = 1; i < s.length(); i++)
     {
-        cout << 1;
-        return 0;
-    }
-    int flag = 1;
-    while (flag)
-    {
-        cout << n << " ";
-        if (n % 2 == 0)
+        if (s[i] == s[i - 1])
         {
-            n = n / 2;
+            temp++;
         }
-        else if (n % 2 != 0)
+        else
         {
-            n = 3 * n + 1;
+            temp = 1;
         }
 
-        if (n == 1)
-        {
-            cout << 1;
-            flag = 0;
-        }
+        ans = max(temp, ans);
     }
+
+    cout << ans;
 
     return 0;
 }

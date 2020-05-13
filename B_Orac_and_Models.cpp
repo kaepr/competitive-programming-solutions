@@ -40,7 +40,6 @@
 #define FILE_READ_IN freopen("input.txt", "r", stdin);
 #define FILE_READ_OUT freopen("output.txt", "w", stdout);
 #define all(a) a.begin(), a.end()
-#define ld long double
 using namespace std;
 // For ordered_set
 using namespace __gnu_pbds;
@@ -50,34 +49,61 @@ const ll maxn = 1e5;
 const ll inf = 1e9;
 const double pi = acos(-1);
 
-int main()
+void solve()
 {
     ll n;
     cin >> n;
+    ll s[n + 1];
+    int total = 0;
+    for (ll i = 1; i <= n; i++)
+        cin >> s[i];
+
+    ll final[n + 1];
+    for (ll i = 0; i <= n; i++)
+    {
+        final[i] = 0;
+    }
+
+    int fptr = 1;
+    final[1] = s[1];
+
+    set<int> st;
+
     if (n == 1)
     {
-        cout << 1;
-        return 0;
+        cout << 1 << "\n";
     }
-    int flag = 1;
-    while (flag)
+    else
     {
-        cout << n << " ";
-        if (n % 2 == 0)
+        ll anss = 0;
+        for (ll i = 1; i <= n; i++)
         {
-            n = n / 2;
+            ll temp_sum = 0;
+            ll nmax = 0;
+            for (ll j = 1; j <= n; j++)
+            {
+                nmax = max(nmax, s[j]);
+                if (s[j] > s[i] && s[j] > nmax)
+                {
+                    if (j % i == 0)
+                    {
+                        temp_sum++;
+                    }
+                }
+            }
+            anss = max(anss, temp_sum);
         }
-        else if (n % 2 != 0)
-        {
-            n = 3 * n + 1;
-        }
-
-        if (n == 1)
-        {
-            cout << 1;
-            flag = 0;
-        }
+        cout << anss << "\n";
     }
+}
 
+int main()
+{
+    int t = 0;
+    cin >> t;
+    while (t--)
+    {
+        solve();
+    }
     return 0;
 }

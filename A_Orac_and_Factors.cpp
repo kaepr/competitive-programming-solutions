@@ -40,7 +40,6 @@
 #define FILE_READ_IN freopen("input.txt", "r", stdin);
 #define FILE_READ_OUT freopen("output.txt", "w", stdout);
 #define all(a) a.begin(), a.end()
-#define ld long double
 using namespace std;
 // For ordered_set
 using namespace __gnu_pbds;
@@ -50,34 +49,79 @@ const ll maxn = 1e5;
 const ll inf = 1e9;
 const double pi = acos(-1);
 
-int main()
+ll smallestDivisor(ll n)
 {
-    ll n;
-    cin >> n;
-    if (n == 1)
+    // if divisible by 2
+    if (n % 2 == 0)
+        return 2;
+
+    // iterate from 3 to sqrt(n)
+    for (ll i = 3; i * i <= n; i += 2)
     {
-        cout << 1;
-        return 0;
+        if (n % i == 0)
+            return i;
     }
-    int flag = 1;
-    while (flag)
+
+    return n;
+}
+
+int const N = 1000005;
+int is_prime[N];
+
+bool sieve()
+{
+    // We cross out all composites from 2 to sqrt(N)
+    int i = 2;
+    // This will loop from 2 to int(sqrt(x))
+    while (i * i <= N)
     {
-        cout << n << " ";
+        // If we already crossed out this number, then continue
+        if (is_prime[i] == 0)
+        {
+            i++;
+            continue;
+        }
+        int j = 2 * i;
+        while (j < N)
+        {
+            // Cross out this as it is composite
+            is_prime[j] = 0;
+            // j is incremented by i, because we want to cover all multiples of i
+            j += i;
+        }
+        i++;
+    }
+}
+
+void solve()
+{
+    ll n, k;
+    cin >> n >> k;
+    ll ans = 0;
+    while (k > 0)
+    {
         if (n % 2 == 0)
         {
-            n = n / 2;
+            ans = n + 2 * k;
+            break;
         }
-        else if (n % 2 != 0)
+        else
         {
-            n = 3 * n + 1;
-        }
-
-        if (n == 1)
-        {
-            cout << 1;
-            flag = 0;
+            n = n + smallestDivisor(n);
+            k--;
+            ans = n;
         }
     }
+    cout << ans << "\n";
+}
 
+int main()
+{
+    int t = 0;
+    cin >> t;
+    while (t--)
+    {
+        solve();
+    }
     return 0;
 }

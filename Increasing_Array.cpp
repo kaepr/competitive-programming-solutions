@@ -54,30 +54,22 @@ int main()
 {
     ll n;
     cin >> n;
-    if (n == 1)
+    ll a[n];
+    for (ll i = 0; i < n; i++)
     {
-        cout << 1;
-        return 0;
+        cin >> a[i];
     }
-    int flag = 1;
-    while (flag)
+    ll sum = 0;
+    for (ll i = 1; i < n; i++)
     {
-        cout << n << " ";
-        if (n % 2 == 0)
+        if (a[i] - a[i - 1] < 0)
         {
-            n = n / 2;
-        }
-        else if (n % 2 != 0)
-        {
-            n = 3 * n + 1;
-        }
-
-        if (n == 1)
-        {
-            cout << 1;
-            flag = 0;
+            ll tsum = a[i - 1] - a[i];
+            sum += a[i - 1] - a[i];
+            a[i] += tsum;
         }
     }
+    cout << sum;
 
     return 0;
 }

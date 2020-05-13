@@ -52,30 +52,30 @@ const double pi = acos(-1);
 
 int main()
 {
-    ll n;
+    int n;
     cin >> n;
     if (n == 1)
     {
         cout << 1;
-        return 0;
     }
-    int flag = 1;
-    while (flag)
+    else if (n < 4)
     {
-        cout << n << " ";
-        if (n % 2 == 0)
+        cout << "NO SOLUTION";
+    }
+    else
+    {
+        for (int i = 1; i <= n; i++)
         {
-            n = n / 2;
-        }
-        else if (n % 2 != 0)
-        {
-            n = 3 * n + 1;
+            if (i % 2 == 0)
+            {
+                cout << i << " ";
+            }
         }
 
-        if (n == 1)
+        for (int i = 1; i <= n; i++)
         {
-            cout << 1;
-            flag = 0;
+            if (i % 2 != 0)
+                cout << i << " ";
         }
     }
 

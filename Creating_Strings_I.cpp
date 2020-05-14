@@ -50,40 +50,25 @@ const ll maxn = 1e5;
 const ll inf = 1e9;
 const double pi = acos(-1);
 
+// Driver program to test above function
 int main()
 {
-    ll t;
-    cin >> t;
-    while (t > 0)
+    string s;
+    cin >> s;
+    sort(all(s));
+    vector<string> v;
+
+    do
     {
-        ll y, x;
-        cin >> y >> x;
-        if (x > y)
-        {
-            if (x % 2 == 1)
-            {
-                cout << x * x - y + 1;
-            }
-            else
-            {
-                x--;
-                cout << x * x + y;
-            }
-        }
-        else
-        {
-            if (y % 2 == 0)
-            {
-                cout << y * y - x + 1;
-            }
-            else
-            {
-                y--;
-                cout << y * y + x;
-            }
-        }
-        printf("\n");
-        t--;
+        v.pb(s);
+    } while (next_permutation(all(s)));
+
+    cout << v.size() << "\n";
+
+    for (int i = 0; i < v.size(); i++)
+    {
+        cout << v[i] << "\n";
     }
+
     return 0;
 }

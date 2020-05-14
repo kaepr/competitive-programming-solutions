@@ -40,7 +40,6 @@
 #define FILE_READ_IN freopen("input.txt", "r", stdin);
 #define FILE_READ_OUT freopen("output.txt", "w", stdout);
 #define all(a) a.begin(), a.end()
-#define ld long double
 using namespace std;
 // For ordered_set
 using namespace __gnu_pbds;
@@ -50,40 +49,21 @@ const ll maxn = 1e5;
 const ll inf = 1e9;
 const double pi = acos(-1);
 
+void solve()
+{
+    int a, b;
+    cin >> a >> b;
+    cout << (!((a + b) % 3) && min(a, b) * 2 >= max(a, b) ? "YES\n" : "NO\n");
+
+}
+
 int main()
 {
-    ll t;
+    int t = 0;
     cin >> t;
-    while (t > 0)
+    while (t--)
     {
-        ll y, x;
-        cin >> y >> x;
-        if (x > y)
-        {
-            if (x % 2 == 1)
-            {
-                cout << x * x - y + 1;
-            }
-            else
-            {
-                x--;
-                cout << x * x + y;
-            }
-        }
-        else
-        {
-            if (y % 2 == 0)
-            {
-                cout << y * y - x + 1;
-            }
-            else
-            {
-                y--;
-                cout << y * y + x;
-            }
-        }
-        printf("\n");
-        t--;
+        solve();
     }
     return 0;
 }

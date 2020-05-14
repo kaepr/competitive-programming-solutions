@@ -50,40 +50,48 @@ const ll maxn = 1e5;
 const ll inf = 1e9;
 const double pi = acos(-1);
 
+string getPalindrome(string str)
+{
+    //storing counts of characters
+    unordered_map<char, int> hmap;
+    for (int i = 0; i < str.length(); i++)
+        hmap[str[i]]++;
+
+    int oddCount = 0;
+    char oddChar;
+    for (auto x : hmap)
+    {
+        if (x.second % 2 != 0)
+        {
+            oddCount++;
+            oddChar = x.first;
+        }
+    }
+
+    if (oddCount > 1 || oddCount == 1 && str.length() % 2 == 0)
+        return "NO SOLUTION";
+
+    string firstHalf = "", secondHalf = "";
+
+    for (auto x : hmap)
+    {
+        //building a string of floor(count/2)
+        //occurenes of current character
+
+        string s(x.second / 2, x.first);
+
+        //attach the string to the end of and begin of second half
+        firstHalf = firstHalf + s;
+        secondHalf = s + secondHalf;
+    }
+
+    return (oddCount == 1) ? (firstHalf + oddChar + secondHalf) : (firstHalf + secondHalf);
+}
+
 int main()
 {
-    ll t;
-    cin >> t;
-    while (t > 0)
-    {
-        ll y, x;
-        cin >> y >> x;
-        if (x > y)
-        {
-            if (x % 2 == 1)
-            {
-                cout << x * x - y + 1;
-            }
-            else
-            {
-                x--;
-                cout << x * x + y;
-            }
-        }
-        else
-        {
-            if (y % 2 == 0)
-            {
-                cout << y * y - x + 1;
-            }
-            else
-            {
-                y--;
-                cout << y * y + x;
-            }
-        }
-        printf("\n");
-        t--;
-    }
+    string s;
+    cin >> s;
+    cout << getPalindrome(s);
     return 0;
 }

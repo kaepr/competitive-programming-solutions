@@ -52,38 +52,14 @@ const double pi = acos(-1);
 
 int main()
 {
-    ll t;
-    cin >> t;
-    while (t > 0)
+    ll n;
+    cin >> n;
+    for (ll i = 1; i <= n; i++)
     {
-        ll y, x;
-        cin >> y >> x;
-        if (x > y)
-        {
-            if (x % 2 == 1)
-            {
-                cout << x * x - y + 1;
-            }
-            else
-            {
-                x--;
-                cout << x * x + y;
-            }
-        }
-        else
-        {
-            if (y % 2 == 0)
-            {
-                cout << y * y - x + 1;
-            }
-            else
-            {
-                y--;
-                cout << y * y + x;
-            }
-        }
-        printf("\n");
-        t--;
+        ll ans;
+        ans = i * i * (i * i - 1) - 8 - 24 - (i - 4) * 16 - 16 - (i - 4) * 4 * 6 - 8 * (i - 4) * (i - 4);
+        ans /= 2;
+        cout << ans << "\n";
     }
     return 0;
 }

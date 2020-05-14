@@ -50,40 +50,46 @@ const ll maxn = 1e5;
 const ll inf = 1e9;
 const double pi = acos(-1);
 
+ll binpow(ll a, ll b)
+{
+    ll ans = 1;
+    while (b > 0)
+    {
+        if (b & 1)
+            ans = ans * a;
+
+        a = a * a;
+        b >>= 1;
+    }
+    return ans;
+}
+
+ll power(ll x, unsigned ll y, ll p)
+{
+    ll res = 1;
+
+    x = x % p;
+
+    if (x == 0)
+        return 0;
+
+    while (y > 0)
+    {
+
+        if (y & 1)
+            res = (res * x) % p;
+
+        y = y >> 1;
+        x = (x * x) % p;
+    }
+    return res;
+}
+
 int main()
 {
-    ll t;
-    cin >> t;
-    while (t > 0)
-    {
-        ll y, x;
-        cin >> y >> x;
-        if (x > y)
-        {
-            if (x % 2 == 1)
-            {
-                cout << x * x - y + 1;
-            }
-            else
-            {
-                x--;
-                cout << x * x + y;
-            }
-        }
-        else
-        {
-            if (y % 2 == 0)
-            {
-                cout << y * y - x + 1;
-            }
-            else
-            {
-                y--;
-                cout << y * y + x;
-            }
-        }
-        printf("\n");
-        t--;
-    }
+    ll n;
+    cin >> n;
+    ll ans = power(2, n, MOD);
+    cout << ans;
     return 0;
 }

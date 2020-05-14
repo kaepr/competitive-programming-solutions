@@ -52,38 +52,52 @@ const double pi = acos(-1);
 
 int main()
 {
-    ll t;
-    cin >> t;
-    while (t > 0)
+    ll n;
+    cin >> n;
+    ll t = n * (n + 1) / 2;
+    if (t % 2 == 0)
     {
-        ll y, x;
-        cin >> y >> x;
-        if (x > y)
+        t /= 2;
+        vector<int> a;
+        ll s = 0;
+        ll e = 0;
+        ll i = n;
+        while (true)
         {
-            if (x % 2 == 1)
+            a.pb(i);
+            s += i--;
+            e = t - s;
+            if (!e)
+                break;
+            if (e <= i)
             {
-                cout << x * x - y + 1;
-            }
-            else
-            {
-                x--;
-                cout << x * x + y;
+                a.pb(e);
+                break;
             }
         }
-        else
+        cout << "YES\n"
+             << a.size() << "\n";
+        for (ll j = 0; j < a.size(); j++)
         {
-            if (y % 2 == 0)
-            {
-                cout << y * y - x + 1;
-            }
-            else
-            {
-                y--;
-                cout << y * y + x;
-            }
+            cout << a[j];
+            if (j < a.size() - 1)
+                cout << " ";
         }
-        printf("\n");
-        t--;
+        cout << "\n";
+        cout << n - a.size() << "\n";
+        for (ll j = i; j > 0; j--)
+        {
+            if (j == e)
+                continue;
+            cout << j;
+            if ((e != 1 && j > 1) || (e == 1 && j > 2))
+                cout << " ";
+        }
+        cout << "\n";
+    }
+    else
+    {
+        cout << "NO";
     }
     return 0;
 }

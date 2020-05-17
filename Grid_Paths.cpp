@@ -57,7 +57,7 @@ int sol = 0;
 void solve(int pos, int x, int y, const string &s, char prev = 'R')
 {
 
-    if (x == 0 || y == 0)
+    if (x == 6 and y == 0)
     {
         //now we are at the bottom left square
         //if we are the final step
@@ -73,7 +73,7 @@ void solve(int pos, int x, int y, const string &s, char prev = 'R')
         return;
     if (prev == 'D' and (x == 6 or visited[x + 1][y]) and y > 0 and y < 6 and !visited[x][y - 1] and !visited[x][y + 1])
         return;
-    if (prev == 'L' and (y == 0 or visited[x][y - 1]) and x > 0 and x < 6 and !visited[x + 1][y] and !visited[x][y + 1])
+    if (prev == 'L' and (y == 0 or visited[x][y - 1]) and x > 0 and x < 6 and !visited[x - 1][y] and !visited[x + 1][y])
         return;
     if (prev == 'R' and (y == 6 or visited[x][y + 1]) and x > 0 and x < 6 and !visited[x - 1][y] and !visited[x + 1][y])
         return;
@@ -131,7 +131,7 @@ int main()
     string s;
     cin >> s;
     visited[0][0] = 1;
-
+    solve(0, 0, 0, s);
     cout << sol << "\n";
     return 0;
 }

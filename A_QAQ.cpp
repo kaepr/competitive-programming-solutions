@@ -34,55 +34,35 @@ const double pi = acos(-1);
 
 void solve()
 {
-    int n, m;
-    cin >> n >> m;
-    int a[n], b[m];
-
-    for (int i = 0; i < n; i++)
-        cin >> a[i];
-
-    for (int i = 0; i < m; i++)
+    string s;
+    cin >> s;
+    int ans = 0;
+    for (int i = 0; i < s.length(); i++)
     {
-        cin >> b[i];
-    }
-
-    int totalOddKey = 0;
-    int totalEvenKey = 0;
-    int totalOddChest = 0;
-    int totalEvenChest = 0;
-    for (int i = 0; i < n; i++)
-    {
-        if (a[i] % 2 == 0)
+        if (s[i] == 'Q')
         {
-            totalEvenChest++;
-        }
-        else
-        {
-            totalOddChest++;
+            for (int j = i + 1; j < s.length(); j++)
+            {
+                if (s[j] == 'A')
+                {
+                    for (int k = j + 1; k < s.length(); k++)
+                    {
+                        if (s[k] == 'Q')
+                        {
+                            ans++;
+                        }
+                    }
+                }
+            }
         }
     }
-
-    for (int i = 0; i < m; i++)
-    {
-        if (b[i] % 2 == 0)
-        {
-            totalEvenKey++;
-        }
-        else
-        {
-            totalOddKey++;
-        }
-    }
-
-    int aa = min(totalEvenKey, totalOddChest);
-    int bb = min(totalEvenChest, totalOddKey);
-
-    cout << aa + bb;
+    cout << ans;
 }
 
 int main()
 {
     int t = 1;
+    //cin>>t;
     while (t--)
     {
         solve();

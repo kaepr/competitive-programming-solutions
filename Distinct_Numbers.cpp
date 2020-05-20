@@ -34,6 +34,7 @@
 #define FILE_READ_IN freopen("input.txt","r",stdin);
 #define FILE_READ_OUT freopen("output.txt","w",stdout);
 #define all(a) a.begin(),a.end()
+#define ld long double
 using namespace std;
 // For ordered_set
 using namespace __gnu_pbds;
@@ -43,17 +44,16 @@ const ll maxn = 1e5;
 const ll inf = 1e9;
 const double pi = acos(-1);
 
-void solve(){
-    ll a,b,c,d;
-    cin>>a>>b>>c>>d;
-    
-}
-
 int main(){
-   int t = 0;
-   cin >> t;
-   while(t--){
-       solve();
-   }
-   return 0;
+    int n;
+    cin>>n;
+    set<int,greater<int>> settt;
+    while(n>0){
+        int temp;
+        cin>>temp;
+        settt.insert(temp);
+        n--;
+    }
+    cout<<settt.size();
+    return 0;
 }

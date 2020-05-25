@@ -30,21 +30,9 @@ const ll inf = 1e9;
 const double pi = acos(-1);
 
 void solve(){
-    int a,b;
-    cin>>a>>b;
-    int diff = abs(a-b);
-    int ans = 0;
-    int cnt=1;
-    int times=0;
-    for(int i=1; i<=diff; i++){
-        if(times==2){
-            times = 0;
-            cnt++;
-        }
-        ans+=cnt;
-        times++;
-    }
-    cout << ans;
+    int a,b,c,d;
+    cin>>a>>b>>c>>d;
+    
 }
 
 int main(){

@@ -21,38 +21,41 @@
 #define S second
 #define IT iterator
 #define RIT reverse_iterator
-#define FAST ios_base::sync_with_stdio(false);cin.tie();cout.tie();
-#define FILE_READ_IN freopen("input.txt","r",stdin);
-#define FILE_READ_OUT freopen("output.txt","w",stdout);
+#define FAST                          \
+    ios_base::sync_with_stdio(false); \
+    cin.tie();                        \
+    cout.tie();
+#define FILE_READ_IN freopen("input.txt", "r", stdin);
+#define FILE_READ_OUT freopen("output.txt", "w", stdout);
 using namespace std;
 const ll maxn = 1e5;
 const ll inf = 1e9;
 const double pi = acos(-1);
 
-void solve(){
-    int a,b;
-    cin>>a>>b;
-    int diff = abs(a-b);
-    int ans = 0;
-    int cnt=1;
-    int times=0;
-    for(int i=1; i<=diff; i++){
-        if(times==2){
-            times = 0;
-            cnt++;
-        }
-        ans+=cnt;
-        times++;
+void solve()
+{
+    int n, v;
+    cin >> n >> v;
+    if (n - 1 <= v)
+    {
+        cout << n - 1 << "\n";
+        return;
     }
-    cout << ans;
+    int result = v - 1;
+    for (int i = 1; i <= n - v; i++)
+    {
+        result += i;
+    }
+    cout << result << "\n";
 }
 
-int main(){
-  FAST
-  int t=1;
-  //cin>>t;
-  while(t--){
-    solve();
-  }
-  return 0;
+int main()
+{
+    FAST int t = 1;
+    //cin>>t;
+    while (t--)
+    {
+        solve();
+    }
+    return 0;
 }

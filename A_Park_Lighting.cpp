@@ -34,23 +34,58 @@ const double pi = acos(-1);
 
 void solve()
 {
-    ll n, k, ans;
-    cin >> n >> k;
-    ans = n;
-    for (ll j = 1; j * j <= n; j++)
+    int n, m;
+    cin >> n >> m;
+    int ans = 1e9;
+    // calculating rows
+    //n
+    if (n > m)
     {
-        if (n % j == 0)
+        int temp = 0;
+        temp = (n / 2) * m;
+        if (n % 2 != 0)
         {
-            if (j <= k)
+            if (m % 2 == 0)
             {
-                ans = min(ans, n / j);
+                temp += m / 2;
             }
-
-            if (n / j <= k)
+            else
             {
-                ans = min(ans, j);
+                temp = temp + m / 2 + 1;
             }
         }
+        ans = min(temp, ans);
+    }
+    else if (m > n)
+    {
+        int temp = 0;
+        temp = (m / 2) * n;
+        if (m % 2 != 0)
+        {
+            if (n % 2 == 0)
+            {
+                temp += n / 2;
+            }
+            else
+            {
+                temp = temp + n / 2 + 1;
+            }
+        }
+        ans = min(temp, ans);
+    }
+    else if (n == m)
+    {
+        int temp = 0;
+        if (n % 2 == 0)
+        {
+            temp = (n / 2) * m;
+        }
+        else if (n % 2 != 0)
+        {
+            temp += (n / 2) * m;
+            temp = temp + (m / 2) + 1;
+        }
+        ans = min(temp, ans);
     }
     cout << ans << "\n";
 }

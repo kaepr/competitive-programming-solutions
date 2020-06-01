@@ -34,31 +34,30 @@ const double pi = acos(-1);
 
 void solve()
 {
-    ll n, k, ans;
-    cin >> n >> k;
-    ans = n;
-    for (ll j = 1; j * j <= n; j++)
+    string first, second, type;
+    cin >> first >> second >> type;
+    transform(first.begin(), first.end(), first.begin(), ::tolower);
+    transform(second.begin(), second.end(), second.begin(), ::tolower);
+    transform(type.begin(), type.end(), type.begin(), ::tolower);
+    for (int i = 0; i < type.length(); i++)
     {
-        if (n % j == 0)
+        char temp = type[i];
+        //cout << "the letter is " << temp << "\n";
+        int index = 0;
+        for (int j = 0; j < first.length(); j++)
         {
-            if (j <= k)
+            if (first[j] == temp)
             {
-                ans = min(ans, n / j);
-            }
-
-            if (n / j <= k)
-            {
-                ans = min(ans, j);
+                cout << second[i];
             }
         }
     }
-    cout << ans << "\n";
 }
 
 int main()
 {
-    FAST int t;
-    cin >> t;
+    FAST int t = 1;
+    //cin>>t;
     while (t--)
     {
         solve();

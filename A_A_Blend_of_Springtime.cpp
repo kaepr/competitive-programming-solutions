@@ -34,31 +34,48 @@ const double pi = acos(-1);
 
 void solve()
 {
-    ll n, k, ans;
-    cin >> n >> k;
-    ans = n;
-    for (ll j = 1; j * j <= n; j++)
+    string s;
+    cin >> s;
+    int n = s.length();
+    int flag = 0;
+    for (int i = 1; i < n - 1; i++)
     {
-        if (n % j == 0)
-        {
-            if (j <= k)
-            {
-                ans = min(ans, n / j);
-            }
 
-            if (n / j <= k)
-            {
-                ans = min(ans, j);
-            }
+        int Aflag = 0;
+        int Bflag = 0;
+        int Cflag = 0;
+
+        //checker
+        if (s[i - 1] == 'C' || s[i] == 'C' || s[i + 1] == 'C')
+        {
+            Cflag = 1;
+        }
+        if (s[i - 1] == 'B' || s[i] == 'B' || s[i + 1] == 'B')
+        {
+            Bflag = 1;
+        }
+        if (s[i - 1] == 'A' || s[i] == 'A' || s[i + 1] == 'A')
+        {
+            Aflag = 1;
+        }
+
+        if (Aflag == 1 && Bflag == 1 && Cflag == 1)
+        {
+            flag = 1;
+            cout << "Yes\n";
+            return;
         }
     }
-    cout << ans << "\n";
+    if (flag == 0)
+    {
+        cout << "No\n";
+    }
 }
 
 int main()
 {
-    FAST int t;
-    cin >> t;
+    FAST int t = 1;
+    //cin>>t;
     while (t--)
     {
         solve();

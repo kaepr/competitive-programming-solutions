@@ -34,25 +34,31 @@ const double pi = acos(-1);
 
 void solve()
 {
-    ll n, k, ans;
-    cin >> n >> k;
-    ans = n;
-    for (ll j = 1; j * j <= n; j++)
-    {
-        if (n % j == 0)
-        {
-            if (j <= k)
-            {
-                ans = min(ans, n / j);
-            }
+    int initial = 1;
+    int n;
+    cin >> n;
+    int a[n];
+    for (int i = 0; i < n; i++)
+        cin >> a[i];
 
-            if (n / j <= k)
-            {
-                ans = min(ans, j);
-            }
+    sort(a, a + n);
+
+    int b[n];
+    b[0] = 1;
+    for (int i = 1; i < n; i++)
+    {
+        b[i] = b[i - 1] + 1;
+    }
+    int ans = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if (b[i] >= a[i])
+        {
+            ans = max(b[i], ans);
         }
     }
-    cout << ans << "\n";
+
+    cout << ans + 1 << "\n";
 }
 
 int main()

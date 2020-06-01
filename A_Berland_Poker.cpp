@@ -34,25 +34,52 @@ const double pi = acos(-1);
 
 void solve()
 {
-    ll n, k, ans;
-    cin >> n >> k;
-    ans = n;
-    for (ll j = 1; j * j <= n; j++)
-    {
-        if (n % j == 0)
-        {
-            if (j <= k)
-            {
-                ans = min(ans, n / j);
-            }
 
-            if (n / j <= k)
-            {
-                ans = min(ans, j);
-            }
+    int n, m, k;
+    cin >> n >> m >> k;
+    int a = n / k;
+    int arr[k][a];
+    for (int i = 0; i < k; i++)
+    {
+        for (int j = 0; j < a; j++)
+        {
+            arr[i][j] = 0;
         }
     }
-    cout << ans << "\n";
+
+    int mInPrevious = 60;
+    int mInRow = 0;
+    for (int i = 0; i < a; i++)
+    {
+        if (m > 0)
+        {
+            arr[0][i] = 1;
+            m--;
+        }
+    }
+    int first = 0;
+    for (int i = 0; i < a; i++)
+    {
+        if (arr[0][i] == 1)
+        {
+            first++;
+        }
+    }
+    // first has the maximum number of jokers
+    k--;
+    if (m <= 0)
+    {
+        cout << first << "\n";
+    }
+    else if (m % k == 0)
+    {
+        cout << first - m / k << "\n";
+    }
+    else
+    {
+        int diff = m / k + 1;
+        cout << first - diff << "\n";
+    }
 }
 
 int main()

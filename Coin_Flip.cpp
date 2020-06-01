@@ -34,25 +34,28 @@ const double pi = acos(-1);
 
 void solve()
 {
-    ll n, k, ans;
-    cin >> n >> k;
-    ans = n;
-    for (ll j = 1; j * j <= n; j++)
+    int n, m;
+    cin >> n >> m;
+    multiset<int, greater<int>> st;
+    while (n--)
     {
-        if (n % j == 0)
+        int x;
+        cin >> x;
+        st.insert(x);
+    }
+    while (m--)
+    {
+        int x;
+        cin >> x;
+        auto it = st.lower_bound(x);
+        if (it == st.end())
+            cout << "-1\n";
+        else
         {
-            if (j <= k)
-            {
-                ans = min(ans, n / j);
-            }
-
-            if (n / j <= k)
-            {
-                ans = min(ans, j);
-            }
+            cout << *it << "\n";
+            st.erase(it);
         }
     }
-    cout << ans << "\n";
 }
 
 int main()

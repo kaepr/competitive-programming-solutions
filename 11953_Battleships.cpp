@@ -53,7 +53,7 @@ const int ym[] = {1,-1,0,0};
 void dfs(int i, int j, int n){
     visited[i][j] = true;
     for(int k=0; k<numMoves; k++){
-        if(i+xm[k] >= 0 && i+xm[k]<n && j+ym[k]>=0 && j+ym[k]<n){
+        if(  i  +  xm  [k] >= 0 && i+xm[k]<n && j+ym[k]>=0 && j+ym[k]<n){
             int new_i = i + xm[k];
             int new_j =j + ym[k];
             if(!visited[new_i][new_j] && grid[new_i][new_j]=='x')

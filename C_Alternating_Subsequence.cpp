@@ -1,81 +1,51 @@
 #include <bits/stdc++.h>
-//For ordered_set
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
-#define MOD 1000000007
-#define test int t; cin>>t; while(t--)
-#define init(arr,val) memset(arr,val,sizeof(arr))
-#define loop(i,a,b) for(int i=a;i<b;i++)
-#define loopr(i,a,b) for(int i=a;i>=b;i--)
-#define loops(i,a,b,step) for(int i=a;i<b;i+=step)
-#define looprs(i,a,b,step) for(int i=a;i>=b;i-=step)
-#define ull unsigned long long int
-#define ll long long int
-#define P pair
-#define PLL pair<long long, long long>
-#define PII pair<int, int>
-#define PUU pair<unsigned long long int, unsigned long long int>
-#define L list
-#define V vector
-#define D deque
-#define ST set
-#define MS multiset
-#define M map
-#define UM unordered_map
-#define mp make_pair
-#define pb push_back
-#define pf push_front
-#define MM multimap
-#define F first
-#define S second
-#define IT iterator
-#define RIT reverse_iterator
-#define FAST ios_base::sync_with_stdio(false);cin.tie();cout.tie();
-#define FILE_READ_IN freopen("input.txt","r",stdin);
-#define FILE_READ_OUT freopen("output.txt","w",stdout);
-#define all(a) a.begin(),a.end()
 using namespace std;
-// For ordered_set
-using namespace __gnu_pbds;
-template <typename T>
-using ord_set = tree<T,null_type,less<T>,rb_tree_tag,tree_order_statistics_node_update>;
-const ll maxn = 1e5;
-const ll inf = 1e9;
-const double pi = acos(-1);
+using ll = long long;
 
-int maxSubArraySum(int a[], int size) 
-{ 
-    int max_so_far = -1e9, max_ending_here = 0; 
-  
-    for (int i = 0; i < size; i++) 
-    { 
-        max_ending_here = max_ending_here + a[i]; 
-        if (max_so_far < max_ending_here) 
-            max_so_far = max_ending_here; 
-  
-        if (max_ending_here < 0) 
-            max_ending_here = 0; 
-    } 
-    return max_so_far; 
-} 
+void solve()
+{
+    ll n;
+    cin >> n;
+    ll a[n];
+    for (ll i = 0; i < n; i++)
+        cin >> a[i];
 
-void solve(){
-    int n;
-    cin>>n;
-    int arr[n];
-    for(int i=0; i<n; i++){
-        cin>>arr[i];
+    ll pPtr = 0;
+    ll nPtr = 0;
+
+    if (a[0] > 0)
+        pPtr = 1;
+    else
+        nPtr = 1;
+
+    ll sum = 0;
+    for (ll i = 0; i < n; i++)
+    {
+        ll cur = a[i];
+        ll j = i+1;
+        if(j<n && a[i]*a[j] < 0)
+            sum += a[i];
+        
+        if(j < n && a[j]*a[i] > 0)
+            a[j] = max(a[j], a[i]);
+        
+        if(i==n-1)
+            sum += a[n-1];
     }
-    int sum = maxSubArraySum(arr,n);
-    cout<<sum<<"\n";
-
+    cout << sum << "\n";
 }
 
-int main(){
-   int t = 0;
-   cin >> t;
-   while(t--){
-       solve();
-   }
-   return 0;
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
+    int t;
+    cin >> t;
+    while (t--)
+    {
+        solve();
+    }
+    return 0;
 }

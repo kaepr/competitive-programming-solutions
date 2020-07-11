@@ -1,0 +1,1 @@
+{"group":"local","interactive":false,"local":true,"memoryLimit":1024,"name":"Local: B_Ilya_and_Queries","srcPath":"/home/shagun/competitive-programming-solutions/B_Ilya_and_Queries.cpp","tests":[{"id":1594354274904,"input":"......\n4\n3 4\n2 3\n1 6\n2 6","output":"1\n1\n5\n4"}],"timeLimit":3000,"url":"/home/shagun/competitive-programming-solutions/B_Ilya_and_Queries.cpp"}

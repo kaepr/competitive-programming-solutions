@@ -85,17 +85,21 @@ void solve()
                 b_extra.push_back(num);
             }
         }
-
-        sort(a_extra.begin(), a_extra.end());
-
-        sort(b_extra.begin(), b_extra.end(), greater<int>());
-
-        for (int i = 0; i < a_extra.size(); i++)
+        if (a_extra.size() == 0)
         {
-            cost = cost + min(a_extra[i], b_extra[i]);
+            cout << 0 << "\n";
         }
+        else
+        {
+            sort(a_extra.begin(), a_extra.end());
 
-        cout << cost << "\n";
+            sort(b_extra.begin(), b_extra.end());
+
+            int low = min(a_extra[0], b_extra[0]);
+            cost = a_extra.size() * low;
+
+            cout << cost << "\n";
+        }
     }
 }
 

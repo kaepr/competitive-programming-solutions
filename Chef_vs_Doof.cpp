@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
-const int mod = 5;
+const int mod = 1e9 + 7;
 
 int powmod(int x, int y, int mod)
 {
@@ -19,17 +19,24 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-int myPow(int x, string s, int mod)
+void solve()
 {
-    x %= mod;
-    int res = 1;
-    int now = x;
-    for (int i = (int)s.size() - 1; i >= 0; i--)
-    {
-        res = (res * powmod(now, s[i] - '0', mod)) % mod;
-        now = powmod(now, 10, mod);
+    int n;
+    cin>>n;
+    int a[n];
+    for(int i=0; i<n; i++)
+        cin>>a[i];
+    
+    //integer multiple of 
+    int f = 1;
+    for(int i=0; i<n; i++){
+        if(a[i] % 2==0)
+            f =0 ;
     }
-    return res;
+    if(f)
+        cout<<"YES\n";
+    else
+        cout<<"NO\n";
 }
 
 int main()
@@ -37,14 +44,14 @@ int main()
     ios_base::sync_with_stdio(0);
     cin.tie(NULL);
     cout.tie(NULL);
-    
 
-    string s;
-    cin >> s;
-
-    int res = myPow(1, s, mod) + myPow(2, s, mod) + myPow(3, s, mod) + myPow(4, s, mod);
-    res %= mod;
-    cout << res << "\n";
+    int t;
+    cin >> t;
+    while (t > 0)
+    {
+        solve();
+        t--;
+    }
 
     return 0;
 }

@@ -1,107 +1,52 @@
 #include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
+const int mod = 1e9 + 7;
+
+const int N = 50000;
+
+bool isPrime(int n)
+{
+    for (int i = 2; i < min(N, n); i++)
+        if (n % i == 0)
+            return 0;
+
+    return 1;
+}
 
 void solve()
 {
     int n;
     cin >> n;
-    int move = 1;
-    /*
-    
-    if move is odd, ashish turns, cannot play then loses
-    if move is even, fastesat finger turns, cannot play then loses
-
-    */
-
-    int flag = 1;
-
-    while (flag)
+    bool lose = (n == 1);
+    if (n > 2 && n % 2 == 0)
     {
-        if (n == 1)
-        {
-            flag = 0;
-        }
-        else
-        {
-            if (n % 2 != 0)
-            {
-                n /= n;
-                move++;
-            }
-            else if (n % 2 == 0)
-            {
-                int min_odd_divisor = INT_MAX;
-                int smallest_4_multiple = INT_MAX;
-                for (int i = 2; i <= sqrt(n); i++)
-                {
-                    if (n % i == 0)
-                    {
-                        if (i % 2 != 0)
-                        {
-                            min_odd_divisor = min(min_odd_divisor, i);
-                            if (n / i % 4 == 0)
-                            {
-                                smallest_4_multiple = min(smallest_4_multiple, n / i);
-                            }
-                        }
-
-                        int other = n / i;
-                        if ((n / i) % 2 != 0)
-                        {
-                            min_odd_divisor = min(min_odd_divisor, n / i);
-                            int num = n / (n / i);
-                            if (num % 4 == 0)
-                            {
-                                smallest_4_multiple = min(smallest_4_multiple, num);
-                            }
-                        }
-                    }
-                }
-
-                if (smallest_4_multiple > 1 && smallest_4_multiple < n)
-                {
-                    n = smallest_4_multiple;
-                    //cout<<"new n is "<<n<<"\n";
-                    move++;
-                }
-                else if (min_odd_divisor > 1 && min_odd_divisor < n)
-                {
-                    //cout << "min odd divisor was " << min_odd_divisor << "\n";
-                    n = n / min_odd_divisor;
-                    move++;
-                }
-                else
-                {
-                    n--;
-                    move++;
-                }
-                //cout<<"new n is "<<n<<"\n";
-            }
-        }
+        if ((n & (n - 1)) == 0)
+            lose = 1;
+        else if (n % 4 != 0 && isPrime(n / 2))
+            lose = 1;
     }
-
-    if (move % 2 != 0)
-    {
+    if (lose)
         cout << "FastestFinger\n";
-    }
     else
-    {
         cout << "Ashishgup\n";
-    }
 }
 
 int main()
 {
+    // freopen("filename.in","r",stdin);
+    // freopen("filename.out","w",stdout);
     ios_base::sync_with_stdio(0);
     cin.tie(NULL);
     cout.tie(NULL);
 
     int t;
     cin >> t;
-    while (t--)
+    while (t > 0)
     {
         solve();
+        t--;
     }
+
     return 0;
 }

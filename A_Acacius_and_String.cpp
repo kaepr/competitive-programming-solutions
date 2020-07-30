@@ -3,107 +3,71 @@ using namespace std;
 using ll = long long;
 const int mod = 1e9 + 7;
 
-//abacaba
+const string t = "abacaba";
+
+bool contains(string s)
+{
+    int cnt = 0, n = s.size();
+    for (int i = 0; i <= n - 7; i++)
+    {
+        if (s.substr(i, 7) == t)
+            cnt++;
+    }
+    return (cnt == 1);
+}
+
+void process(string s)
+{
+    int n = s.size();
+    for (int i = 0; i < n; i++)
+    {
+        if (s[i] == '?')
+            cout << 'd';
+        else
+            cout << s[i];
+    }
+    cout << "\n";
+}
 
 void solve()
 {
-    string t = "abacaba";
     int n;
     cin >> n;
     string s;
     cin >> s;
-    int f = 0;
-    int occur = 0;
-    for (int i = 0; i < n - 6; i++)
+    if (contains(s))
     {
-        //cout<<"the stirn is "<<s<<"\n";
-        f = 1;
-        //int possible = 1;
+        cout << "Yes\n";
+        process(s);
+        return;
+    }
+    for (int i = 0; i <= n - 7; i++)
+    {
+        string str = s;
+        bool flag = true;
         for (int j = 0; j < 7; j++)
         {
-            if(s[i+j] != t[j]){
-                if(s[i+j]=='?'){
-                    //cout<<s[i+j]<<" is str and t is "<<t[j]<<"\n";
-                    f=0;
-                    break;
-                }
-            }
-        }
-
-        if (f == 0)
-            continue;
-
-        //<<"substring exists from "<<i<<"\n";
-        //cout<<s<<"\n";
-
-        int ptr = 0;
-        for (int j = i; j < i + 7; j++)
-        {
-            if (s[j] != t[ptr])
+            if (str[i + j] != '?' && str[i + j] != t[j])
             {
-                if (s[j] == '?')
-                {
-                    if (ptr == 0)
-                        s[j] = 'a';
-                    if (ptr == 1)
-                        s[j] = 'b';
-                    if (ptr == 2)
-                        s[j] = 'a';
-                    if (ptr == 3)
-                        s[j] = 'c';
-                    if (ptr == 4)
-                        s[j] = 'a';
-                    if (ptr == 5)
-                        s[j] = 'b';
-                    if (ptr == 6)
-                        s[j] = 'a';
-                }
+                flag = false;
+                break;
             }
-            ptr++;
+            str[i + j] = t[j];
         }
-
-        //counting occurences
-        for (int j = 0; j < n; j++)
+        if (flag && contains(str))
         {
-            if (s[j] == '?')
-                s[j] = 'd';
-        }
-
-        int times = 0;
-
-        for (int j = 0; j < n - 6; j++)
-        {
-            int ptr = j;
-            int same = 1;
-            for (int k = 0; k < 7; k++)
-            {
-                if (s[ptr] != t[k])
-                    same = 0;
-                ptr++;
-            }
-            if (same)
-                times++;
-        }
-        if (times == 1)
-        {
-            f = 1;
             cout << "Yes\n";
-            cout << s << "\n";
-            break;
-        }
-        else
-        {
-            f = 0;
+            process(str);
+            return;
         }
     }
-    if (f == 0)
-    {
-        cout << "No\n";
-    }
+    cout << "No\n";
 }
 
 int main()
 {
+    // freopen("filename.in","r",stdin);
+    // freopen("filename.out","w",stdout);
     ios_base::sync_with_stdio(0);
     cin.tie(NULL);
     cout.tie(NULL);

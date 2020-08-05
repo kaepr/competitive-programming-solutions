@@ -1,36 +1,7 @@
 #include <bits/stdc++.h>
-#define MOD 1000000007
-#define ull unsigned long long int
-#define ll long long int
-#define P pair
-#define PLL pair<long long, long long>
-#define PII pair<int, int>
-#define PUU pair<unsigned long long int, unsigned long long int>
-#define L list
-#define V vector
-#define D deque
-#define ST set
-#define MS multiset
-#define M map
-#define UM unordered_map
-#define mp make_pair
-#define pb push_back
-#define pf push_front
-#define MM multimap
-#define F first
-#define S second
-#define IT iterator
-#define RIT reverse_iterator
-#define FAST                          \
-    ios_base::sync_with_stdio(false); \
-    cin.tie();                        \
-    cout.tie();
-#define FILE_READ_IN freopen("input.txt", "r", stdin);
-#define FILE_READ_OUT freopen("output.txt", "w", stdout);
 using namespace std;
-const ll maxn = 1e5;
-const ll inf = 1e9;
-const double pi = acos(-1);
+using ll = long long;
+const int mod = 1e9 + 7;
 
 void solve()
 {
@@ -38,25 +9,69 @@ void solve()
     cin >> n;
     string s;
     cin >> s;
-    int ans = 0, k = -1;
-    for (int i = 0; i < n; i++)
+    int time = 0;
+    while (1)
     {
-        if (s[i] == 'P' && k > -1)
-            ans = max(ans, i - k);
-        else if (s[i] == 'A')
-            k = i;
-    }
+        int current = 0;
+        for (int i = 0; i < n; i++)
+        {
+            if (s[i] == 'A')
+                current++;
+        }
 
-    cout << ans << "\n";
+        //convert them
+        string s2 = s;
+        //cout<<s2<<"\n";
+
+        for (int i = 0; i < n - 1; i++)
+        {
+            if (s[i] == 'A' && s[i + 1] == 'P')
+                s2[i + 1] = 'A';
+        }
+
+        int newTotal = 0;
+        for (int i = 0; i < n; i++)
+        {
+            if (s2[i] == 'A')
+                newTotal++;
+        }
+
+        // if(time==n){
+        //     break;
+        // }
+        if (newTotal == current || newTotal == n)
+        {
+            if (s2 == s)
+            {
+                break;
+            }
+            else
+            {
+                time++;
+                break;
+            }
+        }
+        time++;
+        s = s2;
+    }
+    cout << time << "\n";
 }
 
 int main()
 {
+    // freopen("filename.in","r",stdin);
+    // freopen("filename.out","w",stdout);
+    ios_base::sync_with_stdio(0);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
     int t;
     cin >> t;
-    while (t--)
+    while (t > 0)
     {
         solve();
+        t--;
     }
+
     return 0;
 }

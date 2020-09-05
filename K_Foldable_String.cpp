@@ -3,32 +3,30 @@ using namespace std;
 using ll = long long;
 const int mod = 1e9 + 7;
 
-int solve(const string &s, int x, int y)
+int powmod(int x, int y, int mod)
 {
-    int res = 0;
-    for (auto c : s)
-        if (c - '0' == x)
-        {
-            ++res;
-            swap(x, y);
-        }
-
-    if (x != y && res % 2 == 1)
-        --res;
-
+    int res = 1;
+    x %= mod;
+    if (x == 0)
+        return 0;
+    while (y > 0)
+    {
+        if (y & 1)
+            res = (res * x) % mod;
+        y = y >> 1;
+        x = (x * x) % mod;
+    }
     return res;
 }
 
 void solve()
 {
+    int n,k;
+    cin>>n>>k;
     string s;
-    cin >> s;
-    int ans = 0;
-    for (int i = 0; i < 10; i++)
-        for (int j = 0; j < 10; j++)
-            ans = max(ans, solve(s, i, j));
+    cin>>s;
+    
 
-    cout << s.size() - ans << "\n";
 }
 
 int main()

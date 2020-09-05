@@ -1,88 +1,130 @@
 #include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
+const int mod = 1e9 + 7;
+
+int powmod(int x, int y, int mod)
+{
+    int res = 1;
+    x %= mod;
+    if (x == 0)
+        return 0;
+    while (y > 0)
+    {
+        if (y & 1)
+            res = (res * x) % mod;
+        y = y >> 1;
+        x = (x * x) % mod;
+    }
+    return res;
+}
 
 void solve()
 {
-    string a, b;
-    cin >> a >> b;
-    int alen = (int)a.size();
-
-    int blen = (int)b.size();
-    if (alen > blen)
+    string s1, s2;
+    cin >> s1 >> s2;
+    // to determine if second word could be printed by tping the first one
+    vector<pair<char, int>> g1;
+    vector<pair<char, int>> g2;
+    for (int i = 0; i < s1.length(); i++)
     {
-        puts("NO");
-        return;
-    }
-    vector<pair<char, int>> v1, v2;
-    for (int i = 0; i < alen; i++)
-    {
-        int cnt = 0;
-        int j = i;
-        while (j < alen)
+        char c = s1[i];
+        int cnt = 1;
+        int ptr = i + 1;
+        while (true)
         {
-            if (a[i] != a[j])
+            if (s1[ptr] == c)
+            {
+                cnt++;
+                ptr++;
+            }
+            else
+            {
                 break;
-            cnt++;
-            j++;
+            }
         }
-        v1.emplace_back(a[i], cnt);
-        i = j - 1;
+        g1.push_back(make_pair(c, cnt));
+        i = ptr - 1;
     }
 
-    a = b;
-    alen = blen;
-    for (int i = 0; i < alen; i++)
+    for (int i = 0; i < s2.length(); i++)
     {
-        int cnt = 0;
-        int j = i;
-        while (j < alen)
+        char c = s2[i];
+        int cnt = 1;
+        int ptr = i + 1;
+        while (true)
         {
-            if (a[i] != a[j])
+            if (s2[ptr] == c)
+            {
+                cnt++;
+                ptr++;
+            }
+            else
+            {
                 break;
-            cnt++;
-            j++;
+            }
         }
-        v2.emplace_back(a[i], cnt);
-        i = j - 1;
+        g2.push_back(make_pair(c, cnt));
+        i = ptr - 1;
     }
 
-    alen = v1.size();
-    blen = v2.size();
-    if (alen != blen)
-    {
-        puts("NO");
-        return;
-    }
+    //  for (auto x : g1)
+    // {
+    //     cout << x.first << " " << x.second << "\n";
+    // }
+    // cout<<"break case\n";
 
-    for (int i = 0; i < alen; i++)
+    //  for (auto x : g2)
+    // {
+    //     cout << x.first << " " << x.second << "\n";
+    // }
+    // cout<<"break case\n";
+
+    bool flag = true;
+    int ptr = 0;
+    for (int i = 0; i < g1.size(); i++)
     {
-        if (v1[i].first != v2[i].first)
+        if (g1[i].first == g2[ptr].first && g1[i].second <= g2[ptr].second)
         {
-            puts("NO");
+            ptr++;
+        }
+        else
+        {
+            cout << "NO\n";
             return;
         }
-        if (v1[i].second > v2[i].second)
-        {
-            puts("NO");
-            return;
-        }
     }
-    puts("YES");
+    // cout<<ptr<<"\n";
+    // cout<<g2.size()<<"\n";
+    if(ptr == g2.size()){
+        cout<<"YES\n";
+    }else{
+        cout<<"NO\n";
+    }
+    // if(ptr + 1 != g2.size()){
+    //     cout<<"NO\n";
+    //     return;
+    // }
+
+    // cout << "YES\n";
+
+   
 }
 
 int main()
 {
+    // freopen("filename.in","r",stdin);
+    // freopen("filename.out","w",stdout);
     ios_base::sync_with_stdio(0);
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int n;
-    cin >> n;
-    while (n > 0)
+    int t;
+    cin >> t;
+    while (t > 0)
     {
         solve();
-        n--;
+        t--;
     }
 
     return 0;

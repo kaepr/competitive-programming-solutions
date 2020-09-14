@@ -3,24 +3,25 @@ using namespace std;
 using ll = long long;
 const int mod = 1e9 + 7;
 
-int powmod(int x, int y, int mod)
+const int N = 10000;
+int cnt[27];
+string s;
+int n;
+
+bool valid()
 {
-    int res = 1;
-    x %= mod;
-    if (x == 0)
-        return 0;
-    while (y > 0)
-    {
-        if (y & 1)
-            res = (res * x) % mod;
-        y = y >> 1;
-        x = (x * x) % mod;
-    }
-    return res;
+    for (int i = 0; i < 26; i++)
+        if (cnt[i] >= 2)
+            return false;
+
+    return true;
 }
 
-void solve()
+void fill()
 {
+    for (int i = 0; i < n; i++)
+        if (s[i] == '?')
+            s[i] = 'A';
 }
 
 int main()
@@ -31,13 +32,47 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t;
-    cin >> t;
-    while (t > 0)
+    cin >> s;
+    n = s.length();
+
+    if (n < 26)
     {
-        solve();
-        t--;
+        cout << -1 << "\n";
+        return 0;
     }
+
+    for (int i = 25; i < n; i++)
+    {
+        memset(cnt, 0, sizeof(cnt));
+        for (int j = i; j >= i - 25; j--)
+        {
+            if(s[j] != '?')
+                cnt[s[j] - 'A']++;
+        }
+
+        if (valid())
+        {
+            int cur = 0;
+            while (cnt[cur] > 0)
+                cur++;
+
+            for (int j = i - 25; j <= i; j++)
+            {
+                if (s[j] == '?')
+                {
+                    s[j] = cur + 'A';
+                    cur++;
+
+                    while (cnt[cur] > 0)
+                        cur++;
+                }
+            }
+            fill();
+            cout << s << "\n";
+            return 0;
+        }
+    }
+    cout << -1 << "\n";
 
     return 0;
 }

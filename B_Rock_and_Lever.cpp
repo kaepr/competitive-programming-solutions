@@ -23,34 +23,33 @@ void solve()
 {
     ll n;
     cin >> n;
-    ll cnt2 = 0, cnt3 = 0;
-    ll nCopy = n;
-
-
-    while (n % 2 == 0)
+    ll a[n];
+    for (ll i = 0; i < n; i++)
     {
-        n /= 2;
-        cnt2++;
+        cin >> a[i];
     }
 
-    while (nCopy % 3 == 0)
+    ll pairs = 0;
+    vector<bool> vis(n, false);
+    for (ll i = 31; i >= 0; i--)
     {
-        nCopy /= 3;
-        cnt3++;
+        ll elm = 0;
+        for (ll j = 0; j < n; j++)
+        {
+            if(a[j] < (1<<(i+1)) && a[j] >= (1<<i)){
+                elm++;
+            }
+            
+        }
+
+        pairs += (elm) * (elm - 1) / 2;
+
     }
-
-    if(cnt2 > cnt3){
-        
-    }
-
-
-
+    cout << pairs << "\n";
 }
 
 int main()
 {
-    // freopen("filename.in","r",stdin);
-    // freopen("filename.out","w",stdout);
     ios_base::sync_with_stdio(0);
     cin.tie(NULL);
     cout.tie(NULL);

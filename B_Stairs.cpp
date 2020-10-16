@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-using ll = long long;
+using ull = long long;
 const int mod = 1e9 + 7;
 
 int powmod(int x, int y, int mod)
@@ -21,36 +21,37 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    ll n;
+    ull n;
     cin >> n;
-    ll cnt2 = 0, cnt3 = 0;
-    ll nCopy = n;
 
+    ull a[32];
+    ull binaryGreatest = 1;
 
-    while (n % 2 == 0)
+    ull totalSquaresRequired = 0;
+    ull currentNminusOne = 0;
+    int ansCnt = 0;
+    for (ull i = 0; i <= 32; i++)
     {
-        n /= 2;
-        cnt2++;
+        binaryGreatest = 1 << i;
+
+        currentNminusOne = currentNminusOne | binaryGreatest;
+
+        ull toAdd = currentNminusOne * (currentNminusOne + 1) / 2;
+        totalSquaresRequired += toAdd;
+
+        if (totalSquaresRequired > n)
+        {
+            break;
+        }
+        ansCnt++;
     }
 
-    while (nCopy % 3 == 0)
-    {
-        nCopy /= 3;
-        cnt3++;
-    }
-
-    if(cnt2 > cnt3){
-        
-    }
-
-
-
+    cout << ansCnt << "\n";
 }
 
 int main()
 {
-    // freopen("filename.in","r",stdin);
-    // freopen("filename.out","w",stdout);
+
     ios_base::sync_with_stdio(0);
     cin.tie(NULL);
     cout.tie(NULL);

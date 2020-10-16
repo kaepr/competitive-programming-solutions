@@ -21,48 +21,46 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    vector<pair<int, int>> vi;
-    int n;
-    cin >> n;
+    ll n, T;
+    cin >> n >> T;
+    ll a[n];
+    for (int i = 0; i < n; i++)
+        cin >> a[i];
+
+    int p[n];
+    memset(p, -1, sizeof(p));
     for (int i = 0; i < n; i++)
     {
-        int x;
-        cin >> x;
-        vi.push_back(make_pair(x, 0));
-    }
-
-    for (int i = 0; i < n; i++)
-    {
-        int x;
-        cin >> x;
-        vi[i].second = x;
-    }
-
-    vector<int> unlock;
-    vector<pair<int, int>> lock;
-    for (int i = 0; i < n; i++)
-    {
-        if (vi[i].second == 0)
-            unlock.push_back(vi[i].first);
-    }
-
-    sort(unlock.begin(), unlock.end());
-    reverse(unlock.begin(), unlock.end());
-
-    int ptr = 0;
-
-    for (int i = 0; i < n; i++)
-    {
-        if (vi[i].second == 1)
+        if ( 2 * a[i] < T)
         {
-            cout << vi[i].first << " ";
+            p[i] = 1;
         }
-        else
+        else if (2 * a[i] > T)
         {
-            cout << unlock[ptr] << " ";
-            ptr++;
+            p[i] = 0;
         }
     }
+
+    bool flag = true;
+
+    for (int i = 0; i < n; i++)
+    {
+        if (p[i] == -1)
+        {
+            if (flag)
+            {
+                flag = !flag;
+                p[i] = 1;
+            }
+            else
+            {
+                p[i] = 0;
+                flag = !flag;
+            }
+        }
+    }
+    for (int i = 0; i < n; i++)
+        cout << p[i] << " ";
 
     cout << "\n";
 }

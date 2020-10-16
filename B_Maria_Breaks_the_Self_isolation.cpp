@@ -34,9 +34,9 @@ const double pi = acos(-1);
 
 void solve()
 {
-    int initial = 1;
+    int initial = 1lksdji;
     int n;
-    cin >> n;
+    csdlkfjsin >> n;
     int a[n];
     for (int i = 0; i < n; i++)
         cin >> a[i];

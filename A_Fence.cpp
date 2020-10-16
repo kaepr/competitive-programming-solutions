@@ -21,30 +21,37 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    ll n;
-    cin >> n;
-    ll cnt2 = 0, cnt3 = 0;
-    ll nCopy = n;
-
-
-    while (n % 2 == 0)
+    ll a[3];
+    for (int i = 0; i < 3; i++)
     {
-        n /= 2;
-        cnt2++;
+        cin >> a[i];
     }
+    sort(a, a + 3);
+    reverse(a, a + 3);
+    bool found = false;
 
-    while (nCopy % 3 == 0)
+    // for (int i = 0; i < 3; i++)
+    // {
+    //     cout << a[i] << " ";
+    // }
+    // cout << "\n";
+
+    for (int i = 0; i < 2; i++)
     {
-        nCopy /= 3;
-        cnt3++;
+        ll next = a[i + 1];
+        // cout << "current element is " << a[i] << "\n";
+        for (int j = a[i] - 1; j > next; j--)
+        {
+            // cout << "this happends\n";
+            cout << j << "\n";
+            found = true;
+            return;
+        }
     }
-
-    if(cnt2 > cnt3){
-        
+    if (!found)
+    {
+        cout << a[0] + 1 << "\n";
     }
-
-
-
 }
 
 int main()

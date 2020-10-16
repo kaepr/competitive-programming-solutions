@@ -21,30 +21,33 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    ll n;
-    cin >> n;
-    ll cnt2 = 0, cnt3 = 0;
-    ll nCopy = n;
+    int n, k, l;
+    cin >> n >> k >> l;
 
-
-    while (n % 2 == 0)
-    {
-        n /= 2;
-        cnt2++;
+    if(k==1 && n > 1){
+        cout<<-1<<"\n";
+        return;
     }
-
-    while (nCopy % 3 == 0)
+    if (n > k * l)
     {
-        nCopy /= 3;
-        cnt3++;
+        cout << -1 << "\n";
     }
+    else
+    {
+        int ptr = 0;
+        int bow = 1;
+        while(ptr < n){
+            if(bow > k){
+                bow = 1;
+            }
+            cout<<bow<<" ";
+            bow++;
+            ptr++;
+        }
 
-    if(cnt2 > cnt3){
         
+        cout << "\n";
     }
-
-
-
 }
 
 int main()

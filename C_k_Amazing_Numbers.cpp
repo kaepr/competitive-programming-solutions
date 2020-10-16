@@ -21,30 +21,15 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    ll n;
+    int n;
     cin >> n;
-    ll cnt2 = 0, cnt3 = 0;
-    ll nCopy = n;
+    int a[n];
+    for (int i = 0; i < n; i++)
+        cin >> a[i];
 
+    int ans = 0;
 
-    while (n % 2 == 0)
-    {
-        n /= 2;
-        cnt2++;
-    }
-
-    while (nCopy % 3 == 0)
-    {
-        nCopy /= 3;
-        cnt3++;
-    }
-
-    if(cnt2 > cnt3){
-        
-    }
-
-
-
+    
 }
 
 int main()

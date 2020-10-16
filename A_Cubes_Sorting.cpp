@@ -21,50 +21,29 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    vector<pair<int, int>> vi;
     int n;
     cin >> n;
+    int a[n];
     for (int i = 0; i < n; i++)
+        cin >> a[i];
+
+    bool dec = true;
+    for (int i = n - 1; i >= 1; i--)
     {
-        int x;
-        cin >> x;
-        vi.push_back(make_pair(x, 0));
-    }
-
-    for (int i = 0; i < n; i++)
-    {
-        int x;
-        cin >> x;
-        vi[i].second = x;
-    }
-
-    vector<int> unlock;
-    vector<pair<int, int>> lock;
-    for (int i = 0; i < n; i++)
-    {
-        if (vi[i].second == 0)
-            unlock.push_back(vi[i].first);
-    }
-
-    sort(unlock.begin(), unlock.end());
-    reverse(unlock.begin(), unlock.end());
-
-    int ptr = 0;
-
-    for (int i = 0; i < n; i++)
-    {
-        if (vi[i].second == 1)
+        if (!(a[i] < a[i - 1]))
         {
-            cout << vi[i].first << " ";
-        }
-        else
-        {
-            cout << unlock[ptr] << " ";
-            ptr++;
+            dec = false;
         }
     }
 
-    cout << "\n";
+    if (dec)
+    {
+        cout << "NO\n";
+    }
+    else
+    {
+        cout << "YES\n";
+    }
 }
 
 int main()

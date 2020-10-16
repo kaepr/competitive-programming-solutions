@@ -23,28 +23,28 @@ void solve()
 {
     ll n;
     cin >> n;
-    ll cnt2 = 0, cnt3 = 0;
-    ll nCopy = n;
-
-
-    while (n % 2 == 0)
+    ll sum = 1, cnt = 0;
+    ll lastElm = sum;
+    while (sum < n)
     {
-        n /= 2;
-        cnt2++;
+        if (cnt % 2 != 0)
+        {
+            sum += lastElm;
+            // if(sum > n){
+            //     break;
+            // }
+        }
+        else
+        {
+            sum += lastElm;
+            lastElm++;
+            // if(sum > n){
+            //     break;
+            // }
+        }
+        cnt++;
     }
-
-    while (nCopy % 3 == 0)
-    {
-        nCopy /= 3;
-        cnt3++;
-    }
-
-    if(cnt2 > cnt3){
-        
-    }
-
-
-
+    cout << cnt << "\n";
 }
 
 int main()

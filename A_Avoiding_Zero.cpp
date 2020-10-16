@@ -21,50 +21,41 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    vector<pair<int, int>> vi;
     int n;
     cin >> n;
+    int a[n];
     for (int i = 0; i < n; i++)
     {
-        int x;
-        cin >> x;
-        vi.push_back(make_pair(x, 0));
+        cin >> a[i];
     }
-
+    int sum = 0;
     for (int i = 0; i < n; i++)
+        sum += a[i];
+
+    if (sum == 0)
     {
-        int x;
-        cin >> x;
-        vi[i].second = x;
+        cout << "NO\n";
     }
-
-    vector<int> unlock;
-    vector<pair<int, int>> lock;
-    for (int i = 0; i < n; i++)
+    else if (sum > 0)
     {
-        if (vi[i].second == 0)
-            unlock.push_back(vi[i].first);
+        cout << "YES\n";
+        sort(a, a + n);
+        reverse(a, a + n);
+        for (int i = 0; i < n; i++)
+            cout << a[i] << " ";
+
+        cout << "\n";
     }
-
-    sort(unlock.begin(), unlock.end());
-    reverse(unlock.begin(), unlock.end());
-
-    int ptr = 0;
-
-    for (int i = 0; i < n; i++)
+    else
     {
-        if (vi[i].second == 1)
-        {
-            cout << vi[i].first << " ";
-        }
-        else
-        {
-            cout << unlock[ptr] << " ";
-            ptr++;
-        }
-    }
+        cout << "YES\n";
+        sort(a, a + n);
+        // reverse(a,a+n);
+        for (int i = 0; i < n; i++)
+            cout << a[i] << " ";
 
-    cout << "\n";
+        cout << "\n";
+    }
 }
 
 int main()

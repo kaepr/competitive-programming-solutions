@@ -21,30 +21,11 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    ll n;
-    cin >> n;
-    ll cnt2 = 0, cnt3 = 0;
-    ll nCopy = n;
-
-
-    while (n % 2 == 0)
-    {
-        n /= 2;
-        cnt2++;
-    }
-
-    while (nCopy % 3 == 0)
-    {
-        nCopy /= 3;
-        cnt3++;
-    }
-
-    if(cnt2 > cnt3){
-        
-    }
-
-
-
+    ll n,m;
+    cin>>n>>m;
+    ll a[n][m];
+    ll ans = INT_MAX;
+    
 }
 
 int main()

@@ -21,30 +21,6 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    ll n;
-    cin >> n;
-    ll cnt2 = 0, cnt3 = 0;
-    ll nCopy = n;
-
-
-    while (n % 2 == 0)
-    {
-        n /= 2;
-        cnt2++;
-    }
-
-    while (nCopy % 3 == 0)
-    {
-        nCopy /= 3;
-        cnt3++;
-    }
-
-    if(cnt2 > cnt3){
-        
-    }
-
-
-
 }
 
 int main()
@@ -55,13 +31,35 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t;
-    cin >> t;
-    while (t > 0)
+    int n;
+    cin >> n;
+    int a[n];
+    for (int i = 0; i < n; i++)
+        cin >> a[i];
+
+    int diff = INT_MAX;
+    int ind1 = 0, ind2 = 0;
+
+    for (int i = 0; i < n - 1; i++)
     {
-        solve();
-        t--;
+        int change = abs(a[i] - a[i + 1]);
+        if (change < diff)
+        {
+            diff = change;
+            ind1 = i + 1;
+            ind2 = i + 2;
+        }
     }
+    int change = abs(a[n - 1] - a[0]);
+
+    if (change < diff)
+    {
+        diff = change;
+        ind1 = n;
+        ind2 = 1;
+    }
+
+    cout << ind1 << " " << ind2 << "\n";
 
     return 0;
 }

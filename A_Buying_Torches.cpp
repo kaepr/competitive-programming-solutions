@@ -1,7 +1,14 @@
 #include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
+using vi = vector<int>;
+
 const int mod = 1e9 + 7;
+
+#define pb push_back
+#define f first
+#define s second
+#define mp make_pair
 
 int powmod(int x, int y, int mod)
 {
@@ -21,16 +28,13 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    ll x, y, k;
-    cin >> x >> y >> k;
-    ll total = k * y + k;
-    ll sumDiff = x - 1;
-    total--;
-    ll ans = total / (x - 1);
-    if (total % (x - 1) != 0)
-        ans++;
-
-    cout << ans + k << "\n";
+    vector<int> v;
+    for(int i=0; i<5; i++){
+        v.pb(1);
+    }
+    for(auto x : v){
+        cout<<x<<" ";
+    }
 }
 
 int main()

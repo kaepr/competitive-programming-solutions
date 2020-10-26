@@ -11,6 +11,11 @@
          }
      }
 
+     if(true){
+        bool flag = false;
+
+     }
+
      for(int p=2; p<= n; p++)
         if (prime[p])
             cout << p << " ";

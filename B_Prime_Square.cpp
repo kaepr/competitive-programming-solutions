@@ -1,14 +1,35 @@
 #include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
+using ull = unsigned long long;
 using vi = vector<int>;
 
-const int mod = 1e9 + 7;
+const int MOD = 1e9 + 7;
 
 #define pb push_back
-#define f first
-#define s second
+#define F first
+#define S second
 #define mp make_pair
+
+#define TRACE
+#ifdef TRACE
+#define trace(...) __f(#__VA_ARGS__, __VA_ARGS__)
+template <typename Arg1>
+void __f(const char *name, Arg1 &&arg1)
+{
+    cout << name << " : " << arg1 << endl;
+    //use cerr if u want to display at the bottom
+}
+template <typename Arg1, typename... Args>
+void __f(const char *names, Arg1 &&arg1, Args &&... args)
+{
+    const char *comma = strchr(names + 1, ',');
+    cout.write(names, comma - names) << " : " << arg1 << " | ";
+    __f(comma + 1, args...);
+}
+#else
+#define trace(...)
+#endif
 
 int powmod(int x, int y, int mod)
 {
@@ -26,8 +47,61 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
+vi primes;
+
+bool isPrime(int n)
+{
+    // Corner cases
+    if (n <= 1)
+        return false;
+    if (n <= 3)
+        return true;
+
+    // This is checked so that we can skip
+    // middle five numbers in below loop
+    if (n % 2 == 0 || n % 3 == 0)
+        return false;
+
+    for (int i = 5; i * i <= n; i = i + 6)
+        if (n % i == 0 || n % (i + 2) == 0)
+            return false;
+
+    return true;
+}
+
 void solve()
 {
+    int n;
+    cin >> n;
+    vi v;
+    if (n % 2 == 0)
+    {
+        v.pb(1);
+        v.pb(1);
+        for (int i = 0; i < n - 2; i++)
+        {
+            v.pb(0);
+        }
+    }
+    else if (n % 2 != 0)
+    {
+        v.pb(1);
+        v.pb(1);
+        v.pb(1);
+        for (int i = 0; i < n - 3; i++)
+        {
+            v.pb(0);
+        }
+    }
+    for (int i = 0; i < n; i++)
+    {
+        for (auto x : v)
+        {
+            cout << x << " ";
+        }
+        cout << "\n";
+        rotate(v.begin(), v.begin() + 1, v.end());
+    }
 }
 
 int main()
@@ -37,6 +111,19 @@ int main()
     ios_base::sync_with_stdio(0);
     cin.tie(NULL);
     cout.tie(NULL);
+
+    int num = 1;
+
+    while (primes.size() < 105)
+    {
+        if (isPrime(num))
+        {
+            primes.pb(num);
+        }
+        num++;
+    }
+
+    reverse(primes.begin(), primes.end());
 
     int t;
     cin >> t;

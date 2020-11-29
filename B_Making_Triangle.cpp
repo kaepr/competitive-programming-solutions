@@ -1,17 +1,35 @@
 #include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
-const int mod = 1e9 + 7;
+using ull = unsigned long long;
+using vi = vector<int>;
 
-int check(int a, int b, int c)
+const int MOD = 1e9 + 7;
+
+#define pb push_back
+#define f first
+#define s second
+#define mp make_pair
+
+int powmod(int x, int y, int mod)
 {
-    if (a == b || b == c || a == c)
+    int res = 1;
+    x %= mod;
+    if (x == 0)
         return 0;
+    while (y > 0)
+    {
+        if (y & 1)
+            res = (res * x) % mod;
+        y = y >> 1;
+        x = (x * x) % mod;
+    }
+    return res;
+}
 
-    if (a + b > c && b + c > a && c + a > b)
-        return 1;
-
-    return 0;
+void solve()
+{
+    
 }
 
 int main()
@@ -22,27 +40,13 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int n;
-    cin >> n;
-    int a[n];
-    for (int i = 0; i < n; i++)
-        cin >> a[i];
-
-    int cnt = 0;
-    for (int i = 0; i < n; i++)
+    int t;
+    cin >> t;
+    while (t > 0)
     {
-        for (int j = i + 1; j < n; j++)
-        {
-            for (int k = j + 1; k < n; k++)
-            {
-
-                if (check(a[i], a[j], a[k]))
-                    cnt++;
-            }
-        }
+        solve();
+        t--;
     }
-
-    cout << cnt << "\n";
 
     return 0;
 }

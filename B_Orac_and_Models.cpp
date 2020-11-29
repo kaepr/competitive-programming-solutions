@@ -1,109 +1,108 @@
 #include <bits/stdc++.h>
-//For ordered_set
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
-#define MOD 1000000007
-#define test  \
-    int t;    \
-    cin >> t; \
-    while (t--)
-#define init(arr, val) memset(arr, val, sizeof(arr))
-#define loop(i, a, b) for (int i = a; i < b; i++)
-#define loopr(i, a, b) for (int i = a; i >= b; i--)
-#define loops(i, a, b, step) for (int i = a; i < b; i += step)
-#define looprs(i, a, b, step) for (int i = a; i >= b; i -= step)
-#define ull unsigned long long int
-#define ll long long int
-#define P pair
-#define PLL pair<long long, long long>
-#define PII pair<int, int>
-#define PUU pair<unsigned long long int, unsigned long long int>
-#define L list
-#define V vector
-#define D deque
-#define ST set
-#define MS multiset
-#define M map
-#define UM unordered_map
-#define mp make_pair
+using namespace std;
+using ll = long long;
+using ull = unsigned long long;
+using vi = vector<int>;
+
+const int MOD = 1e9 + 7;
+
 #define pb push_back
-#define pf push_front
-#define MM multimap
 #define F first
 #define S second
-#define IT iterator
-#define RIT reverse_iterator
-#define FAST                          \
-    ios_base::sync_with_stdio(false); \
-    cin.tie();                        \
-    cout.tie();
-#define FILE_READ_IN freopen("input.txt", "r", stdin);
-#define FILE_READ_OUT freopen("output.txt", "w", stdout);
-#define all(a) a.begin(), a.end()
-using namespace std;
-// For ordered_set
-using namespace __gnu_pbds;
-template <typename T>
-using ord_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
-const ll maxn = 1e5;
-const ll inf = 1e9;
-const double pi = acos(-1);
+#define mp make_pair
+
+#define TRACE
+#ifdef TRACE
+#define trace(...) __f(#__VA_ARGS__, __VA_ARGS__)
+template <typename Arg1>
+void __f(const char *name, Arg1 &&arg1)
+{
+    cout << name << " : " << arg1 << endl;
+    //use cerr if u want to display at the bottom
+}
+template <typename Arg1, typename... Args>
+void __f(const char *names, Arg1 &&arg1, Args &&... args)
+{
+    const char *comma = strchr(names + 1, ',');
+    cout.write(names, comma - names) << " : " << arg1 << " | ";
+    __f(comma + 1, args...);
+}
+#else
+#define trace(...)
+#endif
+
+int powmod(int x, int y, int mod)
+{
+    int res = 1;
+    x %= mod;
+    if (x == 0)
+        return 0;
+    while (y > 0)
+    {
+        if (y & 1)
+            res = (res * x) % mod;
+        y = y >> 1;
+        x = (x * x) % mod;
+    }
+    return res;
+}
 
 void solve()
 {
     ll n;
     cin >> n;
-    ll s[n + 1];
-    int total = 0;
-    for (ll i = 1; i <= n; i++)
-        cin >> s[i];
+    ll a[n + 1];
+    ll f[n + 1];
+    for (int i = 0; i <= n; i++)
+        f[i] = 1;
 
-    ll final[n + 1];
-    for (ll i = 0; i <= n; i++)
+    for (int i = 1; i <= n; i++)
     {
-        final[i] = 0;
+        cin >> a[i];
     }
-
-    int fptr = 1;
-    final[1] = s[1];
-
-    set<int> st;
-
     if (n == 1)
     {
         cout << 1 << "\n";
     }
     else
     {
-        ll anss = 0;
-        for (ll i = 1; i <= n; i++)
+        ll ans = 0;
+        for (int i = 1; i <= n; i++)
         {
-            ll temp_sum = 0;
-            ll nmax = 0;
-            for (ll j = 1; j <= n; j++)
+            ll temp = 1;
+            ll last = i;
+            for (int j = i + i; j <= n; j += i)
             {
-                nmax = max(nmax, s[j]);
-                if (s[j] > s[i] && s[j] > nmax)
+                if (a[j] > a[i])
                 {
-                    if (j % i == 0)
-                    {
-                        temp_sum++;
-                    }
+                    f[j] = max(f[j], f[i] + 1);
                 }
             }
-            anss = max(anss, temp_sum);
         }
-        cout << anss << "\n";
+        for (int i = 1; i <= n; i++)
+        {
+            ans = max(ans, f[i]);
+        }
+        cout << ans << "\n";
     }
+    // cout << ans << "\n";
 }
 
 int main()
 {
-    int t = 0;
+    // freopen("filename.in","r",stdin);
+    // freopen("filename.out","w",stdout);
+    ios_base::sync_with_stdio(0);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
+    int t;
     cin >> t;
-    while (t--)
+    while (t > 0)
     {
         solve();
+        t--;
     }
+
     return 0;
 }

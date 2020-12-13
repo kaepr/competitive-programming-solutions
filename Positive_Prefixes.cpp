@@ -47,49 +47,47 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
+ll sums[1005];
+
 void solve()
 {
-    int n, k;
+    ll n, k;
     cin >> n >> k;
-    int a[n];
-    for (int i = 0; i < n; i++)
-    {
-        cin >> a[i];
-    }
+    ll bel = k + 1;
+    ll totalSum = sums[k];
+    ll ind = 0;
 
     if (n == k)
     {
-        cout << 1 << "\n";
+        for (int i = 1; i <= n; i++)
+            cout << i << " ";
+        cout << "\n";
         return;
     }
 
-    int minn = INT_MAX;
-    int currAns = 0;
-    int index = 0;
-    for (int i = 0; i < k; i++)
+    for (int i = 0; i <= n; i++)
     {
-        currAns += a[i];
-    }
-
-    minn = min(minn, currAns);
-    // trace(index);
-    // trace(minn);
-    // trace(index);
-    for (int i = 1; i < n - k + 1; i++)
-    {
-        currAns += a[i + k - 1];
-        currAns -= a[i - 1];
-        // cout << "Sum of current segment : " + currAns << "\n";
-        if (currAns < minn)
+        ll curr = totalSum - sums[i] * 2;
+        if (curr <= bel)
         {
-            index = i;
-            minn = min(minn, currAns);
+            ind = i;
+            break;
         }
-        // trace(currAns);
-        // trace(minn);
-        // trace(index);
     }
-    cout << index + 1 << "\n";
+    trace(ind);
+    for (int i = 1; i <= ind; i++)
+    {
+        cout << -i << " ";
+    }
+    for (int i = ind + 1; i <= k; i++)
+    {
+        cout << i << " ";
+    }
+    for (int i = k + 1; i <= n; i++)
+    {
+        cout << -i << " ";
+    }
+    cout << "\n";
 }
 
 int main()
@@ -99,9 +97,14 @@ int main()
     ios_base::sync_with_stdio(0);
     cin.tie(NULL);
     cout.tie(NULL);
+    sums[0] = 0;
+    for (int i = 1; i < 1005; i++)
+    {
+        sums[i] = (i * (i + 1)) / 2;
+    }
 
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while (t > 0)
     {
         solve();

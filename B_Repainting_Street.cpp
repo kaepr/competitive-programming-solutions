@@ -53,43 +53,45 @@ void solve()
     cin >> n >> k;
     int a[n];
     for (int i = 0; i < n; i++)
-    {
         cin >> a[i];
+
+    int ans2 = INT_MAX;
+    int maxCol = *max_element(a, a + n);
+    int total = n / k;
+    if (n % k != 0)
+    {
+        total++;
     }
 
-    if (n == k)
-    {
-        cout << 1 << "\n";
-        return;
-    }
+    // trace(total);
 
-    int minn = INT_MAX;
-    int currAns = 0;
-    int index = 0;
-    for (int i = 0; i < k; i++)
+    for (int col = 1; col <= maxCol; col++)
     {
-        currAns += a[i];
-    }
-
-    minn = min(minn, currAns);
-    // trace(index);
-    // trace(minn);
-    // trace(index);
-    for (int i = 1; i < n - k + 1; i++)
-    {
-        currAns += a[i + k - 1];
-        currAns -= a[i - 1];
-        // cout << "Sum of current segment : " + currAns << "\n";
-        if (currAns < minn)
+        int curr = 0;
+        int index = 0;
+        for (int i = 0; i < n; i++)
         {
-            index = i;
-            minn = min(minn, currAns);
+            if (a[i] != col)
+            {
+                index = i;
+                break;
+            }
         }
-        // trace(currAns);
-        // trace(minn);
-        // trace(index);
+        while (index < n)
+        {
+            if (a[index] != col)
+            {
+                curr++;
+                index += k;
+            }
+            else
+            {
+                index++;
+            }
+        }
+        ans2 = min(ans2, curr);
     }
-    cout << index + 1 << "\n";
+    cout << ans2 << "\n";
 }
 
 int main()
@@ -100,8 +102,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while (t > 0)
     {
         solve();

@@ -71,7 +71,8 @@
         "typeindex": "cpp",
         "typeinfo": "cpp",
         "valarray": "cpp",
-        "charconv": "cpp"
+        "charconv": "cpp",
+        "variant": "cpp"
     },
     "python.pythonPath": "/usr/bin/python3",
     "notebook.kernelProviderAssociations": [

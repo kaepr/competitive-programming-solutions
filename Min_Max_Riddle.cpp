@@ -49,47 +49,78 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    int n, k;
-    cin >> n >> k;
+    int n;
+    cin >> n;
     int a[n];
     for (int i = 0; i < n; i++)
-    {
         cin >> a[i];
+    int left[n], right[n];
+    stack<int> s;
+    for (int i = 0; i < n; i++)
+    {
+        left[i] = -1;
+        right[i] = n;
     }
 
-    if (n == k)
+    for (int i = 0; i < n; i++)
     {
-        cout << 1 << "\n";
-        return;
-    }
-
-    int minn = INT_MAX;
-    int currAns = 0;
-    int index = 0;
-    for (int i = 0; i < k; i++)
-    {
-        currAns += a[i];
-    }
-
-    minn = min(minn, currAns);
-    // trace(index);
-    // trace(minn);
-    // trace(index);
-    for (int i = 1; i < n - k + 1; i++)
-    {
-        currAns += a[i + k - 1];
-        currAns -= a[i - 1];
-        // cout << "Sum of current segment : " + currAns << "\n";
-        if (currAns < minn)
+        while (!s.empty() && a[s.top()] >= a[i])
         {
-            index = i;
-            minn = min(minn, currAns);
+            s.pop();
         }
-        // trace(currAns);
-        // trace(minn);
-        // trace(index);
+        if (!s.empty())
+        {
+            left[i] = s.top();
+        }
+        s.push(i);
     }
-    cout << index + 1 << "\n";
+    while (!s.empty())
+    {
+        s.pop();
+    }
+
+    for (int i = n - 1; i >= 0; i--)
+    {
+        while (!s.empty() && a[s.top()] >= a[i])
+        {
+            s.pop();
+        }
+
+        if (!s.empty())
+        {
+            right[i] = s.top();
+        }
+        s.push(i);
+    }
+
+    // for (int i = 0; i < n; i++)
+    // {
+    //     cout << left[i] << " ";
+    // }
+    // cout << "\n";
+
+    // for (int i = 0; i < n; i++)
+    // {
+    //     cout << right[i] << " ";
+    // }
+    // cout << "\n";
+
+    int ans[n + 1];
+    memset(ans, 0, sizeof(ans));
+    for (int i = 0; i < n; i++)
+    {
+        int len = right[i] - left[i] - 1;
+        // trace(len);
+        ans[len] = max(ans[len], a[i]);
+    }
+    for (int i = n - 1; i >= 1; i--)
+    {
+        ans[i] = max(ans[i], ans[i + 1]);
+    }
+    for (int i = 1; i <= n; i++)
+    {
+        cout << ans[i] << " ";
+    }
 }
 
 int main()

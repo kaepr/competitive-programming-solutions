@@ -49,47 +49,39 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    int n, k;
-    cin >> n >> k;
-    int a[n];
+    int n, m;
+    cin >> n >> m;
+    vi a, b;
     for (int i = 0; i < n; i++)
     {
-        cin >> a[i];
+        int x;
+        cin >> x;
+        a.PB(x);
     }
-
-    if (n == k)
+    for (int i = 0; i < m; i++)
     {
-        cout << 1 << "\n";
-        return;
+        int x;
+        cin >> x;
+        b.PB(x);
     }
-
-    int minn = INT_MAX;
-    int currAns = 0;
-    int index = 0;
-    for (int i = 0; i < k; i++)
+    map<int, int> mp;
+    for (int i = 0; i < n; i++)
     {
-        currAns += a[i];
+        mp[a[i]]++;
     }
-
-    minn = min(minn, currAns);
-    // trace(index);
-    // trace(minn);
-    // trace(index);
-    for (int i = 1; i < n - k + 1; i++)
+    for (int i = 0; i < m; i++)
     {
-        currAns += a[i + k - 1];
-        currAns -= a[i - 1];
-        // cout << "Sum of current segment : " + currAns << "\n";
-        if (currAns < minn)
+        mp[b[i]]++;
+    }
+    int cnt = 0;
+    for (auto x : mp)
+    {
+        if (x.second == 2)
         {
-            index = i;
-            minn = min(minn, currAns);
+            cnt++;
         }
-        // trace(currAns);
-        // trace(minn);
-        // trace(index);
     }
-    cout << index + 1 << "\n";
+    cout << cnt << "\n";
 }
 
 int main()
@@ -100,8 +92,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while (t > 0)
     {
         solve();

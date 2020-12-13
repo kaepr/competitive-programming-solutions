@@ -49,47 +49,59 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    int n, k;
-    cin >> n >> k;
-    int a[n];
+    int n, m;
+    cin >> n >> m;
+    int a[n][m];
     for (int i = 0; i < n; i++)
     {
-        cin >> a[i];
-    }
-
-    if (n == k)
-    {
-        cout << 1 << "\n";
-        return;
-    }
-
-    int minn = INT_MAX;
-    int currAns = 0;
-    int index = 0;
-    for (int i = 0; i < k; i++)
-    {
-        currAns += a[i];
-    }
-
-    minn = min(minn, currAns);
-    // trace(index);
-    // trace(minn);
-    // trace(index);
-    for (int i = 1; i < n - k + 1; i++)
-    {
-        currAns += a[i + k - 1];
-        currAns -= a[i - 1];
-        // cout << "Sum of current segment : " + currAns << "\n";
-        if (currAns < minn)
+        for (int j = 0; j < m; j++)
         {
-            index = i;
-            minn = min(minn, currAns);
+            char x;
+            cin >> x;
+            if (x == '*')
+            {
+                a[i][j] = 1;
+            }
+            else
+            {
+                a[i][j] = 0;
+            }
         }
-        // trace(currAns);
-        // trace(minn);
-        // trace(index);
     }
-    cout << index + 1 << "\n";
+
+    int dp[n][m];
+
+    for (int i = n - 2; i >= 0; i--)
+    {
+        for (int j = 1; j < m - 1; j++)
+        {
+            if (a[i][j] != 0)
+            {
+                a[i][j] += min(a[i + 1][j], min(a[i + 1][j - 1], a[i + 1][j + 1]));
+            }
+        }
+    }
+
+    // for (int i = 0; i < n; i++)
+    // {
+    //     for (int j = 0; j < m; j++)
+    //     {
+    //         cout << a[i][j] << " ";
+    //     }
+    //     cout << "\n";
+    // }
+
+    int ans = 0;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            ans += a[i][j];
+        }
+    }
+    cout << ans << "\n";
+
+    // cout << "new case\n";
 }
 
 int main()
@@ -100,8 +112,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while (t > 0)
     {
         solve();

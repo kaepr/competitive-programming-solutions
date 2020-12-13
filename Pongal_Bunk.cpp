@@ -49,47 +49,65 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    int n, k;
-    cin >> n >> k;
-    int a[n];
-    for (int i = 0; i < n; i++)
+    ll n;
+    cin >> n;
+    ll a[n + 2] = {0};
+    ll b[n + 2] = {0};
+    // for (int i = 0; i < n + 2; i++)
+    //     cout << a[i] << " ";
+
+    // cout << "\n";
+    ll q;
+    cin >> q;
+    while (q > 0)
     {
-        cin >> a[i];
+        ll l, r;
+        cin >> l >> r;
+        a[l]++;
+        a[r + 1]--;
+
+        b[r + 1] -= (r - l + 1);
+
+        q--;
     }
 
-    if (n == k)
+    // for (int i = 0; i < n + 2; i++)
+    // {
+    //     cout << a[i] << " ";
+    // }
+    // cout << "\n";
+
+    for (int i = 1; i < n + 2; i++)
     {
-        cout << 1 << "\n";
-        return;
+        a[i] = a[i] + a[i - 1];
     }
 
-    int minn = INT_MAX;
-    int currAns = 0;
-    int index = 0;
-    for (int i = 0; i < k; i++)
+    for (int i = 1; i < n + 2; i++)
     {
-        currAns += a[i];
+        b[i] = b[i] + a[i] + b[i - 1];
     }
 
-    minn = min(minn, currAns);
-    // trace(index);
-    // trace(minn);
-    // trace(index);
-    for (int i = 1; i < n - k + 1; i++)
+    // for (int i = 0; i < n + 2; i++)
+    // {
+    //     cout << a[i] << " ";
+    // }
+    // cout << "\n";
+
+    // for (int i = 0; i < n + 2; i++)
+    // {
+    //     cout << b[i] << " ";
+    // }
+    // cout << "\n";
+
+    ll m;
+    cin >> m;
+    while (m > 0)
     {
-        currAns += a[i + k - 1];
-        currAns -= a[i - 1];
-        // cout << "Sum of current segment : " + currAns << "\n";
-        if (currAns < minn)
-        {
-            index = i;
-            minn = min(minn, currAns);
-        }
-        // trace(currAns);
-        // trace(minn);
-        // trace(index);
+        int x;
+        cin >> x;
+        cout << b[x] << "\n";
+        m--;
     }
-    cout << index + 1 << "\n";
 }
 
 int main()

@@ -47,18 +47,116 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
+int a[1001][1001];
+int b[1001][1001];
+
 void solve()
 {
-    int n;
-    cin >> n;
-
-    cout << n << " ";
-    for (int i = 1; i <= n - 1; i++)
+    int n, m, u, q;
+    cin >> n >> m >> u >> q;
+    for (int i = 0; i < n; i++)
     {
-        cout << i << " ";
+        for (int j = 0; j < m; j++)
+        {
+            cin >> a[i][j];
+            b[i][j] = a[i][j];
+        }
     }
 
-    cout << "\n";
+    for (int i = 1; i < n; i++)
+    {
+        b[i][0] -= a[i - 1][0];
+    }
+
+    for (int i = 1; i < m; i++)
+    {
+        b[0][i] -= a[0][i - 1];
+    }
+
+    for (int i = 1; i < n; i++)
+    {
+        for (int j = 1; j < m; j++)
+        {
+            b[i][j] = b[i][j] - a[i - 1][j] - a[i][j - 1] + a[i - 1][j - 1];
+        }
+    }
+
+    while (u > 0)
+    {
+        int k, r1, c1, r2, c2;
+        cin >> k >> r1 >> c1 >> r2 >> c2;
+        if (c2 + 1 < m)
+        {
+            b[r1][c2 + 1] -= k;
+        }
+
+        if (r2 + 1 < n)
+        {
+            b[r2 + 1][c1] -= k;
+        }
+
+        if (r2 + 1 < n && c2 + 1 < m)
+            b[r2 + 1][c2 + 1] += k;
+
+        b[r1][c1] += k;
+
+        u--;
+    }
+
+    for (int i = 1; i < n; i++)
+
+        b[i][0] += b[i - 1][0];
+
+    for (int i = 1; i < m; i++)
+
+        b[0][i] += b[0][i - 1];
+
+    for (int i = 1; i < n; i++)
+    {
+
+        for (int j = 1; j < m; j++)
+            b[i][j] = b[i][j] + b[i - 1][j] + b[i][j - 1] - b[i - 1][j - 1];
+    }
+
+    //Making 2d prefix array for answering queries
+    for (int i = 1; i < m; i++)
+
+        b[0][i] += b[0][i - 1];
+
+    for (int i = 1; i < n; i++)
+
+        b[i][0] += b[i - 1][0];
+
+    for (int i = 1; i < n; i++)
+
+    {
+
+        for (int j = 1; j < m; j++)
+
+            b[i][j] += (b[i - 1][j] + b[i][j - 1] - b[i - 1][j - 1]);
+    }
+
+    while (q > 0)
+    {
+        int r1, c1, r2, c2;
+        cin >> r1 >> c1 >> r2 >> c2;
+        int ans = b[r2][c2];
+
+        if (r1 - 1 >= 0)
+
+            ans -= b[r1 - 1][c2];
+
+        if (c1 - 1 >= 0)
+
+            ans -= b[r2][c1 - 1];
+
+        if (r1 - 1 >= 0 && c1 - 1 >= 0)
+
+            ans += b[r1 - 1][c1 - 1];
+
+        cout << ans << "\n";
+        q--;
+    }
 }
 
 int main()
@@ -69,8 +167,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t;
-    cin >> t;
+    int t = 1;
+    // cin >> t;
     while (t > 0)
     {
         solve();

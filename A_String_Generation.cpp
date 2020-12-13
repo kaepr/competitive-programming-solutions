@@ -51,45 +51,54 @@ void solve()
 {
     int n, k;
     cin >> n >> k;
-    int a[n];
+    string s = "";
+
     for (int i = 0; i < n; i++)
     {
-        cin >> a[i];
     }
-
-    if (n == k)
+    int ptr = 0, ptr2 = 0;
+    int cntr = 0;
+    while (ptr < n)
     {
-        cout << 1 << "\n";
-        return;
-    }
-
-    int minn = INT_MAX;
-    int currAns = 0;
-    int index = 0;
-    for (int i = 0; i < k; i++)
-    {
-        currAns += a[i];
-    }
-
-    minn = min(minn, currAns);
-    // trace(index);
-    // trace(minn);
-    // trace(index);
-    for (int i = 1; i < n - k + 1; i++)
-    {
-        currAns += a[i + k - 1];
-        currAns -= a[i - 1];
-        // cout << "Sum of current segment : " + currAns << "\n";
-        if (currAns < minn)
+        if (cntr == 0)
         {
-            index = i;
-            minn = min(minn, currAns);
+            for (int i = 0; i < k; i++)
+            {
+                if (ptr < n)
+                {
+                    ptr++;
+                    s += 'a';
+                }
+            }
+            cntr = 1;
         }
-        // trace(currAns);
-        // trace(minn);
-        // trace(index);
+        else if (cntr == 1)
+        {
+            for (int i = 0; i < k; i++)
+            {
+                if (ptr < n)
+                {
+                    ptr++;
+                    s += 'b';
+                }
+            }
+            cntr = 2;
+        }
+        else if (cntr == 2)
+        {
+            for (int i = 0; i < k; i++)
+            {
+                if (ptr < n)
+                {
+                    ptr++;
+                    s += 'c';
+                }
+            }
+            cntr = 0;
+        }
     }
-    cout << index + 1 << "\n";
+
+    cout << s << "\n";
 }
 
 int main()
@@ -100,8 +109,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while (t > 0)
     {
         solve();

@@ -47,49 +47,32 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
+string s;
+int n, p, k, x, y;
+
 void solve()
 {
-    int n, k;
-    cin >> n >> k;
-    int a[n];
+    cin >> n >> p >> k;
+    cin >> s;
+    cin >> x >> y;
+
+    // p--;
+    vector<int> a(n);
     for (int i = 0; i < n; i++)
     {
-        cin >> a[i];
+        a[i] = (s[i] == '0');
     }
 
-    if (n == k)
+    for (int i = n - k - 1; i >= 0; i--)
     {
-        cout << 1 << "\n";
-        return;
+        a[i] += a[i + k];
     }
-
-    int minn = INT_MAX;
-    int currAns = 0;
-    int index = 0;
-    for (int i = 0; i < k; i++)
+    int ans = INT_MAX;
+    for (int i = 0; i <= n - p; i++)
     {
-        currAns += a[i];
+        ans = min(ans, i * y + x * a[i + p - 1]);
     }
-
-    minn = min(minn, currAns);
-    // trace(index);
-    // trace(minn);
-    // trace(index);
-    for (int i = 1; i < n - k + 1; i++)
-    {
-        currAns += a[i + k - 1];
-        currAns -= a[i - 1];
-        // cout << "Sum of current segment : " + currAns << "\n";
-        if (currAns < minn)
-        {
-            index = i;
-            minn = min(minn, currAns);
-        }
-        // trace(currAns);
-        // trace(minn);
-        // trace(index);
-    }
-    cout << index + 1 << "\n";
+    cout << ans << "\n";
 }
 
 int main()
@@ -100,8 +83,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while (t > 0)
     {
         solve();

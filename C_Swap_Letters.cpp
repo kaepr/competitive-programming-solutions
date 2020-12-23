@@ -53,7 +53,13 @@ void solve()
     cin >> n;
     string s, t;
     cin >> s >> t;
+    // if (s == t)
+    // {
+    //     cout << 0 << "\n";
+    //     return;
+    // }
     int cnta = 0, cntb = 0;
+    vector<int> posab, posba;
     for (int i = 0; i < n; i++)
     {
         if (s[i] == 'a')
@@ -65,18 +71,66 @@ void solve()
             cnta++;
         else if (t[i] == 'b')
             cntb++;
+
+        if (s[i] == 'a' && t[i] == 'b')
+        {
+            posab.PB(i);
+        }
+
+        if (s[i] == 'b' && t[i] == 'a')
+        {
+            posba.PB(i);
+        }
     }
 
-    vector<pair<int,int>> ans;
+    vector<pair<int, int>> ans;
 
-    if (cnta % 2 == 0 && cntb % 2 == 0)
-    {
-        
-    }
-    else
+    if ((posab.size() + posba.size()) % 2 != 0)
     {
         cout << -1 << "\n";
     }
+    else
+    {
+        if (posab.size() != 0)
+        {
+            for (int i = 0; i < posab.size() - 1; i += 2)
+            {
+                ans.PB(MP(posab[i], posab[i + 1]));
+            }
+        }
+
+        if (posba.size() != 0)
+        {
+            for (int i = 0; i < posba.size() - 1; i += 2)
+            {
+                ans.PB(MP(posba[i], posba[i + 1]));
+            }
+        }
+
+        if (posab.size() % 2 != 0 && posba.size() % 2 != 0)
+        {
+            ans.PB(MP(posab[posab.size() - 1], posab[posab.size() - 1]));
+            ans.PB(MP(posab[posab.size() - 1], posba[posba.size() - 1]));
+        }
+
+        if (posab.size() != 0 && posba.size() != 0)
+        {
+        }
+
+        cout << ans.size() << "\n";
+        for (auto x : ans)
+        {
+            cout << x.first + 1 << " " << x.second + 1 << "\n";
+        }
+    }
+
+    // if (cnta % 2 == 0 && cntb % 2 == 0)
+    // {
+    // }
+    // else
+    // {
+    //     cout << -1 << "\n";
+    // }
 }
 
 int main()

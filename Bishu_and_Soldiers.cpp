@@ -47,62 +47,36 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-ll n, c;
-ll pos[100005];
-
-bool check(int x)
-{
-    //cow placed at pos[0]
-    int cowsPlaced = 1;
-    int lastPos = pos[0];
-    for (int i = 1; i < n; i++)
-    {
-        int dist = pos[i] - lastPos;
-        if (dist >= x)
-        {
-            cowsPlaced++;
-            lastPos = pos[i];
-            if (cowsPlaced >= c)
-            {
-                return true;
-            }
-        }
-    }
-    if (cowsPlaced >= c)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
-
 void solve()
 {
-    cin >> n >> c;
-    ll l = 0, r = 1e9 + 5;
-
+    int n;
+    cin >> n;
+    vi a;
     for (int i = 0; i < n; i++)
     {
-        cin >> pos[i];
+        int x;
+        cin >> x;
+        a.PB(x);
     }
-    sort(pos, pos + n);
-    ll ans = INT_MIN;
-    while (l <= r)
+
+    sort(a.begin(), a.end());
+    vi pre(n);
+    pre[0] = a[0];
+    for (int i = 1; i < n; i++)
     {
-        ll m = l + (r - l) / 2;
-        if (check(m))
-        {
-            l = m + 1;
-            ans = max(ans, m);
-        }
-        else
-        {
-            r = m - 1;
-        }
+        pre[i] = pre[i - 1] + a[i];
     }
-    cout << ans << "\n";
+
+    int q;
+    cin >> q;
+    while (q > 0)
+    {
+        int x;
+        cin >> x;
+        int ind = upper_bound(a.begin(), a.end(), x) - a.begin();
+        cout << ind << " " << pre[ind - 1] << "\n";
+        q--;
+    }
 }
 
 int main()
@@ -113,8 +87,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t;
-    cin >> t;
+    int t = 1;
+    // cin >> t;
     while (t > 0)
     {
         solve();

@@ -47,62 +47,64 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-ll n, c;
-ll pos[100005];
-
-bool check(int x)
-{
-    //cow placed at pos[0]
-    int cowsPlaced = 1;
-    int lastPos = pos[0];
-    for (int i = 1; i < n; i++)
-    {
-        int dist = pos[i] - lastPos;
-        if (dist >= x)
-        {
-            cowsPlaced++;
-            lastPos = pos[i];
-            if (cowsPlaced >= c)
-            {
-                return true;
-            }
-        }
-    }
-    if (cowsPlaced >= c)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
-
 void solve()
 {
-    cin >> n >> c;
-    ll l = 0, r = 1e9 + 5;
+    int n;
+    cin >> n;
+    string s;
+    cin >> s;
+    map<string, int> mp;
+    string s1 = "2020";
+    string s2 = "2";
+    string s3 = "020";
+    string s4 = "20";
 
-    for (int i = 0; i < n; i++)
+    if (s == "2020")
     {
-        cin >> pos[i];
+        cout << "YES\n";
+        return;
     }
-    sort(pos, pos + n);
-    ll ans = INT_MIN;
-    while (l <= r)
+
+    if (s.substr(0, 4) == "2020")
     {
-        ll m = l + (r - l) / 2;
-        if (check(m))
+        cout << "YES\n";
+        return;
+    }
+
+    if (s.substr(n - 4, 4) == "2020")
+    {
+        cout << "YES\n";
+        return;
+    }
+
+    if (s.substr(0,1) == "2")
+    {
+        if (s.substr(n - 3, 3) == "020")
         {
-            l = m + 1;
-            ans = max(ans, m);
-        }
-        else
-        {
-            r = m - 1;
+            cout << "YES\n";
+            return;
         }
     }
-    cout << ans << "\n";
+
+    if (s.substr(0, 2) == "20")
+    {
+        if (s.substr(n - 2, 2) == "20")
+        {
+            cout << "YES\n";
+            return;
+        }
+    }
+
+    if (s.substr(0, 3) == "202")
+    {
+        if (s.substr(n - 1, 1) == "0")
+        {
+            cout << "YES\n";
+            return;
+        }
+    }
+
+    cout << "NO\n";
 }
 
 int main()

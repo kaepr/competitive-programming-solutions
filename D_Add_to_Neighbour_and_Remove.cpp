@@ -47,76 +47,90 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-ll n, m;
-
-void solve()
+int cnt(vector<int> arr, int k)
 {
-    cin >> m >> n;
-    vector<ll> primes;
-    ll nsqrt = sqrt(n);
-    vector<ll> ans;
-    vector<char> is_prime(nsqrt + 1, true);
-    for (int i = 2; i <= nsqrt + 1; i++)
-    {
-        if (is_prime[i])
-        {
-            primes.PB(i);
-            // if (i >= m)
-            // {
-            //     ans.PB(i);
-            // }
-            for (int j = i * i; j <= nsqrt; j += i)
-            {
-                is_prime[j] = false;
-            }
-        }
-    }
-
-    vector<bool> range(n - m + 1);
-    fill(range.begin(), range.end(), false);
-
-    // cout << "PRIME NUMBERS\n";
-    // for (auto x : primes)
+    // for (auto x : arr)
     // {
     //     cout << x << " ";
     // }
     // cout << "\n";
-
-    // cout << "ANS\n";
-
-    for (int i = 0; i < primes.size(); i++)
+    // trace(k);
+    int j = 0;
+    int curr_sum = 0;
+    int ans = 0;
+    for (int i = 0; i < arr.size(); i++)
     {
-        ll lowLim = floor(m / primes[i]) * primes[i];
-        // trace(primes[i]);
-        // trace(lowLim);
-        if (lowLim < m)
+        curr_sum += arr[i];
+        if (curr_sum == k)
         {
-            lowLim += primes[i];
+            ans += (i - j);
+            j = i + 1;
+            curr_sum = 0;
         }
+        else if (curr_sum > k)
+        {
+            return -1;
+        }
+        // trace(ans);
+    }
+    return ans;
+}
 
-        if (lowLim == primes[i])
+void solve()
+{
+    int n;
+    cin >> n;
+    vi a;
+    for (int i = 0; i < n; i++)
+    {
+        int x;
+        cin >> x;
+        a.PB(x);
+    }
+
+    int total_sum = 0;
+
+    for (auto x : a)
+    {
+        total_sum += x;
+    }
+
+    vi divisors;
+    for (int i = 1; i * i <= total_sum; i++)
+    {
+        if (total_sum % i == 0)
         {
-            lowLim += primes[i];
-        }
-        for (ll j = lowLim; j <= n; j += primes[i])
-        {
-            // trace(j - m);
-            range[j - m] = true;
+            if (total_sum / i == i)
+            {
+                divisors.PB(i);
+            }
+            else
+            {
+                divisors.PB(i);
+                divisors.PB(total_sum / i);
+            }
         }
     }
-    for (ll i = m; i <= n; i++)
+
+    int ans = n - 1;
+
+    // for (auto x : divisors)
+    // {
+    //     cout << x << " ";
+    // }
+
+    for (auto x : divisors)
     {
-        if (!range[i - m])
+        int curr = cnt(a, x);
+        if (curr != -1)
         {
-            if (i != 1)
-                ans.PB(i);
+            ans = min(ans, curr);
         }
     }
-    for (auto x : ans)
-    {
-        cout << x << "\n";
-    }
-    cout << "\n";
+    cout << ans << "\n";
+
+    // cout << "\n";s
+    // cout << "NEWCASE\n";
 }
 
 int main()

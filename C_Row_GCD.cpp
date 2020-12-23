@@ -46,75 +46,66 @@ int powmod(int x, int y, int mod)
     }
     return res;
 }
-
-ll n, c;
-ll pos[100005];
-
-bool check(int x)
+ll gcd(ll a, ll b)
 {
-    //cow placed at pos[0]
-    int cowsPlaced = 1;
-    int lastPos = pos[0];
-    for (int i = 1; i < n; i++)
-    {
-        int dist = pos[i] - lastPos;
-        if (dist >= x)
-        {
-            cowsPlaced++;
-            lastPos = pos[i];
-            if (cowsPlaced >= c)
-            {
-                return true;
-            }
-        }
-    }
-    if (cowsPlaced >= c)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+    if (a == 0)
+        return b;
+    return gcd(b % a, a);
 }
 
+ll findGCD(ll arr[], ll n)
+{
+    ll result = arr[0];
+    for (ll i = 1; i < n; i++)
+    {
+        result = gcd(arr[i], result);
+
+        if (result == 1)
+        {
+            return 1;
+        }
+    }
+    return result;
+}
 void solve()
 {
-    cin >> n >> c;
-    ll l = 0, r = 1e9 + 5;
+    ll n, m;
+    cin >> n >> m;
+    ll a[n], b[m];
+    for (ll i = 0; i < n; i++)
+        cin >> a[i];
 
-    for (int i = 0; i < n; i++)
+    for (ll i = 0; i < m; i++)
+        cin >> b[i];
+
+    sort(a, a + n);
+    sort(b, b + m);
+
+    ll currGCD = findGCD(a, n);
+    for (ll i = 0; i < m; i++)
     {
-        cin >> pos[i];
-    }
-    sort(pos, pos + n);
-    ll ans = INT_MIN;
-    while (l <= r)
-    {
-        ll m = l + (r - l) / 2;
-        if (check(m))
+        ll num = b[i];
+        if (num % currGCD == 0)
         {
-            l = m + 1;
-            ans = max(ans, m);
+            cout << num + currGCD << " ";
         }
         else
         {
-            r = m - 1;
+            cout << currGCD << " ";
         }
     }
-    cout << ans << "\n";
 }
 
 int main()
 {
-    // freopen("filename.in","r",stdin);
-    // freopen("filename.out","w",stdout);
+    // freopen("filename_input.txt","r",stdin);
+    // freopen("filename_output.txt","w",stdout);
     ios_base::sync_with_stdio(0);
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t;
-    cin >> t;
+    int t = 1;
+    // cin >> t;
     while (t > 0)
     {
         solve();

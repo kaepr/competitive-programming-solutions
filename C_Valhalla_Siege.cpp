@@ -47,62 +47,51 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-ll n, c;
-ll pos[100005];
-
-bool check(int x)
-{
-    //cow placed at pos[0]
-    int cowsPlaced = 1;
-    int lastPos = pos[0];
-    for (int i = 1; i < n; i++)
-    {
-        int dist = pos[i] - lastPos;
-        if (dist >= x)
-        {
-            cowsPlaced++;
-            lastPos = pos[i];
-            if (cowsPlaced >= c)
-            {
-                return true;
-            }
-        }
-    }
-    if (cowsPlaced >= c)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
-
 void solve()
 {
-    cin >> n >> c;
-    ll l = 0, r = 1e9 + 5;
+    ll n, q;
+    cin >> n >> q;
+    ll a[n];
+    for (ll i = 0; i < n; i++)
+        cin >> a[i];
 
-    for (int i = 0; i < n; i++)
+    // ll pre[n];
+    vector<ll> pre(n);
+    pre[0] = a[0];
+    for (ll i = 1; i < n; i++)
+        pre[i] = a[i] + pre[i - 1];
+
+    ll k[q];
+    for (ll i = 0; i < q; i++)
+        cin >> k[i];
+
+    ll partialDamage = 0;
+    ll totalDamage = 0;
+
+    // for (auto x : pre)
+    // {
+    //     cout << x << " ";
+    // }
+    // cout << "\n";
+
+    for (ll i = 0; i < q; i++)
     {
-        cin >> pos[i];
-    }
-    sort(pos, pos + n);
-    ll ans = INT_MIN;
-    while (l <= r)
-    {
-        ll m = l + (r - l) / 2;
-        if (check(m))
+        ll currDamage = k[i];
+        totalDamage = currDamage + partialDamage;
+        // trace(totalDamage);
+        if (totalDamage >= pre[n - 1])
         {
-            l = m + 1;
-            ans = max(ans, m);
+            //all dead now
+            partialDamage = 0;
+            cout << n << "\n";
         }
         else
         {
-            r = m - 1;
+            partialDamage = totalDamage;
+            int index = upper_bound(pre.begin(), pre.end(), totalDamage) - pre.begin();
+            cout << n - index << "\n";
         }
     }
-    cout << ans << "\n";
 }
 
 int main()
@@ -113,8 +102,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t;
-    cin >> t;
+    int t = 1;
+    // cin >> t;
     while (t > 0)
     {
         solve();

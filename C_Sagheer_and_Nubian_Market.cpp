@@ -47,74 +47,59 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-ll n, c;
-ll pos[100005];
+ll a[100009];
+ll b[100009];
+ll n, S;
 
-bool check(int x)
+ll ans(ll k)
 {
-    //cow placed at pos[0]
-    int cowsPlaced = 1;
-    int lastPos = pos[0];
-    for (int i = 1; i < n; i++)
+    for (ll i = 0; i < n; i++)
     {
-        int dist = pos[i] - lastPos;
-        if (dist >= x)
-        {
-            cowsPlaced++;
-            lastPos = pos[i];
-            if (cowsPlaced >= c)
-            {
-                return true;
-            }
-        }
+        b[i] = a[i] + (i + 1) * k;
     }
-    if (cowsPlaced >= c)
+    sort(b, b + n);
+    ll ans = 0;
+    for (ll i = 0; i < k; i++)
     {
-        return true;
+        ans += b[i];
     }
-    else
-    {
-        return false;
-    }
+    return ans;
 }
 
 void solve()
 {
-    cin >> n >> c;
-    ll l = 0, r = 1e9 + 5;
-
-    for (int i = 0; i < n; i++)
+    cin >> n >> S;
+    for (ll i = 0; i < n; i++)
     {
-        cin >> pos[i];
+        cin >> a[i];
     }
-    sort(pos, pos + n);
-    ll ans = INT_MIN;
-    while (l <= r)
+
+    ll l = 0, r = n + 1;
+    while (l < r - 1)
     {
         ll m = l + (r - l) / 2;
-        if (check(m))
+        if (ans(m) <= S)
         {
-            l = m + 1;
-            ans = max(ans, m);
+            l = m;
         }
         else
         {
-            r = m - 1;
+            r = m;
         }
     }
-    cout << ans << "\n";
+    cout << l << " " << ans(l) << "\n";
 }
 
 int main()
 {
-    // freopen("filename.in","r",stdin);
-    // freopen("filename.out","w",stdout);
+    // freopen("filename_input.txt","r",stdin);
+    // freopen("filename_output.txt","w",stdout);
     ios_base::sync_with_stdio(0);
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t;
-    cin >> t;
+    int t = 1;
+    // cin >> t;
     while (t > 0)
     {
         solve();

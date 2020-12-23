@@ -47,74 +47,46 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-ll n, c;
-ll pos[100005];
-
-bool check(int x)
-{
-    //cow placed at pos[0]
-    int cowsPlaced = 1;
-    int lastPos = pos[0];
-    for (int i = 1; i < n; i++)
-    {
-        int dist = pos[i] - lastPos;
-        if (dist >= x)
-        {
-            cowsPlaced++;
-            lastPos = pos[i];
-            if (cowsPlaced >= c)
-            {
-                return true;
-            }
-        }
-    }
-    if (cowsPlaced >= c)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
-
 void solve()
 {
-    cin >> n >> c;
-    ll l = 0, r = 1e9 + 5;
+    ll a, b;
+    scanf("%lld%lld", &a, &b);
+    cin >> a >> b;
+    int turn = 0;
+    ll ans = 0;
+    for (ll i = b + 1; i <= a; i++)
+    {
 
-    for (int i = 0; i < n; i++)
-    {
-        cin >> pos[i];
-    }
-    sort(pos, pos + n);
-    ll ans = INT_MIN;
-    while (l <= r)
-    {
-        ll m = l + (r - l) / 2;
-        if (check(m))
+        ll num = i;
+        // trace(num);
+        ll x = 2;
+        while (num > 1)
         {
-            l = m + 1;
-            ans = max(ans, m);
+            if (num % x == 0)
+            {
+                num /= x;
+                ans++;
+            }
+            else
+            {
+                x++;
+            }
         }
-        else
-        {
-            r = m - 1;
-        }
+        turn = 0;
     }
-    cout << ans << "\n";
+    printf("%lld\n", ans);
 }
 
 int main()
 {
-    // freopen("filename.in","r",stdin);
-    // freopen("filename.out","w",stdout);
+    // freopen("filename_input.txt","r",stdin);
+    // freopen("filename_output.txt","w",stdout);
     ios_base::sync_with_stdio(0);
     cin.tie(NULL);
     cout.tie(NULL);
 
     int t;
-    cin >> t;
+    scanf("%d", &t);
     while (t > 0)
     {
         solve();

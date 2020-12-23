@@ -47,59 +47,36 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-ll n, c;
-ll pos[100005];
-
-bool check(int x)
-{
-    //cow placed at pos[0]
-    int cowsPlaced = 1;
-    int lastPos = pos[0];
-    for (int i = 1; i < n; i++)
-    {
-        int dist = pos[i] - lastPos;
-        if (dist >= x)
-        {
-            cowsPlaced++;
-            lastPos = pos[i];
-            if (cowsPlaced >= c)
-            {
-                return true;
-            }
-        }
-    }
-    if (cowsPlaced >= c)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
+int pre[100005];
 
 void solve()
 {
-    cin >> n >> c;
-    ll l = 0, r = 1e9 + 5;
-
-    for (int i = 0; i < n; i++)
+    string s;
+    cin >> s;
+    int n = s.length();
+    s = " " + s;
+    for (int i = 1; i <= n; i++)
     {
-        cin >> pos[i];
-    }
-    sort(pos, pos + n);
-    ll ans = INT_MIN;
-    while (l <= r)
-    {
-        ll m = l + (r - l) / 2;
-        if (check(m))
+        if (s[i] == '0')
         {
-            l = m + 1;
-            ans = max(ans, m);
+            pre[i] = pre[i - 1];
         }
-        else
+        else if (s[i] == '1')
         {
-            r = m - 1;
+            pre[i] = pre[i - 1] + 1;
+        }
+    }
+
+    int ans = 0;
+    for (int i = 1; i * i + i <= n; i++)
+    {
+        int len = i * i + i;
+        for (int j = 1; j <= n - len + 1; j++)
+        {
+            ll c1 = pre[j + len - 1] - pre[j - 1];
+            ll c0 = len - c1;
+            if (c0 == c1 * c1)
+                ans++;
         }
     }
     cout << ans << "\n";

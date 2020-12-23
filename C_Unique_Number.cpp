@@ -47,62 +47,54 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-ll n, c;
-ll pos[100005];
-
-bool check(int x)
-{
-    //cow placed at pos[0]
-    int cowsPlaced = 1;
-    int lastPos = pos[0];
-    for (int i = 1; i < n; i++)
-    {
-        int dist = pos[i] - lastPos;
-        if (dist >= x)
-        {
-            cowsPlaced++;
-            lastPos = pos[i];
-            if (cowsPlaced >= c)
-            {
-                return true;
-            }
-        }
-    }
-    if (cowsPlaced >= c)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
+// int numDigits()
 
 void solve()
 {
-    cin >> n >> c;
-    ll l = 0, r = 1e9 + 5;
+    int x;
+    cin >> x;
+    if (x > 45)
+    {
+        cout << -1 << "\n";
+        return;
+    }
 
-    for (int i = 0; i < n; i++)
+    if (x < 10)
     {
-        cin >> pos[i];
+        cout << x << "\n";
+        return;
     }
-    sort(pos, pos + n);
-    ll ans = INT_MIN;
-    while (l <= r)
+
+    vi d;
+    // d.PB(9);
+    // d.PB(8);
+
+    for (int i = 9; i >= 1; i--)
     {
-        ll m = l + (r - l) / 2;
-        if (check(m))
-        {
-            l = m + 1;
-            ans = max(ans, m);
-        }
-        else
-        {
-            r = m - 1;
-        }
+        d.PB(i);
     }
-    cout << ans << "\n";
+
+    vi v;
+    int index = 0;
+    // x -= 9;
+    // v.PB(9);
+    // index++;
+
+    while (x > d[index])
+    {
+        x -= d[index];
+        v.PB(d[index]);
+        index++;
+    }
+    v.PB(x);
+
+    sort(v.begin(), v.end());
+    for (auto i : v)
+    {
+        cout << i << "";
+    }
+    cout << "\n";
+
 }
 
 int main()

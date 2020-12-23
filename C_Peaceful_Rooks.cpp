@@ -47,76 +47,70 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-ll n, m;
-
 void solve()
 {
-    cin >> m >> n;
-    vector<ll> primes;
-    ll nsqrt = sqrt(n);
-    vector<ll> ans;
-    vector<char> is_prime(nsqrt + 1, true);
-    for (int i = 2; i <= nsqrt + 1; i++)
+    int n, m;
+    cin >> n >> m;
+    int arr[n][n];
+    int isSafe[n][n];
+    memset(arr, 0, sizeof(arr));
+    memset(isSafe, 0, sizeof(isSafe));
+    vector<pair<int, int>> v;
+    while (m > 0)
     {
-        if (is_prime[i])
+        int x, y;
+        cin >> x >> y;
+        x--;
+        y--;
+        for (int i = 0; i < n; i++)
         {
-            primes.PB(i);
-            // if (i >= m)
-            // {
-            //     ans.PB(i);
-            // }
-            for (int j = i * i; j <= nsqrt; j += i)
+            isSafe[x][i]++;
+            isSafe[i][y]++;
+        }
+        isSafe[x][y]--;
+        v.PB(MP(x, y));
+        arr[x][y] = 1;
+        m--;
+    }
+
+    int total_moves = 0;
+
+    cout << "BOARD\n";
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            cout << arr[i][j] << " ";
+        }
+        cout << "\n";
+    }
+
+    cout << "SAFE BOARD\n";
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            cout << isSafe[i][j] << " ";
+        }
+        cout << "\n";
+    }
+
+    for (int i = 0; i < v.size(); i++)
+    {
+        int currX = v[i].F;
+        int currY = v[i].S;
+        if (currX != currY)
+        {
+            if (isSafe[currX][currX] == 1)
             {
-                is_prime[j] = false;
+                total_moves++;
+                for (int i = 0; i < n; i++)
+                {
+                    isSafe[i][currY]--;
+                }
             }
         }
     }
-
-    vector<bool> range(n - m + 1);
-    fill(range.begin(), range.end(), false);
-
-    // cout << "PRIME NUMBERS\n";
-    // for (auto x : primes)
-    // {
-    //     cout << x << " ";
-    // }
-    // cout << "\n";
-
-    // cout << "ANS\n";
-
-    for (int i = 0; i < primes.size(); i++)
-    {
-        ll lowLim = floor(m / primes[i]) * primes[i];
-        // trace(primes[i]);
-        // trace(lowLim);
-        if (lowLim < m)
-        {
-            lowLim += primes[i];
-        }
-
-        if (lowLim == primes[i])
-        {
-            lowLim += primes[i];
-        }
-        for (ll j = lowLim; j <= n; j += primes[i])
-        {
-            // trace(j - m);
-            range[j - m] = true;
-        }
-    }
-    for (ll i = m; i <= n; i++)
-    {
-        if (!range[i - m])
-        {
-            if (i != 1)
-                ans.PB(i);
-        }
-    }
-    for (auto x : ans)
-    {
-        cout << x << "\n";
-    }
-    cout << "\n";
 }
 
 int main()

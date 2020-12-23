@@ -47,62 +47,42 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-ll n, c;
-ll pos[100005];
-
-bool check(int x)
-{
-    //cow placed at pos[0]
-    int cowsPlaced = 1;
-    int lastPos = pos[0];
-    for (int i = 1; i < n; i++)
-    {
-        int dist = pos[i] - lastPos;
-        if (dist >= x)
-        {
-            cowsPlaced++;
-            lastPos = pos[i];
-            if (cowsPlaced >= c)
-            {
-                return true;
-            }
-        }
-    }
-    if (cowsPlaced >= c)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
-
 void solve()
 {
-    cin >> n >> c;
-    ll l = 0, r = 1e9 + 5;
-
+    ll n;
+    cin >> n;
+    vi a;
     for (int i = 0; i < n; i++)
     {
-        cin >> pos[i];
+        int x;
+        cin >> x;
+        a.PB(x);
     }
-    sort(pos, pos + n);
-    ll ans = INT_MIN;
-    while (l <= r)
+
+    vi b;
+    int ptr1 = 0, ptr2 = n - 1;
+    bool flag = true;
+    while (ptr1 <= ptr2)
     {
-        ll m = l + (r - l) / 2;
-        if (check(m))
+
+        if (flag)
         {
-            l = m + 1;
-            ans = max(ans, m);
+            b.PB(a[ptr1]);
+            ptr1++;
+            flag = false;
         }
         else
         {
-            r = m - 1;
+            b.PB(a[ptr2]);
+            ptr2--;
+            flag = true;
         }
     }
-    cout << ans << "\n";
+    for (auto x : b)
+    {
+        cout << x << " ";
+    }
+    cout << "\n";
 }
 
 int main()

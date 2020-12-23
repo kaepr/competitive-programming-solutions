@@ -47,62 +47,38 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-ll n, c;
-ll pos[100005];
-
-bool check(int x)
-{
-    //cow placed at pos[0]
-    int cowsPlaced = 1;
-    int lastPos = pos[0];
-    for (int i = 1; i < n; i++)
-    {
-        int dist = pos[i] - lastPos;
-        if (dist >= x)
-        {
-            cowsPlaced++;
-            lastPos = pos[i];
-            if (cowsPlaced >= c)
-            {
-                return true;
-            }
-        }
-    }
-    if (cowsPlaced >= c)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
-
 void solve()
 {
-    cin >> n >> c;
-    ll l = 0, r = 1e9 + 5;
+    ll n, b, a;
+    cin >> n >> b >> a;
+    ll arr[n];
+    for (ll i = 0; i < n; i++)
+        cin >> arr[i];
 
-    for (int i = 0; i < n; i++)
+    // for (ll i = 0; i < n; i++)
+    //     cout << arr[i] << " ";
+
+    // cout << "\n";
+
+    double avg = 0, tmp = 0;
+
+    for (ll i = a; i <= b; i++)
     {
-        cin >> pos[i];
-    }
-    sort(pos, pos + n);
-    ll ans = INT_MIN;
-    while (l <= r)
-    {
-        ll m = l + (r - l) / 2;
-        if (check(m))
+        tmp = 0.0;
+
+        for (ll j = 0; j < i; j++)
+            tmp += arr[j];
+
+        for (ll j = i; j < n; j++)
         {
-            l = m + 1;
-            ans = max(ans, m);
+            tmp += arr[j];
+            tmp -= arr[j - i];
         }
-        else
-        {
-            r = m - 1;
-        }
+
+        avg = max(avg, tmp / i);
     }
-    cout << ans << "\n";
+
+    cout << fixed << setprecision(10) << avg << "\n";
 }
 
 int main()

@@ -47,76 +47,68 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-ll n, m;
-
 void solve()
 {
-    cin >> m >> n;
-    vector<ll> primes;
-    ll nsqrt = sqrt(n);
-    vector<ll> ans;
-    vector<char> is_prime(nsqrt + 1, true);
-    for (int i = 2; i <= nsqrt + 1; i++)
+    int n;
+    cin >> n;
+    vi a, b;
+    for (int i = 0; i < n; i++)
     {
-        if (is_prime[i])
+        int x;
+        cin >> x;
+        a.PB(x);
+        b.PB(x);
+    }
+    sort(b.begin(), b.end());
+    vector<pair<int, int>> ans;
+    for (int i = 0; i < n; i++)
+    {
+        if (a[i] == b[i])
         {
-            primes.PB(i);
-            // if (i >= m)
-            // {
-            //     ans.PB(i);
-            // }
-            for (int j = i * i; j <= nsqrt; j += i)
+            //nothing
+        }
+        else
+        {
+            int index;
+            for (int j = 0; j < n; j++)
             {
-                is_prime[j] = false;
+                if (a[j] == b[i])
+                {
+                    index = j;
+                    break;
+                }
             }
+            swap(a[i], a[index]);
+            ans.PB(MP(i, index));
         }
     }
 
-    vector<bool> range(n - m + 1);
-    fill(range.begin(), range.end(), false);
-
-    // cout << "PRIME NUMBERS\n";
-    // for (auto x : primes)
-    // {
-    //     cout << x << " ";
-    // }
-    // cout << "\n";
-
-    // cout << "ANS\n";
-
-    for (int i = 0; i < primes.size(); i++)
+    for (int i = 0; i < n; i++)
     {
-        ll lowLim = floor(m / primes[i]) * primes[i];
-        // trace(primes[i]);
-        // trace(lowLim);
-        if (lowLim < m)
+        if (a[i] == b[i])
         {
-            lowLim += primes[i];
+            //nothing
         }
-
-        if (lowLim == primes[i])
+        else
         {
-            lowLim += primes[i];
-        }
-        for (ll j = lowLim; j <= n; j += primes[i])
-        {
-            // trace(j - m);
-            range[j - m] = true;
-        }
-    }
-    for (ll i = m; i <= n; i++)
-    {
-        if (!range[i - m])
-        {
-            if (i != 1)
-                ans.PB(i);
+            int index;
+            for (int j = 0; j < n; j++)
+            {
+                if (a[j] == b[i])
+                {
+                    index = j;
+                    break;
+                }
+            }
+            swap(a[i], a[index]);
+            ans.PB(MP(i, index));
         }
     }
+    cout << ans.size() << "\n";
     for (auto x : ans)
     {
-        cout << x << "\n";
+        cout << x.first << " " << x.second << "\n";
     }
-    cout << "\n";
 }
 
 int main()
@@ -127,8 +119,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t;
-    cin >> t;
+    int t = 1;
+    // cin >> t;
     while (t > 0)
     {
         solve();

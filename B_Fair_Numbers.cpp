@@ -47,76 +47,71 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-ll n, m;
+bool fairChecker(ull n)
+{
+    ull num = n;
+    while (n > 0)
+    {
+        ull dig = n % 10;
+        if (dig != 0)
+        {
+            if (num % dig != 0)
+            {
+                return false;
+            }
+        }
+
+        n /= 10;
+    }
+    return true;
+}
+
+ull gcd(ull a, ull b)
+{
+    if (b == 0)
+        return a;
+    return gcd(b, a % b);
+}
+
+// Returns LCM of array elements
+ull findlcm(vector<ull> arr)
+{
+    // Initialize result
+    ull ans = arr[0];
+
+    // ans contains LCM of arr[0], ..arr[i]
+    // after i'th iteration,
+    for (ull i = 1; i < arr.size(); i++)
+        ans = (((arr[i] * ans)) /
+               (gcd(arr[i], ans)));
+
+    return ans;
+}
 
 void solve()
 {
-    cin >> m >> n;
-    vector<ll> primes;
-    ll nsqrt = sqrt(n);
-    vector<ll> ans;
-    vector<char> is_prime(nsqrt + 1, true);
-    for (int i = 2; i <= nsqrt + 1; i++)
+    ull n;
+    // ull orig;
+    cin >> n;
+    // orig = n;
+    // trace(n);
+    while (true)
     {
-        if (is_prime[i])
+        if (fairChecker(n))
         {
-            primes.PB(i);
-            // if (i >= m)
-            // {
-            //     ans.PB(i);
-            // }
-            for (int j = i * i; j <= nsqrt; j += i)
-            {
-                is_prime[j] = false;
-            }
+            cout << n << "\n";
+            return;
         }
+        n++;
     }
-
-    vector<bool> range(n - m + 1);
-    fill(range.begin(), range.end(), false);
-
-    // cout << "PRIME NUMBERS\n";
-    // for (auto x : primes)
+    // for (ull i = n; i <= 10000; i++)
     // {
-    //     cout << x << " ";
+    //     if (fairChecker(i))
+    //     {
+    //         cout << i << "\n";
+    //         break;
+    //     }
     // }
-    // cout << "\n";
-
-    // cout << "ANS\n";
-
-    for (int i = 0; i < primes.size(); i++)
-    {
-        ll lowLim = floor(m / primes[i]) * primes[i];
-        // trace(primes[i]);
-        // trace(lowLim);
-        if (lowLim < m)
-        {
-            lowLim += primes[i];
-        }
-
-        if (lowLim == primes[i])
-        {
-            lowLim += primes[i];
-        }
-        for (ll j = lowLim; j <= n; j += primes[i])
-        {
-            // trace(j - m);
-            range[j - m] = true;
-        }
-    }
-    for (ll i = m; i <= n; i++)
-    {
-        if (!range[i - m])
-        {
-            if (i != 1)
-                ans.PB(i);
-        }
-    }
-    for (auto x : ans)
-    {
-        cout << x << "\n";
-    }
-    cout << "\n";
 }
 
 int main()

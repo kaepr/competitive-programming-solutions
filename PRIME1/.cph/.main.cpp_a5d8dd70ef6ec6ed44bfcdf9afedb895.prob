@@ -1,0 +1,1 @@
+{"name":"Local: main","url":"/home/shagun/competitive-programming-solutions/PRIME1/main.cpp","tests":[{"id":1608389392466,"input":"2\n1 10\n3 5","output":"2\n3\n5\n7\n\n3\n5"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/shagun/competitive-programming-solutions/PRIME1/main.cpp","group":"local","local":true}

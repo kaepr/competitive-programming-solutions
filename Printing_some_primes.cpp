@@ -47,74 +47,73 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-ll n, m;
-
 void solve()
 {
-    cin >> m >> n;
-    vector<ll> primes;
-    ll nsqrt = sqrt(n);
-    vector<ll> ans;
-    vector<char> is_prime(nsqrt + 1, true);
-    for (int i = 2; i <= nsqrt + 1; i++)
+    ll maxx = 100000005;
+    ll limit = sqrt(maxx) + 1;
+    ll low = limit, high = 2 * limit;
+    vector<ll> prime;
+    vector<ll> prime2;
+    bool mark[limit + 1];
+    memset(mark, true, sizeof(mark));
+    for (ll p = 2; p * p < limit; p++)
     {
-        if (is_prime[i])
+        if (mark[p] == true)
         {
-            primes.PB(i);
-            // if (i >= m)
-            // {
-            //     ans.PB(i);
-            // }
-            for (int j = i * i; j <= nsqrt; j += i)
+            for (ll i = p * p; i < limit; i += p)
             {
-                is_prime[j] = false;
+                mark[i] = false;
             }
         }
     }
+    for (int p = 2; p < limit; p++)
+    {
+        if (mark[p] == true)
+        {
+            prime.PB(p);
+            prime2.PB(p);
+        }
+    }
 
-    vector<bool> range(n - m + 1);
-    fill(range.begin(), range.end(), false);
+    while (low < maxx)
+    {
+        if (high >= maxx)
+        {
+            high = maxx;
+        }
+        memset(mark, true, sizeof(mark));
+        for (ll i = 0; i < prime.size(); i++)
+        {
+            ll loLim = floor(low / prime[i]) * prime[i];
+            if (loLim < low)
+            {
+                loLim += prime[i];
+            }
 
-    // cout << "PRIME NUMBERS\n";
-    // for (auto x : primes)
+            for (ll j = loLim; j < high; j += prime[i])
+            {
+                mark[j - low] = false;
+            }
+        }
+
+        for (ll i = low; i < high; i++)
+        {
+            if (mark[i - low])
+            {
+                prime2.PB(i);
+            }
+        }
+
+        low += limit;
+        high += limit;
+    }
+    // for (auto x : prime2)
     // {
     //     cout << x << " ";
     // }
-    // cout << "\n";
-
-    // cout << "ANS\n";
-
-    for (int i = 0; i < primes.size(); i++)
+    for (int i = 0; i < prime2.size(); i += 100)
     {
-        ll lowLim = floor(m / primes[i]) * primes[i];
-        // trace(primes[i]);
-        // trace(lowLim);
-        if (lowLim < m)
-        {
-            lowLim += primes[i];
-        }
-
-        if (lowLim == primes[i])
-        {
-            lowLim += primes[i];
-        }
-        for (ll j = lowLim; j <= n; j += primes[i])
-        {
-            // trace(j - m);
-            range[j - m] = true;
-        }
-    }
-    for (ll i = m; i <= n; i++)
-    {
-        if (!range[i - m])
-        {
-            if (i != 1)
-                ans.PB(i);
-        }
-    }
-    for (auto x : ans)
-    {
-        cout << x << "\n";
+        cout << prime2[i] << "\n";
     }
     cout << "\n";
 }
@@ -127,8 +126,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t;
-    cin >> t;
+    int t = 1;
+    // cin >> t;
     while (t > 0)
     {
         solve();

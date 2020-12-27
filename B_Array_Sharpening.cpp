@@ -49,49 +49,45 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    ll n, k;
-    cin >> n >> k;
-    //k is the number of nuggets at the end
-    ll total = 0;
-    ll prev = 1;
-    ll action_counter = 1;
-    ll ate = 0;
-    // while (action_counter <= n)
-    // {
-    //     if (action_counter == 1)
-    //     {
-    //         total += 1;
-    //         prev++;
-    //     }
-    // }
-    // ll curr = n, cnt = k;
-    //  while (true)
-    // {
-    //     ll sum = (curr) * (curr + 1) / 2;
-    //     ll sum1 = (curr)
-    // }
-
-    ll l = 0, r = 1e9 + 10;
-    while (l < r)
+    int n;
+    cin >> n;
+    int a[n];
+    for (int i = 0; i < n; i++)
     {
-        ll m = l + (r - l) / 2;
-        ll totalSum = (m) * (m + 1) / 2 - (n - m);
-        if (totalSum == k)
+        cin >> a[i];
+    }
+    int pre = -1, suf = -1;
+    for (int i = 0; i < n; i++)
+    {
+        if (a[i] >= i)
         {
-            cout << n - m << "\n";
-            return;
-        }
-        else if (totalSum > k)
-        {
-            r = m;
+            pre = i;
         }
         else
         {
-            l = m;
+            break;
         }
     }
 
-    // cout << ate << "\n";
+    for (int i = n - 1; i >= 0; i--)
+    {
+        if (a[i] >= (n - 1 - i))
+        {
+            suf = i;
+        }
+        else
+        {
+            break;
+        }
+    }
+    if (suf <= pre)
+    {
+        cout << "Yes\n";
+    }
+    else
+    {
+        cout << "No\n";
+    }
 }
 
 int main()
@@ -102,8 +98,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while (t > 0)
     {
         solve();

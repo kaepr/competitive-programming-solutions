@@ -47,88 +47,65 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-bool check(string s)
-{
-    int n = s.length();
-    for (int i = 0; i < s.length() / 2; i++)
-    {
-        if (s[i] != s[n - i - 1])
-        {
-            return false;
-        }
-    }
-    return true;
-}
-
 void solve()
 {
     int n;
     cin >> n;
-    string s;
-    cin >> s;
-    int l = 0, r = n - 1;
-    int left = -1, right = -1;
-    int ans = 0;
-    while (l < r)
+    string s, t;
+    cin >> s >> t;
+    int sone = 0, tone = 0, szero = 0, tzero = 0;
+    for (int i = 0; i < n; i++)
     {
-        if (s[l] == s[r])
+        if (s[i] == '0')
         {
-            l++;
-            r--;
-            continue;
+            szero++;
         }
 
-        if (l + 1 == r)
+        if (s[i] == '1')
         {
-            cout << "NO\n";
-            return;
+            sone++;
         }
 
-        else
+        if (t[i] == '1')
         {
-            bool changed = false;
+            tone++;
+        }
 
-            if (!changed)
-            {
-                if (s[l] == s[r - 1])
-                {
-                    if (right != r)
-                    {
-                        right = r - 1;
-                        changed = true;
-                        swap(s[r], s[r - 1]);
-                    }
-                }
-            }
-
-            if (!changed)
-            {
-                if (s[l + 1] == s[r])
-                {
-                    if (left != l)
-                    {
-                        left = l + 1;
-                        changed = true;
-                        swap(s[l], s[l + 1]);
-                    }
-                }
-            }
-
-            if (changed)
-            {
-                l++;
-                r--;
-                ans++;
-            }
-            else
-            {
-                cout << "NO\n";
-                return;
-            }
+        if (t[i] == '0')
+        {
+            tzero++;
         }
     }
-    cout << "YES\n";
-    cout << ans << "\n";
+    if (sone == tone && szero == tzero)
+    {
+        int zeroCount = 0;
+        for (int i = n - 1; i >= 0; i--)
+        {
+            if (s[i] == '1' && t[i] == '0' && zeroCount == 0)
+            {
+                cout << "No\n";
+                return;
+            }
+
+            if (s[i] == '1' && t[i] == '0' && zeroCount > 0)
+            {
+                if (zeroCount > 0)
+                {
+                    zeroCount--;
+                }
+            }
+
+            if (s[i] == '0' && t[i] == '1')
+            {
+                zeroCount++;
+            }
+        }
+        cout << "Yes\n";
+    }
+    else
+    {
+        cout << "No\n";
+    }
 }
 
 int main()

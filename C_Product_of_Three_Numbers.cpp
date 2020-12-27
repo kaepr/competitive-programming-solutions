@@ -47,88 +47,82 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-bool check(string s)
-{
-    int n = s.length();
-    for (int i = 0; i < s.length() / 2; i++)
-    {
-        if (s[i] != s[n - i - 1])
-        {
-            return false;
-        }
-    }
-    return true;
-}
-
 void solve()
 {
     int n;
     cin >> n;
-    string s;
-    cin >> s;
-    int l = 0, r = n - 1;
-    int left = -1, right = -1;
-    int ans = 0;
-    while (l < r)
+    // int a, b, c;
+    vi divisors;
+    for (int i = 1; i <= sqrt(n); i++)
     {
-        if (s[l] == s[r])
+        if (n % i == 0)
         {
-            l++;
-            r--;
-            continue;
-        }
-
-        if (l + 1 == r)
-        {
-            cout << "NO\n";
-            return;
-        }
-
-        else
-        {
-            bool changed = false;
-
-            if (!changed)
+            // If divisors are equal, print only one
+            if (n / i == i)
             {
-                if (s[l] == s[r - 1])
-                {
-                    if (right != r)
-                    {
-                        right = r - 1;
-                        changed = true;
-                        swap(s[r], s[r - 1]);
-                    }
-                }
+                divisors.PB(i);
             }
 
-            if (!changed)
-            {
-                if (s[l + 1] == s[r])
-                {
-                    if (left != l)
-                    {
-                        left = l + 1;
-                        changed = true;
-                        swap(s[l], s[l + 1]);
-                    }
-                }
-            }
-
-            if (changed)
-            {
-                l++;
-                r--;
-                ans++;
-            }
             else
             {
-                cout << "NO\n";
-                return;
-            }
+                divisors.PB(i);
+                divisors.PB(n / i);
+            } // Otherwise print both
+            // printf("%d %d ", i, n / i);
         }
     }
-    cout << "YES\n";
-    cout << ans << "\n";
+
+    sort(divisors.begin(), divisors.end());
+    int a = divisors[1];
+    // trace(a);
+    n /= a;
+    vi div2;
+    for (int i = 1; i <= sqrt(n); i++)
+    {
+        if (n % i == 0)
+        {
+            // If div2 are equal, print only one
+            if (n / i == i)
+            {
+                div2.PB(i);
+            }
+
+            else
+            {
+                div2.PB(i);
+                div2.PB(n / i);
+            } // Otherwise print both
+            // printf("%d %d ", i, n / i);
+        }
+    }
+
+    int b;
+    sort(div2.begin(), div2.end());
+    // cout << "Divisors of n " << n << "\n";
+    // for (auto x : div2)
+    // {
+    //     cout << x << " ";
+    // }
+    // cout << "\n";
+    for (auto x : div2)
+    {
+        if (x != 1 && x != a)
+        {
+            b = x;
+            break;
+        }
+    }
+
+    int c = n / b;
+    if (a != c && b != c && a != b && c != 0 && c != 1)
+    {
+        cout << "YES\n";
+        cout << a << " " << b << " " << c << "\n";
+    }
+    else
+    {
+        cout << "NO\n";
+    }
 }
 
 int main()

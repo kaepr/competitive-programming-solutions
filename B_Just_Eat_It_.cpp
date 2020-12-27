@@ -47,88 +47,81 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-bool check(string s)
-{
-    int n = s.length();
-    for (int i = 0; i < s.length() / 2; i++)
-    {
-        if (s[i] != s[n - i - 1])
-        {
-            return false;
-        }
-    }
-    return true;
-}
-
 void solve()
 {
-    int n;
+    ll sum = 0;
+    ll n;
     cin >> n;
-    string s;
-    cin >> s;
-    int l = 0, r = n - 1;
-    int left = -1, right = -1;
-    int ans = 0;
-    while (l < r)
+    vector<ll> a(n);
+    for (ll i = 0; i < n; i++)
     {
-        if (s[l] == s[r])
+        cin >> a[i];
+    }
+    // for (auto x : a)
+    // {
+    //     cout << x << " ";
+    // }
+    // cout << "\n";
+    for (auto x : a)
+    {
+        sum += x;
+    }
+    int left = 0, right = 0;
+    ll max_so_far = 0, max_till_here = 0;
+    for (int i = 0; i < n - 1; i++)
+    {
+        if (a[i] >= 0)
         {
-            l++;
-            r--;
-            continue;
+            max_till_here += a[i];
+            max_so_far = max(max_so_far, max_till_here);
         }
-
-        if (l + 1 == r)
+        else if (a[i] < 0)
         {
-            cout << "NO\n";
-            return;
-        }
-
-        else
-        {
-            bool changed = false;
-
-            if (!changed)
+            if (abs(a[i]) >= max_till_here)
             {
-                if (s[l] == s[r - 1])
-                {
-                    if (right != r)
-                    {
-                        right = r - 1;
-                        changed = true;
-                        swap(s[r], s[r - 1]);
-                    }
-                }
-            }
-
-            if (!changed)
-            {
-                if (s[l + 1] == s[r])
-                {
-                    if (left != l)
-                    {
-                        left = l + 1;
-                        changed = true;
-                        swap(s[l], s[l + 1]);
-                    }
-                }
-            }
-
-            if (changed)
-            {
-                l++;
-                r--;
-                ans++;
+                max_till_here = 0;
             }
             else
             {
-                cout << "NO\n";
-                return;
+                max_till_here += a[i];
             }
         }
     }
-    cout << "YES\n";
-    cout << ans << "\n";
+
+    ll max_so_far2 = 0, max_till_here2 = 0;
+
+    for (int i = 1; i < n; i++)
+    {
+        if (a[i] >= 0)
+        {
+            max_till_here2 += a[i];
+            max_so_far2 = max(max_so_far2, max_till_here2);
+        }
+        else if (a[i] < 0)
+        {
+            if (abs(a[i]) >= max_till_here2)
+            {
+                max_till_here2 = 0;
+            }
+            else
+            {
+                max_till_here2 += a[i];
+            }
+        }
+    }
+
+    max_so_far = max(max_so_far, max_so_far2);
+
+    if (max_so_far >= sum)
+    {
+        cout << "NO\n";
+    }
+    else
+    {
+        cout << "YES\n";
+    }
+
+    // trace(sum, max_so_far, max_so_far2);
 }
 
 int main()

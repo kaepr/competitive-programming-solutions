@@ -49,31 +49,54 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    int maxx1 = 0, maxx2 = 0;
-    int n, m;
-    cin >> n;
-    int a[n];
-    for (int i = 0; i < n; i++)
-        cin >> a[i];
-
-    cin >> m;
-    int b[m];
-    for (int i = 0; i < m; i++)
-        cin >> b[i];
-
-    int currSum = 0;
-    for (int i = 0; i < n; i++)
+    ll n, d;
+    cin >> n >> d;
+    vector<pair<ll, ll>> v;
+    for (ll i = 0; i < n; i++)
     {
-        currSum += a[i];
-        maxx1 = max(maxx1, currSum);
+        ll x, y;
+        cin >> x >> y;
+        v.PB(MP(x, y));
     }
-    currSum = 0;
-    for (int i = 0; i < m; i++)
+
+    sort(v.begin(), v.end());
+    // for (auto x : v)
+    // {
+    //     cout << x.first << " " << x.second << "\n";
+    // }
+    ll ptr1 = 0, ptr2 = 0;
+    ll ans = 0;
+    ll maxx = 0;
+    while (ptr2 < n)
     {
-        currSum += b[i];
-        maxx2 = max(maxx2, currSum);
+        if (ptr1 == ptr2 && ans == 0)
+        {
+            ans += v[ptr2].S;
+            maxx = max(ans, maxx);
+            ptr2++;
+            // trace(maxx);
+            continue;
+        }
+        if (ptr1 == ptr2)
+        {
+            ptr2++;
+            continue;
+        }
+
+        if (v[ptr2].F - v[ptr1].F >= d)
+        {
+            ans -= v[ptr1].S;
+            ptr1++;
+        }
+        else
+        {
+            ans += v[ptr2].S;
+            maxx = max(ans, maxx);
+            ptr2++;
+        }
+        // trace(ans);
     }
-    cout << maxx1 + maxx2 << "\n";
+    cout << maxx << "\n";
 }
 
 int main()
@@ -84,8 +107,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t;
-    cin >> t;
+    int t = 1;
+    // cin >> t;
     while (t > 0)
     {
         solve();

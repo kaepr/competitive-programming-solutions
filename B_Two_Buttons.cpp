@@ -49,31 +49,38 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    int maxx1 = 0, maxx2 = 0;
-    int n, m;
-    cin >> n;
-    int a[n];
-    for (int i = 0; i < n; i++)
-        cin >> a[i];
-
-    cin >> m;
-    int b[m];
-    for (int i = 0; i < m; i++)
-        cin >> b[i];
-
-    int currSum = 0;
-    for (int i = 0; i < n; i++)
+    ll n, m;
+    cin >> n >> m;
+    if (m <= n)
     {
-        currSum += a[i];
-        maxx1 = max(maxx1, currSum);
+        cout << n - m << "\n";
     }
-    currSum = 0;
-    for (int i = 0; i < m; i++)
+    else
     {
-        currSum += b[i];
-        maxx2 = max(maxx2, currSum);
+        //times required to get a number smaller than m using division by 2
+        ll cntDivTwo = 0;
+        ll copym = m;
+        while (copym > n)
+        {
+            if (copym % 2 == 0)
+            {
+                cntDivTwo++;
+                copym /= 2;
+            }
+            else
+            {
+                copym += 1;
+                copym /= 2;
+                cntDivTwo += 2;
+            }
+            // trace(copym);
+        }
+        // trace(cntDivTwo);
+        // trace(copym, n);
+        ll ans = cntDivTwo + n - copym;
+
+        cout << ans << "\n";
     }
-    cout << maxx1 + maxx2 << "\n";
 }
 
 int main()
@@ -84,8 +91,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t;
-    cin >> t;
+    int t = 1;
+    // cin >> t;
     while (t > 0)
     {
         solve();

@@ -49,31 +49,56 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    int maxx1 = 0, maxx2 = 0;
-    int n, m;
+    ll n;
     cin >> n;
-    int a[n];
-    for (int i = 0; i < n; i++)
-        cin >> a[i];
-
-    cin >> m;
-    int b[m];
-    for (int i = 0; i < m; i++)
-        cin >> b[i];
-
-    int currSum = 0;
-    for (int i = 0; i < n; i++)
+    while (n > 0)
     {
-        currSum += a[i];
-        maxx1 = max(maxx1, currSum);
+        ll x;
+        cin >> x;
+        // trace(x);
+        ll divisors = 2;
+        ll num = x;
+        for (ll i = 2; i * i <= x; i++)
+        {
+            // cout << "Happens\n";
+            if (num % i == 0)
+            {
+                if (i != 1 && i != x)
+                {
+                    // trace(i);
+                    if (num / i == i)
+                    {
+                        divisors++;
+                        while (num != 0 && num % i == 0)
+                        {
+                            num /= i;
+                        }
+                    }
+                    else
+                    {
+                        divisors += 2;
+                        while (num != 0 && num % i == 0)
+                        {
+                            num /= i;
+                        }
+                    }
+                }
+            }
+        }
+
+        if (divisors == 3)
+        {
+            cout << "YES\n";
+        }
+        else
+        {
+            cout << "NO\n";
+        }
+
+        // cout << divisors << "\n";
+
+        n--;
     }
-    currSum = 0;
-    for (int i = 0; i < m; i++)
-    {
-        currSum += b[i];
-        maxx2 = max(maxx2, currSum);
-    }
-    cout << maxx1 + maxx2 << "\n";
 }
 
 int main()
@@ -84,8 +109,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t;
-    cin >> t;
+    int t = 1;
+    // cin >> t;
     while (t > 0)
     {
         solve();

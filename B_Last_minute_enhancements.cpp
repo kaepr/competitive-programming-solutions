@@ -49,31 +49,71 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    int maxx1 = 0, maxx2 = 0;
-    int n, m;
+    int n;
     cin >> n;
-    int a[n];
-    for (int i = 0; i < n; i++)
-        cin >> a[i];
-
-    cin >> m;
-    int b[m];
-    for (int i = 0; i < m; i++)
-        cin >> b[i];
-
-    int currSum = 0;
+    vi a;
     for (int i = 0; i < n; i++)
     {
-        currSum += a[i];
-        maxx1 = max(maxx1, currSum);
+        int x;
+        cin >> x;
+        a.PB(x);
     }
-    currSum = 0;
-    for (int i = 0; i < m; i++)
+    sort(a.begin(), a.end());
+    int cnt = 0;
+    set<int> st;
+    for (int i = 0; i < n; i++)
     {
-        currSum += b[i];
-        maxx2 = max(maxx2, currSum);
+        st.insert(a[i]);
     }
-    cout << maxx1 + maxx2 << "\n";
+    map<int, int> mp;
+    for (int i = 0; i < n; i++)
+    {
+        mp[a[i]]++;
+    }
+
+    // for (auto x : mp)
+    // {
+    //     // trace(x.first, x.second);
+    //     if (x.second == 1)
+    //     {
+    //         cnt++;
+    //     }
+    //     else
+    //     {
+    //         if ()
+    //     }
+    // }
+
+    reverse(a.begin(), a.end());
+    for (int i = 0; i < n; i++)
+    {
+        if (i == n - 1)
+        {
+            cnt++;
+        }
+        else if (mp[a[i]] == 1 && mp[a[i] + 1] > 0)
+        {
+            cnt++;
+        }
+        else
+        {
+            mp[a[i]]--;
+            mp[a[i] + 1]++;
+            a[i]++;
+        }
+    }
+    set<int> sa;
+    // for (int i = 0; i < n; i++)
+    // {
+    //     cout << a[i] << " ";
+    // }
+    // cout << "\n";
+    for (int i = 0; i < n; i++)
+    {
+        sa.insert(a[i]);
+    }
+
+    cout << sa.size() << "\n";
 }
 
 int main()

@@ -49,31 +49,46 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    int maxx1 = 0, maxx2 = 0;
-    int n, m;
+    int n;
     cin >> n;
-    int a[n];
-    for (int i = 0; i < n; i++)
+    int a[2 * n];
+    for (int i = 0; i < 2 * n; i++)
+    {
         cin >> a[i];
-
-    cin >> m;
-    int b[m];
-    for (int i = 0; i < m; i++)
-        cin >> b[i];
-
-    int currSum = 0;
-    for (int i = 0; i < n; i++)
-    {
-        currSum += a[i];
-        maxx1 = max(maxx1, currSum);
     }
-    currSum = 0;
-    for (int i = 0; i < m; i++)
+    int ans = 0;
+    for (int i = 0; i < 2 * n; i++)
     {
-        currSum += b[i];
-        maxx2 = max(maxx2, currSum);
+        if (a[i] == a[i + 1])
+        {
+            //no swaps required
+        }
+        else
+        {
+            int ptr = i + 1;
+
+            for (int j = i + 1; j < 2 * n; j++)
+            {
+                if (a[j] == a[i])
+                {
+                    ptr = j;
+                    break;
+                }
+            }
+            while (ptr - 1 > i)
+            {
+                swap(a[ptr], a[ptr - 1]);
+                ptr--;
+                ans++;
+            }
+        }
+        // for (int i = 0; i < 2 * n; i++)
+        // {
+        //     cout << a[i] << " ";
+        // }
+        // cout << "\n";
     }
-    cout << maxx1 + maxx2 << "\n";
+    cout << ans << "\n";
 }
 
 int main()
@@ -84,8 +99,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t;
-    cin >> t;
+    int t = 1;
+    // cin >> t;
     while (t > 0)
     {
         solve();

@@ -47,33 +47,29 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
+#define N 100005
+
+ll dp[N];
+ll freq[N];
+
 void solve()
 {
-    int maxx1 = 0, maxx2 = 0;
-    int n, m;
+    ll n;
     cin >> n;
-    int a[n];
-    for (int i = 0; i < n; i++)
-        cin >> a[i];
-
-    cin >> m;
-    int b[m];
-    for (int i = 0; i < m; i++)
-        cin >> b[i];
-
-    int currSum = 0;
+    vi a;
     for (int i = 0; i < n; i++)
     {
-        currSum += a[i];
-        maxx1 = max(maxx1, currSum);
+        int x;
+        cin >> x;
+        freq[x]++;
     }
-    currSum = 0;
-    for (int i = 0; i < m; i++)
+    dp[0] = 0;
+    dp[1] = freq[1];
+    for (ll i = 2; i <= N; i++)
     {
-        currSum += b[i];
-        maxx2 = max(maxx2, currSum);
+        dp[i] = max(dp[i - 1], dp[i - 2] + freq[i] * i);
     }
-    cout << maxx1 + maxx2 << "\n";
+    cout << dp[N] << "\n";
 }
 
 int main()
@@ -84,8 +80,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t;
-    cin >> t;
+    int t = 1;
+    // cin >> t;
     while (t > 0)
     {
         solve();

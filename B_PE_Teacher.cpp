@@ -49,31 +49,38 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    int maxx1 = 0, maxx2 = 0;
-    int n, m;
-    cin >> n;
-    int a[n];
-    for (int i = 0; i < n; i++)
-        cin >> a[i];
-
-    cin >> m;
-    int b[m];
-    for (int i = 0; i < m; i++)
-        cin >> b[i];
-
-    int currSum = 0;
+    int n, k;
+    cin >> n >> k;
+    vi distinct;
+    set<int> st;
+    // cout << st.size() << "\n";
     for (int i = 0; i < n; i++)
     {
-        currSum += a[i];
-        maxx1 = max(maxx1, currSum);
+        int x;
+        cin >> x;
+        int sz = st.size();
+        st.insert(x);
+        if (st.size() == sz)
+        {
+            //no new added
+        }
+        else
+        {
+            distinct.PB(i + 1);
+        }
     }
-    currSum = 0;
-    for (int i = 0; i < m; i++)
+    if (st.size() >= k)
     {
-        currSum += b[i];
-        maxx2 = max(maxx2, currSum);
+        cout << "YES\n";
+        for (int i = 0; i < k; i++)
+        {
+            cout << distinct[i] << " ";
+        }
     }
-    cout << maxx1 + maxx2 << "\n";
+    else
+    {
+        cout << "NO\n";
+    }
 }
 
 int main()
@@ -84,8 +91,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t;
-    cin >> t;
+    int t = 1;
+    // cin >> t;
     while (t > 0)
     {
         solve();

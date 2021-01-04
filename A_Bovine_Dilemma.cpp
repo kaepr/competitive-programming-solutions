@@ -47,33 +47,52 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
+int findArea(int a, int b, int c)
+{
+    // Length of sides must be positive
+    // and sum of any two sides
+    // must be smaller than third side.
+    if (a < 0 || b < 0 || c < 0 ||
+        (a + b <= c) || a + c <= b ||
+        b + c <= a)
+    {
+        return 0;
+    }
+    float s = (a + b + c) / 2;
+    return sqrt(s * (s - a) *
+                (s - b) * (s - c));
+}
+
+double Area(int dX0, int dY0, int dX1, int dY1, int dX2, int dY2)
+{
+    double dArea = ((dX1 - dX0) * (dY2 - dY0) - (dX2 - dX0) * (dY1 - dY0)) / 2.0;
+    return (dArea > 0.0) ? dArea : -dArea;
+}
+
 void solve()
 {
-    int maxx1 = 0, maxx2 = 0;
-    int n, m;
+    int n;
     cin >> n;
     int a[n];
     for (int i = 0; i < n; i++)
+    {
         cin >> a[i];
+    }
+    sort(a, a + n);
+    set<double> s;
 
-    cin >> m;
-    int b[m];
-    for (int i = 0; i < m; i++)
-        cin >> b[i];
-
-    int currSum = 0;
     for (int i = 0; i < n; i++)
     {
-        currSum += a[i];
-        maxx1 = max(maxx1, currSum);
+        for (int j = i + 1; j < n; j++)
+        {
+            double arr = abs(Area(0, 1, a[i], 0, a[j], 0));
+            if (arr != 0)
+            {
+                s.insert(arr);
+            }
+        }
     }
-    currSum = 0;
-    for (int i = 0; i < m; i++)
-    {
-        currSum += b[i];
-        maxx2 = max(maxx2, currSum);
-    }
-    cout << maxx1 + maxx2 << "\n";
+    cout << s.size() << "\n";
 }
 
 int main()

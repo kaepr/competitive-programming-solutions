@@ -47,33 +47,53 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
+ll cnt = 1;
+ll ans, n;
+ll a[10005];
+ll dp[10005];
+
+ll solve2(ll i)
+{
+    if (dp[i] != -1)
+    {
+        return dp[i];
+    }
+    dp[i] = max(a[i] + solve2(i - 2), solve2(i - 1));
+    return dp[i];
+}
+
 void solve()
 {
-    int maxx1 = 0, maxx2 = 0;
-    int n, m;
+    memset(dp, -1, sizeof(dp));
+    ans = 0;
     cin >> n;
-    int a[n];
-    for (int i = 0; i < n; i++)
+    for (int i = 1; i <= n; i++)
+    {
         cin >> a[i];
-
-    cin >> m;
-    int b[m];
-    for (int i = 0; i < m; i++)
-        cin >> b[i];
-
-    int currSum = 0;
-    for (int i = 0; i < n; i++)
-    {
-        currSum += a[i];
-        maxx1 = max(maxx1, currSum);
     }
-    currSum = 0;
-    for (int i = 0; i < m; i++)
+    // for (int i = 1; i <= n; i++)
+    // {
+    //     cout << a[i] << " ";
+    // }
+    // cout << "\n";
+    dp[0] = 0;
+    dp[1] = a[1];
+    dp[2] = max(dp[1], a[2]);
+
+    for (int i = 3; i <= n; i++)
     {
-        currSum += b[i];
-        maxx2 = max(maxx2, currSum);
+        dp[i] = max(a[i] + dp[i - 2], dp[i - 1]);
     }
-    cout << maxx1 + maxx2 << "\n";
+
+    // for (int i = 0; i <= n; i++)
+    // {
+    // cout << dp[i] << " ";
+    // }
+    // cout << "\n";
+    // ans = solve2(n);
+
+    cout << "Case " << cnt << ": " << dp[n] << "\n";
+    cnt++;
 }
 
 int main()

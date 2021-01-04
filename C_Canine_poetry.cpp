@@ -47,33 +47,33 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
+
 void solve()
 {
-    int maxx1 = 0, maxx2 = 0;
-    int n, m;
-    cin >> n;
-    int a[n];
-    for (int i = 0; i < n; i++)
-        cin >> a[i];
+    string s;
+    cin >> s;
+    int n = s.length();
+    int cnt = 0;
 
-    cin >> m;
-    int b[m];
-    for (int i = 0; i < m; i++)
-        cin >> b[i];
+    for (int i = 0; i < n - 1; i++)
+    {
+        if (s[i] == '1')
+        {
+            continue;
+        }
+        if (s[i] == s[i + 1])
+        {
+            s[i + 1] = '1';
+            cnt++;
+        }
+        if (s[i] == s[i + 2])
+        {
+            s[i + 2] = '1';
+            cnt++;
+        }
+    }
 
-    int currSum = 0;
-    for (int i = 0; i < n; i++)
-    {
-        currSum += a[i];
-        maxx1 = max(maxx1, currSum);
-    }
-    currSum = 0;
-    for (int i = 0; i < m; i++)
-    {
-        currSum += b[i];
-        maxx2 = max(maxx2, currSum);
-    }
-    cout << maxx1 + maxx2 << "\n";
+    cout << cnt << "\n";
 }
 
 int main()

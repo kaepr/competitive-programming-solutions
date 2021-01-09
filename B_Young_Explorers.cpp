@@ -49,18 +49,33 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    ull n;
+    int n;
     cin >> n;
-    ull ans = 0;
-    ull k = n / 2;
-    if (n % 2 == 0)
+    vi v;
+    for (int i = 0; i < n; i++)
     {
-        cout << (n / 2 + 1) * (n / 2 + 1) << "\n";
+        int x;
+        cin >> x;
+        v.PB(x);
     }
-    else
+    sort(v.begin(), v.end());
+
+    int curr = 0;
+    int maxInExp = 0;
+    int ans = 0;
+    for (int i = 0; i < n; i++)
     {
-        cout << 2 * (k + 1) * (k + 2) << "\n";
+
+        maxInExp = max(maxInExp, v[i]);
+        curr++;
+        if (maxInExp <= curr && maxInExp != 0 && curr != 0)
+        {
+            ans++;
+            curr = 0;
+            maxInExp = 0;
+        }
     }
+    cout << ans << "\n";
 }
 
 int main()
@@ -71,8 +86,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while (t > 0)
     {
         solve();

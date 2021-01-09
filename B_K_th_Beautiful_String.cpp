@@ -49,18 +49,51 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    ull n;
-    cin >> n;
-    ull ans = 0;
-    ull k = n / 2;
-    if (n % 2 == 0)
+    ll n, k;
+    cin >> n >> k;
+    // trace(n, k);
+    string s = "";
+    for (int i = 0; i <= n; i++)
     {
-        cout << (n / 2 + 1) * (n / 2 + 1) << "\n";
+        s += 'a';
     }
-    else
+
+    ll low = 1, high = n * (n + 1) / 2;
+
+    while (low < high - 1)
     {
-        cout << 2 * (k + 1) * (k + 2) << "\n";
+        ll m = low + (high - low) / 2;
+        ll sum = m * (m - 1) / 2;
+        // trace(m, sum, low, high);
+        if (sum == k)
+        {
+            low = m;
+            high = m;
+            break;
+        }
+        if (sum <= k)
+        {
+            low = m;
+        }
+        else
+        {
+            high = m;
+        }
     }
+    // high--;
+    // trace(k, low, high);
+    s[high] = 'b';
+    high--;
+    ll index = k - (high) * (high - 1) / 2;
+    // trace(index);
+    s[index] = 'b';
+    reverse(s.begin(), s.end());
+    for (int i = 0; i < n; i++)
+    {
+        cout << s[i];
+    }
+
+    cout << "\n";
 }
 
 int main()
@@ -71,8 +104,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while (t > 0)
     {
         solve();

@@ -49,18 +49,54 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    ull n;
+    int n;
     cin >> n;
-    ull ans = 0;
-    ull k = n / 2;
-    if (n % 2 == 0)
+    vi a;
+    int curr = 0;
+    for (int i = 0; i < n; i++)
     {
-        cout << (n / 2 + 1) * (n / 2 + 1) << "\n";
+        int x;
+        cin >> x;
+        a.PB(x);
     }
-    else
+
+    int ans = 0;
+    for (int i = 0; i < n; i++)
     {
-        cout << 2 * (k + 1) * (k + 2) << "\n";
+        for (int k = 0; k <= i; k++)
+        {
+            int curr = 0;
+
+            int b[n];
+            for (int i = 0; i < n; i++)
+                b[i] = a[i];
+
+            for (int j = k; j <= i; j++)
+            {
+                if (b[j] == 1)
+                {
+                    b[j] = 0;
+                }
+                else if (b[j] == 0)
+                {
+                    b[j] = 1;
+                }
+            }
+
+            // for (int j = 0; j < n; j++)
+            // {
+            //     cout << b[j] << " ";
+            // }
+            // cout << "\n";
+
+            for (int i = 0; i < n; i++)
+                if (b[i] == 1)
+                    curr++;
+
+            ans = max(ans, curr);
+        }
     }
+    cout << ans << "\n";
 }
 
 int main()

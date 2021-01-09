@@ -47,20 +47,76 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
+vector<int> adj[100005];
+int n, m, ans = 0;
+int cats[100005];
+bool vis[100005];
+
+void dfs(int node, int cons)
+{
+
+    vis[node] = true;
+    if (cons > m)
+    {
+        return;
+    }
+
+    if (adj[node].size() == 1 && node != 1 && cons <= m)
+    {
+        ans++;
+        return;
+    }
+
+    for (auto child : adj[node])
+    {
+        int temp = cons;
+
+        if (cats[child])
+        {
+            temp++;
+        }
+        else
+        {
+            temp = 0;
+        }
+
+        if (!vis[child] && temp <= m)
+            dfs(child, temp);
+    }
+}
+
 void solve()
 {
-    ull n;
-    cin >> n;
-    ull ans = 0;
-    ull k = n / 2;
-    if (n % 2 == 0)
+    memset(vis, false, sizeof(vis));
+    cin >> n >> m;
+    for (int i = 0; i < n; i++)
     {
-        cout << (n / 2 + 1) * (n / 2 + 1) << "\n";
+        int x;
+        cin >> x;
+        cats[i + 1] = x;
+    }
+    for (int i = 0; i < n - 1; i++)
+    {
+        int a, b;
+        cin >> a >> b;
+        adj[a].PB(b);
+        adj[b].PB(a);
+    }
+
+    int c;
+
+    if (cats[1])
+    {
+        // cout << "yes\n";
+        c = 1;
     }
     else
     {
-        cout << 2 * (k + 1) * (k + 2) << "\n";
+        c = 0;
     }
+
+    dfs(1, c);
+    cout << ans << "\n";
 }
 
 int main()

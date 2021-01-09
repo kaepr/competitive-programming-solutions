@@ -49,18 +49,24 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    ull n;
+    int n;
     cin >> n;
-    ull ans = 0;
-    ull k = n / 2;
-    if (n % 2 == 0)
+    vector<int> dig;
+    for (int i = 0; i < n; i++)
     {
-        cout << (n / 2 + 1) * (n / 2 + 1) << "\n";
+        dig.PB(8);
     }
-    else
+    dig[0] = 9;
+    dig[1] = 8;
+    for (int i = 2; i < n; i++)
     {
-        cout << 2 * (k + 1) * (k + 2) << "\n";
+        dig[i] = (dig[i] + i - 1) % 10;
     }
+    for (auto x : dig)
+    {
+        cout << x;
+    }
+    cout << "\n";
 }
 
 int main()
@@ -71,8 +77,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while (t > 0)
     {
         solve();

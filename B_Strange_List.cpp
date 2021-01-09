@@ -49,18 +49,39 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    ull n;
-    cin >> n;
-    ull ans = 0;
-    ull k = n / 2;
-    if (n % 2 == 0)
+    vector<pair<ll, ll>> v;
+    ll n, x;
+    cin >> n >> x;
+    for (ll i = 0; i < n; i++)
     {
-        cout << (n / 2 + 1) * (n / 2 + 1) << "\n";
+        ll temp;
+        cin >> temp;
+        v.PB(MP(temp, 1));
     }
-    else
+    for (ll i = 0; i < v.size(); i++)
     {
-        cout << 2 * (k + 1) * (k + 2) << "\n";
+        if (v[i].F % x == 0)
+        {
+            // for(ll i=0; i<v[i].S)
+            v.PB(MP(v[i].F / x, x * v[i].S));
+        }
+        else
+        {
+            break;
+        }
     }
+
+    // for (ll i = 0; i < v.size(); i++)
+    // {
+    //     cout << v[i].F << " " << v[i].S << "\n";
+    // }
+
+    ll sum = 0;
+    for (ll i = 0; i < v.size(); i++)
+    {
+        sum += v[i].F * v[i].S;
+    }
+    cout << sum << "\n";
 }
 
 int main()
@@ -71,8 +92,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while (t > 0)
     {
         solve();

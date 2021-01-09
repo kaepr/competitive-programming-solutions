@@ -49,17 +49,62 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    ull n;
+    ll n;
     cin >> n;
-    ull ans = 0;
-    ull k = n / 2;
-    if (n % 2 == 0)
+    ll a[n];
+    for (int i = 0; i < n; i++)
+        cin >> a[i];
+
+    ll sum = 0;
+    ll sum1 = 0, sum2 = 0;
+    ll cnt1 = 0, cnt2 = 0;
+
+    for (int i = 0; i < n; i++)
     {
-        cout << (n / 2 + 1) * (n / 2 + 1) << "\n";
+        sum += a[i];
+        if (a[i] == 1)
+        {
+            sum1 += a[i];
+            cnt1++;
+        }
+        else if (a[i] == 2)
+        {
+            sum2 += a[i];
+            cnt2++;
+        }
+    }
+
+    ll s1 = 0, s2 = 0;
+
+    if (cnt1 == 0)
+    {
+        if (cnt2 % 2 == 0)
+        {
+            cout << "YES\n";
+        }
+        else
+        {
+            cout << "NO\n";
+        }
+    }
+    else if (cnt2 == 0)
+    {
+        if (cnt1 % 2 == 0)
+        {
+            cout << "YES\n";
+        }
+        else
+        {
+            cout << "NO\n";
+        }
+    }
+    else if (sum % 2 == 0 && (sum1 % 2 == 0))
+    {
+        cout << "YES\n";
     }
     else
     {
-        cout << 2 * (k + 1) * (k + 2) << "\n";
+        cout << "NO\n";
     }
 }
 
@@ -71,8 +116,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while (t > 0)
     {
         solve();

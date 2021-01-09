@@ -48,6 +48,10 @@ int powmod(int x, int y, int mod)
 }
 ll gcd(ll a, ll b)
 {
+    if (b == 0)
+    {
+        return a;
+    }
     if (a == 0)
         return b;
     return gcd(b % a, a);
@@ -71,29 +75,60 @@ void solve()
 {
     ll n, m;
     cin >> n >> m;
-    ll a[n], b[m];
-    for (ll i = 0; i < n; i++)
+    ll a[n + 1], b[m + 1];
+    for (ll i = 1; i <= n; i++)
         cin >> a[i];
 
-    for (ll i = 0; i < m; i++)
+    for (ll i = 1; i <= m; i++)
         cin >> b[i];
 
-    sort(a, a + n);
-    sort(b, b + m);
-
-    ll currGCD = findGCD(a, n);
-    for (ll i = 0; i < m; i++)
+    a[0] = 0;
+    b[0] = 0;
+    // ll currGCD = findGCD(a, n);
+    ll G;
+    if (n == 1)
     {
-        ll num = b[i];
-        if (num % currGCD == 0)
-        {
-            cout << num + currGCD << " ";
-        }
-        else
-        {
-            cout << currGCD << " ";
-        }
+        G = 0;
     }
+    else
+    {
+        G = a[2] - a[1];
+    }
+
+    // trace(G);
+    for (ll i = 3; i <= n; i++)
+    {
+
+        G = gcd(G, a[i] - a[1]);
+        // trace(G);
+    }
+
+    // cout << gcd(a[1] + b[1], 0) << " ";
+
+    // ll G = 0;
+    // trace(G);
+    for (ll i = 1; i <= m; i++)
+    {
+        // trace(a[1] + b[i]);
+        cout << abs(gcd(a[1] + b[i], G)) << " ";
+    }
+    cout << "\n";
+
+    // for (ll i = 0; i < m; i++)
+    // {
+    //     ll num = b[i];
+    //     // trace(num);
+    //     ll ans = a[0] + num;
+    //     ll last = a[0] + num;
+    //     for (ll j = 1; j < n; j++)
+    //     {
+    //         // cout << a[j] + num << " ";
+    //         ans = gcd(ans, a[j] + num);
+    //         last = a[j] + num;
+    //     }
+    //     // cout << "\n";
+    //     cout << ans << " ";
+    // }
 }
 
 int main()

@@ -49,18 +49,27 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    ull n;
-    cin >> n;
-    ull ans = 0;
-    ull k = n / 2;
-    if (n % 2 == 0)
+    ll n, x;
+    cin >> n >> x;
+    vector<ll> a;
+    for (ll i = 0; i < n; i++)
     {
-        cout << (n / 2 + 1) * (n / 2 + 1) << "\n";
+        ll temp;
+        cin >> temp;
+        a.PB(temp);
     }
-    else
+    ll minn = 0;
+    ll maxx = 0;
+    ll sum = 0;
+    for (ll i = 0; i < n; i++)
     {
-        cout << 2 * (k + 1) * (k + 2) << "\n";
+        sum += a[i];
+        // trace(sum);
+        maxx += a[i] / x + (!(a[i] % x == 0));
     }
+    minn = sum / x + (!(sum % x == 0));
+
+    cout << minn << " " << maxx << "\n";
 }
 
 int main()
@@ -71,8 +80,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while (t > 0)
     {
         solve();

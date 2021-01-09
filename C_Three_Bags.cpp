@@ -49,18 +49,32 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    ull n;
-    cin >> n;
-    ull ans = 0;
-    ull k = n / 2;
-    if (n % 2 == 0)
+    int n1, n2, n3;
+    cin >> n1 >> n2 >> n3;
+    vi v1, v2, v3;
+    for (int i = 0; i < n1; i++)
     {
-        cout << (n / 2 + 1) * (n / 2 + 1) << "\n";
+        int x;
+        cin >> x;
+        v1.PB(x);
     }
-    else
+
+    for (int i = 0; i < n2; i++)
     {
-        cout << 2 * (k + 1) * (k + 2) << "\n";
+        int x;
+        cin >> x;
+        v2.PB(x);
     }
+
+    for (int i = 0; i < n3; i++)
+    {
+        int x;
+        cin >> x;
+        v3.PB(x);
+    }
+
+    
+
 }
 
 int main()

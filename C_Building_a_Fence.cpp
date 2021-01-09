@@ -49,7 +49,34 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
+    int n, k;
+    cin >> n >> k;
+    int h[n];
+    for (int i = 0; i < n; i++)
+        cin >> h[i];
+
+    int maxx = h[0];
+    int minn = h[0];
+
+    bool flag = true;
+    for (int i = 1; i < n; i++)
+    {
+        maxx = min(maxx + k - 1, h[i] + k - 1);
+        minn = min(minn - k + 1, h[i]);
+        if (minn > maxx)
+        {
+            cout << "NO\n";
+            return;
+            // break;
+        }
+    }
     
+    if (!(minn <= h[n - 1] && h[n - 1] <= maxx))
+    {
+        cout << "NO\n";
+        return;
+    }
+    cout << "YES\n";
 }
 
 int main()

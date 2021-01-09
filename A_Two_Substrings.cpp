@@ -49,18 +49,55 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    ull n;
-    cin >> n;
-    ull ans = 0;
-    ull k = n / 2;
-    if (n % 2 == 0)
+    string str;
+    cin >> str;
+    int n = str.length();
+    bool abFlag = false, baFlag = false;
+
+    vi f, s;
+    for (int i = 0; i < n - 1; i++)
     {
-        cout << (n / 2 + 1) * (n / 2 + 1) << "\n";
+        if (str[i] == 'A' && str[i + 1] == 'B')
+            f.PB(i);
+
+        if (str[i] == 'B' && str[i + 1] == 'A')
+            s.PB(i);
     }
-    else
+
+    if (f.empty() || s.empty())
     {
-        cout << 2 * (k + 1) * (k + 2) << "\n";
+        cout << "NO\n";
+        return;
     }
+
+    for (int i = 0; i < f.size(); i++)
+    {
+        int pos = f[i];
+        //AB starts at pos
+        for (int j = 0; j < s.size(); j++)
+        {
+            if (s[j] != pos && s[j] + 1 != pos && s[j] != pos + 1 && s[j] + 1 != pos)
+            {
+                cout << "YES\n";
+                return;
+            }
+        }
+    }
+    for (int i = 0; i < s.size(); i++)
+    {
+        int pos = s[i];
+        //AB starts at pos
+        for (int j = 0; j < f.size(); j++)
+        {
+            if (f[j] != pos && f[j] + 1 != pos && f[j] != pos + 1 && f[j] + 1 != pos)
+            {
+                cout << "YES\n";
+                return;
+            }
+        }
+    }
+
+    cout << "NO\n";
 }
 
 int main()

@@ -49,18 +49,36 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    ull n;
+    int n;
     cin >> n;
-    ull ans = 0;
-    ull k = n / 2;
-    if (n % 2 == 0)
+    vector<pair<int, int>> v;
+    for (int i = 0; i < n; i++)
     {
-        cout << (n / 2 + 1) * (n / 2 + 1) << "\n";
+        int x, y;
+        cin >> x >> y;
+        v.PB(MP(x, y));
     }
-    else
+
+    sort(v.begin(), v.end());
+
+    // for (auto x : v)
+    // {
+    //     cout << x.first << " " << x.second << "\n";
+    // }
+
+    int lastDay = min(v[0].F, v[0].S);
+    for (int i = 1; i < v.size(); i++)
     {
-        cout << 2 * (k + 1) * (k + 2) << "\n";
+        if (v[i].S < lastDay)
+        {
+            lastDay = max(lastDay, v[i].F);
+        }
+        else
+        {
+            lastDay = max(lastDay, min(v[i].F, v[i].S));
+        }
     }
+    cout << lastDay << "\n";
 }
 
 int main()

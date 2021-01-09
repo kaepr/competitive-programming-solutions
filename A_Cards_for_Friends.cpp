@@ -49,17 +49,35 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    ull n;
-    cin >> n;
-    ull ans = 0;
-    ull k = n / 2;
-    if (n % 2 == 0)
+    ll w, h, n;
+    cin >> w >> h >> n;
+    ll currPiece = 1;
+
+    ll cnt = 0;
+    while (w % 2 == 0)
     {
-        cout << (n / 2 + 1) * (n / 2 + 1) << "\n";
+        w /= 2;
+        cnt++;
+    }
+
+    while (h % 2 == 0)
+    {
+        h /= 2;
+        cnt++;
+    }
+
+    for (int i = 1; i <= cnt; i++)
+    {
+        currPiece *= 2;
+    }
+
+    if (currPiece >= n)
+    {
+        cout << "YES\n";
     }
     else
     {
-        cout << 2 * (k + 1) * (k + 2) << "\n";
+        cout << "NO\n";
     }
 }
 
@@ -71,8 +89,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while (t > 0)
     {
         solve();

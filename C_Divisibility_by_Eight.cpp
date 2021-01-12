@@ -47,51 +47,45 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
+string s;
+
+bool isSubsequence(string temp)
+{
+    int j = 0;
+    for (int i = 0; i < s.length() && j < temp.length(); i++)
+    {
+        if (s[i] == temp[j])
+            j++;
+    }
+    return (j == temp.length());
+}
+
 void solve()
 {
-    int n;
-    cin >> n;
-    int a[n];
-    for (int i = 0; i < n; i++)
-        cin >> a[i];
-
-    int ptr1 = 0, ptr2 = n - 1;
-    int prevEatA = 0, prevEatB = 0, a_total = 0, b_total = 0, cnta = 0, cntb = 0;
-    bool move = true;
-    while (ptr1 <= ptr2)
+    cin >> s;
+    vector<string> a;
+    //a holds all strings, which are divisors of 8
+    for (int i = 0; i < 1000; i++)
     {
-        if (move)
+        if (i % 8 == 0)
         {
-            move = false;
-            int curr = 0;
-            while (curr <= prevEatB && ptr1 <= ptr2)
-            {
-                curr += a[ptr1];
-
-                ptr1++;
-            }
-            cnta++;
-            prevEatA = curr;
-            a_total += curr;
-            // trace(prevEatA);
-        }
-        else
-        {
-            move = true;
-            int curr = 0;
-            while (curr <= prevEatA && ptr2 >= ptr1)
-            {
-                curr += a[ptr2];
-
-                ptr2--;
-            }
-            cntb++;
-            prevEatB = curr;
-            b_total += curr;
-            // trace(prevEatB);
+            // trace(i);
+            string temp = to_string(i);
+            a.PB(temp);
         }
     }
-    cout << cnta + cntb << " " << a_total << " " << b_total << "\n";
+
+    for (int i = 0; i < a.size(); i++)
+    {
+        // cout << a[i] << "\n";
+        if (isSubsequence(a[i]))
+        {
+            cout << "YES\n";
+            cout << a[i] << "\n";
+            return;
+        }
+    }
+    cout << "NO\n";
 }
 
 int main()
@@ -102,8 +96,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t;
-    cin >> t;
+    int t = 1;
+    // cin >> t;
     while (t > 0)
     {
         solve();

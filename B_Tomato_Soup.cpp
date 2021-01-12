@@ -49,49 +49,25 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    int n;
-    cin >> n;
-    int a[n];
-    for (int i = 0; i < n; i++)
-        cin >> a[i];
-
-    int ptr1 = 0, ptr2 = n - 1;
-    int prevEatA = 0, prevEatB = 0, a_total = 0, b_total = 0, cnta = 0, cntb = 0;
-    bool move = true;
-    while (ptr1 <= ptr2)
+    ll n, a, b;
+    cin >> n >> a >> b;
+    if (2 * a <= b)
     {
-        if (move)
+        cout << n * a << "\n";
+    }
+    else
+    {
+        ll cost = 0;
+        if (n % 2 == 0)
         {
-            move = false;
-            int curr = 0;
-            while (curr <= prevEatB && ptr1 <= ptr2)
-            {
-                curr += a[ptr1];
-
-                ptr1++;
-            }
-            cnta++;
-            prevEatA = curr;
-            a_total += curr;
-            // trace(prevEatA);
+            cost += (n / 2) * b;
         }
         else
         {
-            move = true;
-            int curr = 0;
-            while (curr <= prevEatA && ptr2 >= ptr1)
-            {
-                curr += a[ptr2];
-
-                ptr2--;
-            }
-            cntb++;
-            prevEatB = curr;
-            b_total += curr;
-            // trace(prevEatB);
+            cost += (n / 2) * b + a;
         }
+        cout << cost << "\n";
     }
-    cout << cnta + cntb << " " << a_total << " " << b_total << "\n";
 }
 
 int main()

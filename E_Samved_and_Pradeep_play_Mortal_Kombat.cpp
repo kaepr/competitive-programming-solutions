@@ -47,51 +47,80 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
+// int a[200005];
+// int dp[200005];
+
+// void solve2()
+// {
+
+// }
+
 void solve()
 {
+    // memset(dp, -1, sizeof(dp));
     int n;
     cin >> n;
     int a[n];
     for (int i = 0; i < n; i++)
-        cin >> a[i];
-
-    int ptr1 = 0, ptr2 = n - 1;
-    int prevEatA = 0, prevEatB = 0, a_total = 0, b_total = 0, cnta = 0, cntb = 0;
-    bool move = true;
-    while (ptr1 <= ptr2)
     {
-        if (move)
+        cin >> a[i];
+    }
+    int ans = 0;
+    bool turn = true;
+    int ptr = 0;
+    while (ptr < n)
+    {
+        if (turn)
         {
-            move = false;
-            int curr = 0;
-            while (curr <= prevEatB && ptr1 <= ptr2)
+            if (ptr == n - 1)
             {
-                curr += a[ptr1];
-
-                ptr1++;
+                if (a[ptr] == 1)
+                {
+                    ans++;
+                    break;
+                }
+                else
+                {
+                    ptr++;
+                    break;
+                }
             }
-            cnta++;
-            prevEatA = curr;
-            a_total += curr;
-            // trace(prevEatA);
+            turn = false;
+            if (a[ptr] == 1 && a[ptr + 1] == 1)
+            {
+                ans++;
+                ptr++;
+            }
+            else if (a[ptr] == 1 && a[ptr + 1] == 0)
+            {
+                ans++;
+                ptr += 2;
+            }
+            else if (a[ptr] == 0 && a[ptr + 1] == 1)
+            {
+                ptr++;
+            }
+            else if (a[ptr] == 0 && a[ptr + 1] == 0)
+            {
+                ptr += 2;
+            }
         }
         else
         {
-            move = true;
-            int curr = 0;
-            while (curr <= prevEatA && ptr2 >= ptr1)
+            if (ptr < n - 3 && a[ptr + 1] == 0 && a[ptr + 2] == 0)
             {
-                curr += a[ptr2];
-
-                ptr2--;
+                ptr++;
             }
-            cntb++;
-            prevEatB = curr;
-            b_total += curr;
-            // trace(prevEatB);
+            else
+            {
+                ptr += 2;
+            }
+
+            turn = true;
         }
+        // trace(ptr, ans);
     }
-    cout << cnta + cntb << " " << a_total << " " << b_total << "\n";
+    cout << ans << "\n";
 }
 
 int main()

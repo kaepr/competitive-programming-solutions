@@ -47,51 +47,63 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
+vector<ll> a;
+ll n, k;
+
+bool chk(ll x)
+{
+    // cout << "HERE\n";
+    ll sum = 0;
+    for (ll i = n / 2; i < n; i++)
+    {
+        sum += max((ll)0, x - a[i]);
+    }
+
+    if (sum > k)
+    {
+        // cout << "DASDASDs\n";
+        return false;
+    }
+    else
+    {
+        // trace(sum);
+        return true;
+    }
+}
+
 void solve()
 {
-    int n;
-    cin >> n;
-    int a[n];
-    for (int i = 0; i < n; i++)
-        cin >> a[i];
-
-    int ptr1 = 0, ptr2 = n - 1;
-    int prevEatA = 0, prevEatB = 0, a_total = 0, b_total = 0, cnta = 0, cntb = 0;
-    bool move = true;
-    while (ptr1 <= ptr2)
+    // ll n, k;
+    cin >> n >> k;
+    for (ll i = 0; i < n; i++)
     {
-        if (move)
-        {
-            move = false;
-            int curr = 0;
-            while (curr <= prevEatB && ptr1 <= ptr2)
-            {
-                curr += a[ptr1];
+        ll x;
+        cin >> x;
+        a.PB(x);
+    }
 
-                ptr1++;
-            }
-            cnta++;
-            prevEatA = curr;
-            a_total += curr;
-            // trace(prevEatA);
+    sort(a.begin(), a.end());
+    // for (auto x : a)
+    // {
+    //     cout << x << " ";
+    // }
+    // cout << "\n";
+
+    ll low = 1, high = 2e9 + 100;
+    while (low < high - 1)
+    {
+        ll m = low + (high - low) / 2;
+        if (chk(m))
+        {
+            low = m;
         }
         else
         {
-            move = true;
-            int curr = 0;
-            while (curr <= prevEatA && ptr2 >= ptr1)
-            {
-                curr += a[ptr2];
-
-                ptr2--;
-            }
-            cntb++;
-            prevEatB = curr;
-            b_total += curr;
-            // trace(prevEatB);
+            high = m;
         }
+        // trace(low, high, m);
     }
-    cout << cnta + cntb << " " << a_total << " " << b_total << "\n";
+    cout << low << "\n";
 }
 
 int main()
@@ -102,8 +114,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t;
-    cin >> t;
+    int t = 1;
+    // cin >> t;
     while (t > 0)
     {
         solve();

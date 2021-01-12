@@ -49,49 +49,36 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    int n;
-    cin >> n;
-    int a[n];
-    for (int i = 0; i < n; i++)
-        cin >> a[i];
-
-    int ptr1 = 0, ptr2 = n - 1;
-    int prevEatA = 0, prevEatB = 0, a_total = 0, b_total = 0, cnta = 0, cntb = 0;
-    bool move = true;
-    while (ptr1 <= ptr2)
+    ll a, b, c;
+    cin >> a >> b >> c;
+    vector<ll> v;
+    v.PB(a);
+    v.PB(b);
+    v.PB(c);
+    sort(v.begin(), v.end());
+    ll cand = 0;
+    if (v[0] + v[1] == v[2])
     {
-        if (move)
-        {
-            move = false;
-            int curr = 0;
-            while (curr <= prevEatB && ptr1 <= ptr2)
-            {
-                curr += a[ptr1];
-
-                ptr1++;
-            }
-            cnta++;
-            prevEatA = curr;
-            a_total += curr;
-            // trace(prevEatA);
-        }
-        else
-        {
-            move = true;
-            int curr = 0;
-            while (curr <= prevEatA && ptr2 >= ptr1)
-            {
-                curr += a[ptr2];
-
-                ptr2--;
-            }
-            cntb++;
-            prevEatB = curr;
-            b_total += curr;
-            // trace(prevEatB);
-        }
+        cout << v[2] << "\n";
     }
-    cout << cnta + cntb << " " << a_total << " " << b_total << "\n";
+    else
+    {
+
+        ll change = v[1] - v[0];
+        // if (change >= c)
+        // {
+        v[2] -= change;
+        cout << v[1] + v[2] / 2 << "\n";
+
+        // if (v[2] > v[1] + v[0])
+        // {
+        //     cout << v[0] + v[1] << "\n";
+        // }
+        // else if (v[2] < v[1] + v[0])
+        // {
+        //     cout << v[2] << "\n";
+        // }
+    }
 }
 
 int main()

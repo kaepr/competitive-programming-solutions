@@ -1,76 +1,91 @@
 #include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
-const int mod = 1e9 + 7;
+using ull = unsigned long long;
+using vi = vector<int>;
 
-const int MAXN = 200005;
-int a[200005];
-int n;
-int dp[MAXN][2];
+const int MOD = 1e9 + 7;
 
-int ans(int i, int player)
+#define PB push_back
+#define F first
+#define S second
+#define MP make_pair
+
+#define TRACE
+#ifdef TRACE
+#define trace(...) __f(#__VA_ARGS__, __VA_ARGS__)
+template <typename Arg1>
+void __f(const char *name, Arg1 &&arg1)
 {
-    //0 means friends
-    //1 means my play
+    cout << name << " : " << arg1 << endl;
+    //use cerr if u want to display at the bottom
+}
+template <typename Arg1, typename... Args>
+void __f(const char *names, Arg1 &&arg1, Args &&... args)
+{
+    const char *comma = strchr(names + 1, ',');
+    cout.write(names, comma - names) << " : " << arg1 << " | ";
+    __f(comma + 1, args...);
+}
+#else
+#define trace(...)
+#endif
 
-    if (i >= n)
+int powmod(int x, int y, int mod)
+{
+    int res = 1;
+    x %= mod;
+    if (x == 0)
+        return 0;
+    while (y > 0)
     {
-        dp[i][player] = 0;
-        return dp[i][player];
+        if (y & 1)
+            res = (res * x) % mod;
+        y = y >> 1;
+        x = (x * x) % mod;
     }
-
-    if (dp[i][player] != -1)
-        return dp[i][player];
-
-    if (player)
-    {
-        return dp[i][player] = min(ans(i + 1, !player), ans(i + 2, !player));
-    }
-    else
-    {
-        int sol = 1e9;
-        if (i < n && a[i] == 1)
-            sol = min(sol, ans(i + 1, !player) + 1);
-
-        if (i < n && a[i] == 0)
-            sol = min(sol, ans(i + 1, !player));
-
-        if (i + 1 < n && a[i] == 0 && a[i + 1] == 0)
-            sol = min(sol, ans(i + 2, !player));
-
-        if (i + 1 < n && a[i] == 1 && a[i + 1] == 1)
-            sol = min(sol, ans(i + 2, !player) + 2);
-
-        if (i + 1 < n && a[i] == 1 && a[i + 1] == 0)
-            sol = min(sol, ans(i + 2, !player) + 1);
-
-        if (i + 1 < n && a[i] == 0 && a[i + 1] == 1)
-            sol = min(sol, ans(i + 2, !player) + 1);
-
-        dp[i][player] = sol;
-        return dp[i][player];
-    }
+    return res;
 }
 
 void solve()
 {
-    // memset(a, 0, sizeof(a));
-    memset(dp, -1, sizeof(dp));
-
+    int n;
     cin >> n;
-
+    int a[n];
     for (int i = 0; i < n; i++)
+    {
         cin >> a[i];
-
-    int sol = ans(0, 0);
-
-    cout << dp[0][0] << "\n";
+    }
+    int ans = 0;
+    if (a[0] == 1)
+    {
+        ans++;
+    }
+    int ptr1 = 1, ptr2 = 1;
+    while (ptr1 < n)
+    {
+        if (a[ptr1] == 1)
+        {
+            int curr = 0;
+            while (a[ptr1] == 1 && ptr1 < n)
+            {
+                curr++;
+                ptr1++;
+            }
+            ans += curr / 3;
+        }
+        else
+        {
+            ptr1++;
+        }
+    }
+    cout << ans << "\n";
 }
 
 int main()
 {
-    // freopen("filename.in","r",stdin);
-    // freopen("filename.out","w",stdout);
+    // freopen("filename_input.txt","r",stdin);
+    // freopen("filename_output.txt","w",stdout);
     ios_base::sync_with_stdio(0);
     cin.tie(NULL);
     cout.tie(NULL);

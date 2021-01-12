@@ -47,94 +47,64 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-ll n;
-ll a[300005];
+int n;
+int a[300005];
 
-ll calc()
+bool isHill(int i)
 {
-    ll ans = 0;
-    for (ll i = 1; i < n - 1; i++)
-    {
-        if (a[i] > a[i + 1] && a[i] > a[i - 1])
-        {
-            ans++;
-        }
-        else if (a[i] < a[i + 1] && a[i] < a[i - 1])
-        {
-            ans++;
-        }
-    }
-    return ans;
+    if (i > 0 && i < n - 1 && a[i] > a[i - 1] && a[i] > a[i + 1])
+        return true;
+
+    return false;
+}
+
+bool isValley(int i)
+{
+    if (i > 0 && i < n - 1 && a[i] < a[i - 1] && a[i] < a[i + 1])
+        return true;
+
+    return false;
+}
+
+int calc(int i)
+{
+    int val = isHill(i - 1) + isHill(i) + isHill(i + 1) + isValley(i - 1) + isValley(i) + isValley(i + 1);
+    return val;
 }
 
 void solve()
 {
     cin >> n;
-    vector<ll> v;
-    for (ll i = 0; i < n; i++)
+    int ans = 0;
+    for (int i = 0; i < n; i++)
     {
         cin >> a[i];
     }
 
-    ll total = calc();
-    // trace(total);
-    if (total == 0)
+    for (int i = 1; i < n - 1; i++)
     {
-        cout << 0 << "\n";
-        return;
+        if (isHill(i) || isValley(i))
+            ans++;
     }
 
-    // max we can take down 3
-    bool threePossible = false;
-    int extra = 0;
-    for (ll i = 1; i < n - 3; i++)
+    // trace(ans);
+    int maxChange = 0;
+
+    for (int i = 1; i < n - 1; i++)
     {
-        if (a[i] > a[i + 1] && a[i] > a[i - 1] && a[i + 1] < a[i + 2] && a[i + 2] > a[i + 3])
-        {
-            threePossible = true;
-        }
+        int curr = calc(i);
+        int prev = a[i - 1], next = a[i + 1], mid = a[i];
+        a[i] = max(a[i - 1], a[i + 1]);
+        int newone = calc(i);
+        a[i] = min(a[i - 1], a[i + 1]);
+        int newtwo = calc(i);
+
+        maxChange = max(maxChange, curr - newone);
+        maxChange = max(maxChange, curr - newtwo);
+
+        a[i] = mid;
     }
-
-    for (ll i = 1; i < n - 3; i++)
-    {
-        if (a[i] < a[i - 1] && a[i] < a[i + 1] && a[i + 2] < a[i + 1] && a[i + 2] < a[i + 3])
-        {
-            threePossible = true;
-        }
-    }
-
-    if (threePossible)
-    {
-        cout << total - 3 - extra << "\n";
-        return;
-    }
-
-    bool twoPossible = false;
-    for (ll i = 1; i < n - 2; i++)
-    {
-        if (a[i] < a[i - 1] && a[i] < a[i + 1] && a[i + 1] > a[i + 2])
-        {
-            twoPossible = true;
-        }
-    }
-
-    for (ll i = 1; i < n - 2; i++)
-    {
-        if (a[i] > a[i - 1] && a[i] > a[i + 1] && a[i + 1] < a[i + 2])
-        {
-            twoPossible = true;
-        }
-    }
-
-    if (twoPossible)
-    {
-        cout << total - 2 << "\n";
-        return;
-    }
-
-    cout << total - 1 << "\n";
-
-    // bool exist = false;
+    cout << max(0, ans - maxChange) << "\n";
 }
 
 int main()

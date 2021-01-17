@@ -47,68 +47,47 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-const int MAXN = 1e5 + 2;
-int x[MAXN], h[MAXN];
-int LEFT = 0, RIGHT = 1, STAY = 2, n;
-int dp[MAXN][3];
-
-int calc(int i, int side)
-{
-    if (i == 0)
-        return 1;
-
-    if (i == n - 1)
-    {
-        return 1 + max(calc(i - 1, RIGHT), max(calc(i - 1, LEFT), calc(i - 1, STAY)));
-    }
-
-    if (dp[i][side] != -1)
-    {
-        return dp[i][side];
-    }
-
-    int val = 0;
-    if (side == STAY)
-    {
-        val = max(calc(i - 1, RIGHT), max(calc(i - 1, LEFT), calc(i - 1, STAY)));
-    }
-    else if (side == LEFT)
-    {
-        //if this condition is true, then its impossible to have it go left
-        if (x[i] - h[i] <= x[i - 1])
-            return 0;
-        int calcRight = 0;
-
-        //assuming it goes left, then checking the previous tree, and having it go right
-        if (x[i - 1] + h[i - 1] < x[i] - h[i])
-        {
-            calcRight = calc(i - 1, RIGHT);
-        }
-
-        val = 1 + max(calcRight, max(calc(i - 1, LEFT), calc(i - 1, STAY)));
-    }
-    else
-    {
-        if (x[i] + h[i] >= x[i + 1])
-        {
-            return 0;
-        }
-        val = 1 + max(calc(i - 1, RIGHT), max(calc(i - 1, LEFT), calc(i - 1, STAY)));
-    }
-    dp[i][side] = val;
-    return val;
-}
-
 void solve()
 {
-    cin >> n;
-    memset(dp, -1, sizeof(dp));
+    string s;
+    cin >> s;
+    int n = s.length();
+    int cnt = 0;
     for (int i = 0; i < n; i++)
     {
-        cin >> x[i] >> h[i];
+        if ((s[i] - '0') % 2 == 0)
+            cnt++;
+    }
+    if (cnt == 0)
+    {
+        cout << -1 << "\n";
+        return;
+    }
+    int lastNum = s[n - 1] - '0';
+    for (int i = 0; i < n - 1; i++)
+    {
+        int num = s[i] - '0';
+        if (num % 2 == 0 && num < lastNum)
+        {
+            swap(s[i], s[n - 1]);
+            cout << s << "\n";
+            return;
+        }
     }
 
-    cout << calc(n - 1, RIGHT);
+    for (int i = n - 2; i >= 0; i--)
+    {
+        int num = s[i] - '0';
+        if (num % 2 == 0 && num > lastNum)
+        {
+
+            swap(s[i], s[n - 1]);
+            cout << s << "\n";
+            return;
+        }
+    }
+
+    // cout << s << "\n";
 }
 
 int main()

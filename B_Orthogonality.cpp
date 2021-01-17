@@ -47,68 +47,38 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-const int MAXN = 1e5 + 2;
-int x[MAXN], h[MAXN];
-int LEFT = 0, RIGHT = 1, STAY = 2, n;
-int dp[MAXN][3];
-
-int calc(int i, int side)
+void solve()
 {
-    if (i == 0)
-        return 1;
-
-    if (i == n - 1)
+    int n;
+    cin >> n;
+    vi a, b;
+    for (int i = 0; i < n; i++)
     {
-        return 1 + max(calc(i - 1, RIGHT), max(calc(i - 1, LEFT), calc(i - 1, STAY)));
+        int x;
+        cin >> x;
+        a.PB(x);
     }
 
-    if (dp[i][side] != -1)
+    for (int i = 0; i < n; i++)
     {
-        return dp[i][side];
+        int x;
+        cin >> x;
+        b.PB(x);
     }
 
-    int val = 0;
-    if (side == STAY)
+    int ans = 0;
+    for (int i = 0; i < n; i++)
     {
-        val = max(calc(i - 1, RIGHT), max(calc(i - 1, LEFT), calc(i - 1, STAY)));
+        ans += a[i] * b[i];
     }
-    else if (side == LEFT)
+    if (ans)
     {
-        //if this condition is true, then its impossible to have it go left
-        if (x[i] - h[i] <= x[i - 1])
-            return 0;
-        int calcRight = 0;
-
-        //assuming it goes left, then checking the previous tree, and having it go right
-        if (x[i - 1] + h[i - 1] < x[i] - h[i])
-        {
-            calcRight = calc(i - 1, RIGHT);
-        }
-
-        val = 1 + max(calcRight, max(calc(i - 1, LEFT), calc(i - 1, STAY)));
+        cout << "No\n";
     }
     else
     {
-        if (x[i] + h[i] >= x[i + 1])
-        {
-            return 0;
-        }
-        val = 1 + max(calc(i - 1, RIGHT), max(calc(i - 1, LEFT), calc(i - 1, STAY)));
+        cout << "Yes\n";
     }
-    dp[i][side] = val;
-    return val;
-}
-
-void solve()
-{
-    cin >> n;
-    memset(dp, -1, sizeof(dp));
-    for (int i = 0; i < n; i++)
-    {
-        cin >> x[i] >> h[i];
-    }
-
-    cout << calc(n - 1, RIGHT);
 }
 
 int main()

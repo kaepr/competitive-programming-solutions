@@ -47,43 +47,70 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-const ll maxn = 5e5 + 10;
-ll a[maxn], presum[maxn];
-ll n, sum;
-
 void solve()
 {
-    sum = 0;
-    cin >> n;
-    for (ll i = 0; i < n; i++)
+    int n, m;
+    cin >> n >> m;
+    string s;
+    cin >> s;
+
+    int preSum[n + 1];
+    memset(preSum, 0, sizeof(preSum));
+    preSum[0] = 0;
+
+    for (int i = 0; i < n; i++)
     {
-        cin >> a[i];
-        sum += a[i];
-    }
-    if (sum % 3 != 0)
-    {
-        cout << 0 << "\n";
-        return;
-    }
-    ll sum1 = sum / 3;
-    ll sum2 = 2 * (sum / 3);
-    ll cnt1 = 0, cnt2 = 0;
-    ll ans = 0;
-    sum = 0;
-    for (ll i = 0; i < n - 1; i++)
-    {
-        sum += a[i];
-        if (sum == sum2)
+        if (s[i] == '+')
         {
-            ans += cnt1;
+            preSum[i + 1] = preSum[i] + 1;
         }
-        if (sum == sum1)
+        else
         {
-            cnt1++;
+            preSum[i + 1] = preSum[i] - 1;
         }
-        // trace(i, sum, cnt1, ans);
     }
-    cout << ans << "\n";
+
+    int preMin[n + 1];
+    int preMax[n + 1];
+    preMax[0] = 0;
+    preMin[0] = 0;
+    for (int i = 1; i <= n; i++)
+    {
+        preMin[i] = min(preMin[i - 1], preSum[i]);
+        preMax[i] = max(preMax[i - 1], preSum[i]);
+    }
+
+    int sufMax[n + 2], sufMin[n + 2];
+    memset(sufMax, 0, sizeof(sufMax));
+    memset(sufMin, 0, sizeof(sufMin));
+    sufMax[n + 1] = preSum[n];
+    sufMin[n + 1] = preSum[n];
+    int cur = preSum[n];
+
+    for (int i = n; i >= 0; i--)
+    {
+
+        sufMax[i] = max(preSum[i], sufMax[i + 1]);
+        sufMin[i] = min(preSum[i], sufMin[i + 1]);
+    }
+
+    while (m > 0)
+    {
+        int l, r;
+        cin >> l >> r;
+
+        int a = preSum[l - 1];
+        int b = preSum[r + 1];
+
+        int d1 = sufMax[r + 1] - preSum[r];
+        int d2 = sufMin[r + 1] - preSum[r];
+
+        int maxx = max(preMax[l - 1], a + d1);
+        int minn = min(preMin[l - 1], a + d2);
+
+        cout << maxx - minn + 1 << "\n";
+        m--;
+    }
 }
 
 int main()
@@ -94,8 +121,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while (t > 0)
     {
         solve();

@@ -47,43 +47,9 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-const ll maxn = 5e5 + 10;
-ll a[maxn], presum[maxn];
-ll n, sum;
-
 void solve()
 {
-    sum = 0;
-    cin >> n;
-    for (ll i = 0; i < n; i++)
-    {
-        cin >> a[i];
-        sum += a[i];
-    }
-    if (sum % 3 != 0)
-    {
-        cout << 0 << "\n";
-        return;
-    }
-    ll sum1 = sum / 3;
-    ll sum2 = 2 * (sum / 3);
-    ll cnt1 = 0, cnt2 = 0;
-    ll ans = 0;
-    sum = 0;
-    for (ll i = 0; i < n - 1; i++)
-    {
-        sum += a[i];
-        if (sum == sum2)
-        {
-            ans += cnt1;
-        }
-        if (sum == sum1)
-        {
-            cnt1++;
-        }
-        // trace(i, sum, cnt1, ans);
-    }
-    cout << ans << "\n";
+    
 }
 
 int main()

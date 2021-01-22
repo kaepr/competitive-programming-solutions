@@ -49,38 +49,35 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    ll n;
-    cin >> n;
-    vector<ll> a, b;
+    ll n, k;
+    cin >> n >> k;
+    vector<ll> a;
     for (ll i = 0; i < n; i++)
     {
         ll x;
         cin >> x;
         a.PB(x);
     }
-
+    map<ll, ll> mp;
+    ll maxx = 0;
     for (ll i = 0; i < n; i++)
     {
-        ll x;
-        cin >> x;
-        b.PB(x);
-    }
-
-    vector<ll> diff, copy;
-    for (ll i = 0; i < n; i++)
-    {
-        diff.PB(a[i] - b[i]);
-    }
-    sort(diff.begin(), diff.end());
-    ll ans = 0;
-    for (ll i = 0; i < n; i++)
-    {
-
-        if (diff[i] > 0)
+        if (a[i] % k == 0)
         {
-            ll num = -1 * diff[i] + 1;
-            ll j = lower_bound(diff.begin(), diff.end(), num) - diff.begin();
-            ans += i - j;
+            continue;
+        }
+        if (a[i] % k != 0)
+            mp[k - a[i] % k]++;
+        maxx = max(maxx, mp[k - a[i] % k]);
+    }
+
+    ll ans = 0;
+
+    for (auto x : mp)
+    {
+        if (x.second == maxx)
+        {
+            ans = max(ans, k * (maxx - 1) + x.first + 1);
         }
     }
     cout << ans << "\n";
@@ -94,8 +91,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while (t > 0)
     {
         solve();

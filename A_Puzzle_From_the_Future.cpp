@@ -49,43 +49,68 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    string s;
-    cin >> s;
-    ll n = s.length();
-    ll a[n];
-    for (ll i = 0; i < n; i++)
+    int n;
+    cin >> n;
+    string b;
+    cin >> b;
+    string a = "";
+    char prev;
+    for (int i = 0; i < n; i++)
     {
-        if (s[i] == '+')
+        if (i == 0)
         {
-            a[i] = 1;
+            if (b[i] == '1')
+            {
+                a += '1';
+                prev = '2';
+            }
+            else if (b[i] == '0')
+            {
+                a += '1';
+                prev = '1';
+            }
         }
         else
         {
-            a[i] = -1;
+            if (b[i] == '1')
+            {
+                if (prev == '2')
+                {
+                    a += '0';
+                    prev = '1';
+                }
+                else if (prev == '1')
+                {
+                    a += '1';
+                    prev = '2';
+                }
+                else if (prev == '0')
+                {
+                    a += '1';
+                    prev = '2';
+                }
+            }
+            else if (b[i] == '0')
+            {
+                if (prev == '2')
+                {
+                    a += '1';
+                    prev = '1';
+                }
+                else if (prev == '1')
+                {
+                    a += '0';
+                    prev = '0';
+                }
+                else if (prev == '0')
+                {
+                    a += '1';
+                    prev = '1';
+                }
+            }
         }
     }
-    ll pre[n];
-    pre[0] = a[0];
-    for (ll i = 1; i < n; i++)
-    {
-        pre[i] = a[i] + pre[i - 1];
-    }
-    // for (ll i = 0; i < n; i++)
-    // {
-    //     cout << pre[i] << " ";
-    // }
-    // cout << "\n";
-    ll ans = 0;
-    ll val = 0;
-    for (ll i = 0; i < n; i++)
-    {
-        if (val + pre[i] < 0)
-        {
-            val++;
-            ans += i + 1;
-        }
-    }
-    cout << ans + n << "\n";
+    cout << a << '\n';
 }
 
 int main()

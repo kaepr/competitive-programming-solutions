@@ -49,41 +49,43 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    ll n;
-    cin >> n;
-    vector<ll> a, b;
-    for (ll i = 0; i < n; i++)
-    {
-        ll x;
-        cin >> x;
-        a.PB(x);
-    }
+    int n, m;
+    cin >> n >> m;
+    vi a(n);
+    for (int i = 0; i < n; i++)
+        cin >> a[i];
 
-    for (ll i = 0; i < n; i++)
+    int maxx = 0, maxxIndex = 0;
+    if (a[0] % m == 0)
     {
-        ll x;
-        cin >> x;
-        b.PB(x);
+        maxx = a[0] / m;
     }
-
-    vector<ll> diff, copy;
-    for (ll i = 0; i < n; i++)
+    else
     {
-        diff.PB(a[i] - b[i]);
+        maxx = a[0] / m + 1;
     }
-    sort(diff.begin(), diff.end());
-    ll ans = 0;
-    for (ll i = 0; i < n; i++)
-    {
+    // maxx = (a[0] + 1) / m;
+    maxxIndex = 0;
 
-        if (diff[i] > 0)
+    for (int i = 1; i < n; i++)
+    {
+        int curr = 0;
+        if (a[i] % m == 0)
         {
-            ll num = -1 * diff[i] + 1;
-            ll j = lower_bound(diff.begin(), diff.end(), num) - diff.begin();
-            ans += i - j;
+            curr = a[i] / m;
+        }
+        else
+        {
+            curr = a[i] / m + 1;
+        }
+
+        if (maxx <= curr)
+        {
+            maxx = max(maxx, curr);
+            maxxIndex = i;
         }
     }
-    cout << ans << "\n";
+    cout << maxxIndex + 1 << "\n";
 }
 
 int main()

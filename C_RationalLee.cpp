@@ -49,8 +49,8 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    ll n;
-    cin >> n;
+    ll n, k;
+    cin >> n >> k;
     vector<ll> a, b;
     for (ll i = 0; i < n; i++)
     {
@@ -59,30 +59,51 @@ void solve()
         a.PB(x);
     }
 
-    for (ll i = 0; i < n; i++)
+    for (ll i = 0; i < k; i++)
     {
         ll x;
         cin >> x;
         b.PB(x);
     }
+    sort(a.begin(), a.end());
+    reverse(a.begin(), a.end());
+    sort(b.begin(), b.end());
+    // reverse(b.begin(), b.end());
 
-    vector<ll> diff, copy;
-    for (ll i = 0; i < n; i++)
-    {
-        diff.PB(a[i] - b[i]);
-    }
-    sort(diff.begin(), diff.end());
+    ll ptr1 = 0, ptr2 = n - 1;
     ll ans = 0;
-    for (ll i = 0; i < n; i++)
+    for (ll i = 0; i < b.size(); i++)
     {
-
-        if (diff[i] > 0)
+        if (b[i] == 1)
         {
-            ll num = -1 * diff[i] + 1;
-            ll j = lower_bound(diff.begin(), diff.end(), num) - diff.begin();
-            ans += i - j;
+            ans += 2 * a[ptr1];
+            ptr1++;
+            b[i]--;
         }
+        else
+        {
+            ans += a[ptr1];
+            ptr1++;
+            b[i]--;
+            // ans += a[ptr2];
+            // ptr2 -= (b[i] - 2);
+        }
+        // trace(ans);
     }
+    //we have used elemets from 0...ptr1 - 1, so we need to assign remaining elements
+    // trace(ptr1);
+    for (int i = 0; i < b.size(); i++)
+    {
+        if (b[i] != 0)
+        {
+            //we are at ptr1, and weight is b[i]
+            //as its sorted, so take ptr1 + b[i] - 1 element
+            ans += a[ptr1 + b[i] - 1];
+            ptr1 = ptr1 + b[i];
+        }
+        // trace(ans);
+    }
+
     cout << ans << "\n";
 }
 
@@ -94,8 +115,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while (t > 0)
     {
         solve();

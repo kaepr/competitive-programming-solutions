@@ -47,43 +47,87 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
+const ll N = 1e5 + 10;
+ll node[4 * N];
+
+void update(ll v, ll tl, ll tr, ll id, ll val)
+{
+    if (tl == id && tr == id)
+    {
+        node[v] = val;
+        return;
+    }
+
+    if (id > tr || id < tl)
+    {
+        return;
+    }
+
+    ll tm = tl + (tr - tl) / 2;
+    update(2 * v, tl, tm, id, val);
+    update(2 * v + 1, tm + 1, tr, id, val);
+
+    node[v] = node[2 * v + 1] + node[2 * v];
+}
+
+ll query(ll v, ll tl, ll tr, ll l, ll r)
+{
+    if (tl > r || tr < l)
+    {
+        return 0;
+    }
+
+    if (l <= tl && tr <= r)
+    {
+        //l ... tl ... tr ... r
+        // cout << "HAPPENS\n";
+        return node[v];
+    }
+    ll tm = tl + (tr - tl) / 2;
+    ll ans = 0;
+    ans += query(2 * v, tl, tm, l, r);
+    ans += query(2 * v + 1, tm + 1, tr, l, r);
+    return ans;
+}
+
 void solve()
 {
-    ll n;
-    cin >> n;
-    vector<ll> a, b;
+    ll n, m;
+    cin >> n >> m;
     for (ll i = 0; i < n; i++)
     {
         ll x;
         cin >> x;
-        a.PB(x);
+        update(1, 0, N - 1, i, x);
     }
-
-    for (ll i = 0; i < n; i++)
+    // for (ll i = 0; i < n; i++)
+    // {
+    //     cout << node[i] << " ";
+    // }
+    // cout << "\n";
+    while (m > 0)
     {
-        ll x;
-        cin >> x;
-        b.PB(x);
-    }
-
-    vector<ll> diff, copy;
-    for (ll i = 0; i < n; i++)
-    {
-        diff.PB(a[i] - b[i]);
-    }
-    sort(diff.begin(), diff.end());
-    ll ans = 0;
-    for (ll i = 0; i < n; i++)
-    {
-
-        if (diff[i] > 0)
+        //1 = update
+        //2 = query
+        ll q;
+        cin >> q;
+        if (q == 1)
         {
-            ll num = -1 * diff[i] + 1;
-            ll j = lower_bound(diff.begin(), diff.end(), num) - diff.begin();
-            ans += i - j;
+
+            ll idx, val;
+            cin >> idx >> val;
+            // trace(q, idx, val);
+            update(1, 0, N - 1, idx, val);
         }
+        else if (q == 2)
+        {
+            ll l, r;
+            cin >> l >> r;
+            // trace(q, l, r);
+            cout << query(1, 0, N - 1, l, r - 1) << "\n";
+        }
+        m--;
     }
-    cout << ans << "\n";
 }
 
 int main()

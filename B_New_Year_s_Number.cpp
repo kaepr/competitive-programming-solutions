@@ -49,6 +49,32 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
+    ll num;
+    cin >> num;
+    ll maxn = num + 2025;
+    for (ll i = 0; i < maxn / 2021; i++)
+    {
+        //i is number of 2021
+        ll diff = num - 2021 * i;
+        if (diff % 2020 == 0 && diff >= 0)
+        {
+            cout << "YES\n";
+            return;
+        }
+    }
+
+    for (ll i = 0; i < maxn / 2020; i++)
+    {
+        //i is number of 2021
+        ll diff = num - 2020 * i;
+        if (diff % 2021 == 0 && diff >= 0)
+        {
+            cout << "YES\n";
+            return;
+        }
+    }
+
+    cout << "NO\n";
 }
 
 int main()

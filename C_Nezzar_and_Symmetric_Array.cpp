@@ -49,6 +49,22 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
+    ll n;
+    cin >> n;
+    vector<ll> a;
+    for (ll i = 0; i < n; i++)
+    {
+        ll x;
+        cin >> x;
+        a.PB(x);
+    }
+
+    
+
+
+
+
+
 }
 
 int main()

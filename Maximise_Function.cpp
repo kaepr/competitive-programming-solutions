@@ -21,7 +21,7 @@ void __f(const char *name, Arg1 &&arg1)
     //use cerr if u want to display at the bottom
 }
 template <typename Arg1, typename... Args>
-void __f(const char *names, Arg1 &&arg1, Args &&... args)
+void __f(const char *names, Arg1 &&arg1, Args &&...args)
 {
     const char *comma = strchr(names + 1, ',');
     cout.write(names, comma - names) << " : " << arg1 << " | ";
@@ -49,6 +49,25 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
+    ll n;
+    cin >> n;
+    vector<ll> a;
+    for (ll i = 0; i < n; i++)
+    {
+        ll x;
+        cin >> x;
+        a.PB(x);
+    }
+    sort(a.begin(), a.end());
+    ll x = a[0];
+    ll z = a[n - 1];
+    ll maxx = 0;
+    for (ll i = 1; i < n - 1; i++)
+    {
+        ll curr = abs(x - a[i]) + abs(a[i] - z) + abs(z - x);
+        maxx = max(maxx, curr);
+    }
+    cout << maxx << "\n";
 }
 
 int main()

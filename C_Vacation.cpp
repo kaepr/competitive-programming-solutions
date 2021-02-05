@@ -47,8 +47,33 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
+const ll MAXN = 1e5 + 10;
+ll n;
+
+ll a[MAXN][3];
+ll dp[MAXN][3];
+
 void solve()
 {
+    memset(dp, -1, sizeof(dp));
+    cin >> n;
+    for (ll i = 0; i < n; i++)
+    {
+        cin >> a[i][0] >> a[i][1] >> a[i][2];
+    }
+
+    dp[0][0] = a[0][0];
+    dp[0][1] = a[0][1];
+    dp[0][2] = a[0][2];
+
+    for (ll i = 1; i < n; i++)
+    {
+        dp[i][0] = a[i][0] + max(dp[i-1][1], dp[i-1][2]);
+        dp[i][1] = a[i][1] + max(dp[i-1][0], dp[i-1][2]);
+        dp[i][2] = a[i][2] + max(dp[i-1][1], dp[i-1][0]);
+    }
+
+    cout << max(dp[n - 1][0], max(dp[n - 1][1], dp[n - 1][2])) << "\n";
 }
 
 int main()
@@ -59,8 +84,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t;
-    cin >> t;
+    int t = 1;
+    // cin >> t;
     while (t > 0)
     {
         solve();

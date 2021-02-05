@@ -49,6 +49,45 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
+    ll a, b, k;
+    cin >> a >> b >> k;
+    vector<ll> boys, girls;
+    for (ll i = 0; i < k; i++)
+    {
+        ll x;
+        cin >> x;
+        boys.PB(x);
+    }
+
+    for (ll i = 0; i < k; i++)
+    {
+        ll x;
+        cin >> x;
+        girls.PB(x);
+    }
+    ll sz = a + 2;
+    vector<ll> adj[sz];
+
+    ll bsz[a + 1];
+    ll gsz[b + 1];
+
+    memset(bsz, 0, sizeof(bsz));
+    memset(gsz, 0, sizeof(gsz));
+
+    for (ll i = 0; i < k; i++)
+    {
+        bsz[boys[i]]++;
+        gsz[girls[i]]++;
+        adj[boys[i]].PB(girls[i]);
+    }
+
+    ll ans = 0;
+    for (ll i = 0; i < k; i++)
+    {
+        ans += k - bsz[boys[i]] - gsz[girls[i]] + 1;
+    }
+
+    cout << ans / 2 << "\n";
 }
 
 int main()

@@ -49,6 +49,7 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
+    
 }
 
 int main()

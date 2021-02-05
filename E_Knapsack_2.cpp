@@ -47,8 +47,81 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
+const ll maxn = 105;
+const ll maxn2 = 1e5 + 10;
+ll w[maxn], v[maxn];
+ll dp[maxn][maxn2];
+ll n, max_weight, max_val;
+
+ll calc(ll ptr, ll curr_val)
+{
+    if (ptr == 0 && curr_val == 0)
+        return 0;
+
+    if (ptr == 0)
+    {
+        return INT_MAX;
+    }
+
+    if (dp[ptr][curr_val] != -1)
+    {
+        return dp[ptr][curr_val];
+    }
+
+    ll ans = max_weight + 1;
+
+    if (v[ptr] <= curr_val)
+    {
+        ans = min(w[ptr] + calc(ptr - 1, curr_val - v[ptr]), calc(ptr - 1, curr_val));
+    }
+    else
+    {
+        ans = calc(ptr - 1, curr_val);
+    }
+
+    dp[ptr][curr_val] = ans;
+
+    return ans;
+}
+
 void solve()
 {
+    memset(dp, -1, sizeof(dp));
+    cin >> n >> max_weight;
+
+    // trace(n, max_weight);
+
+    max_val = 0;
+
+    for (ll i = 1; i <= n; i++)
+    {
+        ll x, y;
+        cin >> x >> y;
+        w[i] = x;
+        v[i] = y;
+        max_val += v[i];
+    }
+
+
+    for (ll i = 1; i <= max_val; i++)
+    {
+        calc(n, i);
+    }
+
+    ll sol = 0;
+
+    for (ll i = 0; i <= n; i++)
+    {
+        for (ll j = 0; j <= max_val; j++)
+        {
+            if (dp[i][j] <= max_weight && dp[i][j] != -1)
+            {
+                sol = max(sol, j);
+            }
+        }
+    }
+
+    cout << sol << "\n";
 }
 
 int main()
@@ -59,8 +132,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t;
-    cin >> t;
+    int t = 1;
+    // cin >> t;
     while (t > 0)
     {
         solve();

@@ -47,8 +47,45 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
+const ll maxn = 1e5 + 5;
+ll n;
+ll c[maxn], a[maxn], b[maxn], len[maxn];
+
 void solve()
 {
+    cin >> n;
+    for (ll i = 0; i < n; i++)
+    {
+        cin >> c[i];
+    }
+
+    for (ll i = 0; i < n; i++)
+    {
+        cin >> a[i];
+    }
+
+    for (ll i = 0; i < n; i++)
+    {
+        cin >> b[i];
+    }
+
+    len[0] = 0;
+    ll ans = 0;
+    for (ll i = 1; i < n; i++)
+    {
+        if (a[i] == b[i])
+        {
+            len[i] = c[i] + 1;
+        }
+        else
+        {
+            len[i] = c[i] + 1 + max(abs(a[i] - b[i]), len[i - 1] - abs(a[i] - b[i]));
+        }
+        ans = max(ans, len[i]);
+        // cout << len[i] << " ";
+    }
+    // cout << "\n";
+    cout << ans << "\n";
 }
 
 int main()

@@ -47,8 +47,57 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
+const ll maxn = 105;
+const ll maxn2 = 1e5 + 10;
+ll w[maxn], v[maxn];
+ll dp[maxn][maxn2];
+ll n, sz;
+
+ll calc(ll ptr, ll weight)
+{
+
+    if (ptr == 0 || weight < 0)
+    {
+        return 0;
+    }
+    // cout << "here\n";
+
+    if (dp[ptr][weight] != -1)
+    {
+        return dp[ptr][weight];
+    }
+
+    ll ans = 0;
+
+    if (w[ptr] <= weight)
+    {
+        ans = max(v[ptr] + calc(ptr - 1, weight - w[ptr]), calc(ptr - 1, weight));
+    }
+    else
+    {
+        ans = calc(ptr - 1, weight);
+    }
+
+    dp[ptr][weight] = ans;
+
+    return ans;
+}
+
 void solve()
 {
+    memset(dp, -1, sizeof(dp));
+    cin >> n >> sz;
+
+    for (ll i = 1; i <= n; i++)
+    {
+        ll x, y;
+        cin >> x >> y;
+        w[i] = x;
+        v[i] = y;
+    }
+
+    cout << calc(n, sz);
+    // cout <<
 }
 
 int main()
@@ -59,8 +108,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t;
-    cin >> t;
+    int t = 1;
+    // cin >> t;
     while (t > 0)
     {
         solve();

@@ -49,6 +49,24 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
+    ll n, k;
+    cin >> n >> k;
+    ll num = n / k;
+    ll ck = k;
+    while (n > k)
+    {
+        k += ck;
+    }
+
+    // trace(n, k);
+    if (k % n == 0)
+    {
+        cout << k / n << "\n";
+    }
+    else
+    {
+        cout << k / n + 1 << "\n";
+    }
 }
 
 int main()

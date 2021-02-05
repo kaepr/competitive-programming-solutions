@@ -47,8 +47,67 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
+bool check(int num, int d)
+{
+    while (num > 0)
+    {
+        int dig = num % 10;
+        if (dig == d)
+            return true;
+        num /= 10;
+    }
+    return false;
+}
+
 void solve()
 {
+    int q, d;
+    cin >> q >> d;
+    // trace(q, d);
+    while (q > 0)
+    {
+
+        int n;
+        cin >> n;
+        // trace(n);
+        if (n > 10 * d)
+        {
+            cout << "YES\n";
+        }
+        else if (d == 1)
+        {
+            cout << "YES\n";
+        }
+        else if (check(n, d))
+        {
+            cout << "YES\n";
+        }
+        else
+        {
+            bool flag = false;
+            int num = d;
+
+            for (int i = 1; i <= 10; i++)
+            {
+                num = i * d;
+                if (check(n - num, d))
+                {
+                    flag = true;
+                    break;
+                }
+            }
+
+            if (flag)
+            {
+                cout << "YES\n";
+            }
+            else
+            {
+                cout << "NO\n";
+            }
+        }
+        q--;
+    }
 }
 
 int main()

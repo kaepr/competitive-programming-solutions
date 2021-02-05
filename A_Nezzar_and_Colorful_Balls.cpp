@@ -49,6 +49,42 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
+    int n;
+    cin >> n;
+    vector<pair<int, int>> a;
+    for (int i = 0; i < n; i++)
+    {
+        int x;
+        cin >> x;
+        a.PB(MP(x, 0));
+    }
+    int cnt = 0;
+    int cc = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if (a[i].S == 1)
+        {
+            continue;
+        }
+        cnt++;
+        int num = a[i].F;
+        a[i].S = 1;
+        cc++;
+        for (int j = i + 1; j < n; j++)
+        {
+            if (a[j].F > num && a[j].S == 0)
+            {
+                a[j].S = 1;
+                num = a[j].F;
+                cc++;
+            }
+        }
+        if (cc == n)
+        {
+            break;
+        }
+    }
+    cout << cnt << "\n";
 }
 
 int main()

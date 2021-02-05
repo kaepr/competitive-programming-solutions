@@ -47,8 +47,65 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
+int dp[3005][3005];
+string s, t;
+vector<char> str;
+
+int calc(int ptr1, int ptr2)
+{
+    if (ptr1 < 0 || ptr2 < 0)
+    {
+        return 0;
+    }
+
+    if (dp[ptr1][ptr2] != -1)
+    {
+        return dp[ptr1][ptr2];
+    }
+
+    int ans;
+
+    if (s[ptr1] == t[ptr2])
+    {
+        // trace(s[ptr1], t[ptr2]);
+        str.PB(s[ptr1]);
+        ans = 1 + calc(ptr1 - 1, ptr2 - 1);
+    }
+    else
+    {
+        ans = max(calc(ptr1 - 1, ptr2), calc(ptr1, ptr2 - 1));
+    }
+
+    dp[ptr1][ptr2] = ans;
+    return ans;
+}
+
 void solve()
 {
+    memset(dp, -1, sizeof(dp));
+
+    cin >> s >> t;
+
+    int sz = s.length();
+    int tz = t.length();
+
+    vector<char> v;
+
+    calc(sz - 1, tz - 1);
+
+    for (auto x : v)
+    {
+        cout << x;
+    }
+
+    for (int i = 0; i <= tz; i++)
+    {
+        for (int j = 0; j <= sz; j++)
+        {
+            cout << dp[i][j] << " ";
+        }
+        cout << "\n";
+    }
 }
 
 int main()
@@ -59,8 +116,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t;
-    cin >> t;
+    int t = 1;
+    // cin >> t;
     while (t > 0)
     {
         solve();

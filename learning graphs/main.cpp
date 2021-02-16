@@ -51,6 +51,7 @@ void Graph::DFS(int v){
     bool *visited = new bool[V];
     for(int i=0; i<V; i++)
         visited[i]=false;
+
     
     //call the recursive helper function
     //to print DFS traversal

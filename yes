@@ -1,0 +1,12 @@
+{
+    "cmd": "mingw32-g++.exe", "-o", "$file_base_name", "$file"],
+
+    "variants": 
+
+        {   
+            "cmd": "start", "cmd", "/k", "$file_base_name"],
+            "shell": true,
+            "name": "Run"
+        }
+    ]
+}

@@ -1,1 +1,0 @@
-[{"input":"2 2\nC M\nY Y\n","output":"#Color\n"},{"input":"3 2\nW W\nW W\nB B\n","output":"#Black&amp;White\n"},{"input":"1 1\nW\n","output":"#Black&amp;White\n"}]

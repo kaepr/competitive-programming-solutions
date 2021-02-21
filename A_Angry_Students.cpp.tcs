@@ -1,1 +1,0 @@
-[{"input":"1\n4\nPPAP","output":"1"},{"input":"3\n12\nAPPAPPPAPPPP\n3\nAAP\n3\nPPA","output":"4\n1\n0"}]

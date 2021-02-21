@@ -1,1 +1,0 @@
-[{"input":"1\nABC","output":"ABC"},{"input":"5\nA\nABA\nABA\nA\nA","output":"A"}]

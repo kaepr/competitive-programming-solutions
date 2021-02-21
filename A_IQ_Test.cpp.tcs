@@ -1,1 +1,0 @@
-[{"input":"####\n.#..\n####\n....\n","output":"YES\n"},{"input":"####\n....\n####\n....\n","output":"NO\n"}]

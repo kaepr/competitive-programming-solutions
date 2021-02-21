@@ -46,65 +46,54 @@ int powmod(int x, int y, int mod)
     }
     return res;
 }
+//1000000000000
+//10000
 
-const ll maxn = 1e6 + 10;
-bool prime[maxn];
-ll pre[maxn];
-
-void calc()
+bool chk(ll num)
 {
-    for (ll p = 2; p * p <= maxn; p++)
+    // trace(num);
+    ll l = 1, r = 1e6 + 5;
+    while (l <= r)
     {
-        if (prime[p] == 0)
+        ll m = l + (r - l) / 2;
+        ll val = m * m * m;
+        // trace(m, val);
+        if (val == num)
         {
-            for (ll i = p * p; i <= maxn; i += p)
-            {
-                prime[i] = 1;
-            }
+            return true;
         }
-    }
-
-    pre[0] = 0;
-    pre[1] = 0;
-    for (ll i = 2; i <= maxn; i++)
-    {
-        ll cnt;
-        if (prime[i] == 0)
+        else if (val > num)
         {
-            cnt = 1;
+            r = m - 1;
         }
         else
         {
-            cnt = 0;
+            l = m + 1;
         }
-
-        // else cnt = 0;
-
-        pre[i] = pre[i - 1] + cnt;
-        // trace(pre[i]);
     }
+    return false;
 }
 
 void solve()
 {
-    ll x, y;
-    cin >> x >> y;
-    // trace(x, y);
-    // // ll n = x;
-    // trace(pre[x], y + 1);
-    // for (int i = 0; i < 20; i++)
-    // {
-    //     trace(i, prime[i]);
-    // }
-    // cout << "\n";
-    if (pre[x] < (y + 1))
+    ll x;
+    cin >> x;
+    for (ll i = 1; i <= 10010; i++)
     {
-        cout << "Chef\n";
+        ll temp = x - i * i * i;
+        if (temp < 0)
+        {
+            cout << "NO\n";
+            return;
+        }
+        // trace(i);
+        if (chk(temp))
+        {
+            cout << "YES\n";
+            return;
+        }
     }
-    else
-    {
-        cout << "Divyam\n";
-    }
+    cout << "NO\n";
 }
 
 int main()
@@ -114,12 +103,7 @@ int main()
     ios_base::sync_with_stdio(0);
     cin.tie(NULL);
     cout.tie(NULL);
-    calc();
 
-    // for (ll i = 0; i < 10; i++)
-    // {
-    //     trace(i, prime[i]);
-    // }
     int t;
     cin >> t;
     while (t > 0)

@@ -1,3 +1,4 @@
+
 #include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
@@ -21,7 +22,7 @@ void __f(const char *name, Arg1 &&arg1)
     //use cerr if u want to display at the bottom
 }
 template <typename Arg1, typename... Args>
-void __f(const char *names, Arg1 &&arg1, Args &&... args)
+void __f(const char *names, Arg1 &&arg1, Args &&...args)
 {
     const char *comma = strchr(names + 1, ',');
     cout.write(names, comma - names) << " : " << arg1 << " | ";
@@ -49,32 +50,58 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    int n1, n2, n3;
-    cin >> n1 >> n2 >> n3;
-    vi v1, v2, v3;
-    for (int i = 0; i < n1; i++)
-    {
-        int x;
-        cin >> x;
-        v1.PB(x);
-    }
-
-    for (int i = 0; i < n2; i++)
-    {
-        int x;
-        cin >> x;
-        v2.PB(x);
-    }
-
-    for (int i = 0; i < n3; i++)
-    {
-        int x;
-        cin >> x;
-        v3.PB(x);
-    }
-
+ 
+    int sum = B - A;
+    //sum is the maximum S could have cost
     
+    int minn = C;
+    if (C % D == 0)
+    {
+        minn = C;
+    }
+    else
+    {
+        if (D < C)
+        {
+            minn = C + C % D;
+        }
+        else
+        {
+            minn = C + D % C;
+        }
+    }
 
+    // so S can we values from minn to sum
+
+    if (sum % D == 0)
+    {
+    }
+    else
+    {
+        if (D < sum)
+        {
+            sum = sum + sum % D;
+        }
+        else
+        {
+            sum = sum + D % sum;
+        }
+    }
+
+ 
+
+    int diff = sum - minn;
+ 
+
+    int ans = diff / D;
+    ans++;
+
+    if (diff < D)
+    {
+    return 0;
+    }
+
+    return ans;
 }
 
 int main()

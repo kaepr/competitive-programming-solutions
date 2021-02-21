@@ -47,64 +47,82 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-const ll maxn = 1e6 + 10;
-bool prime[maxn];
-ll pre[maxn];
-
-void calc()
-{
-    for (ll p = 2; p * p <= maxn; p++)
-    {
-        if (prime[p] == 0)
-        {
-            for (ll i = p * p; i <= maxn; i += p)
-            {
-                prime[i] = 1;
-            }
-        }
-    }
-
-    pre[0] = 0;
-    pre[1] = 0;
-    for (ll i = 2; i <= maxn; i++)
-    {
-        ll cnt;
-        if (prime[i] == 0)
-        {
-            cnt = 1;
-        }
-        else
-        {
-            cnt = 0;
-        }
-
-        // else cnt = 0;
-
-        pre[i] = pre[i - 1] + cnt;
-        // trace(pre[i]);
-    }
-}
-
 void solve()
 {
-    ll x, y;
-    cin >> x >> y;
-    // trace(x, y);
-    // // ll n = x;
-    // trace(pre[x], y + 1);
-    // for (int i = 0; i < 20; i++)
-    // {
-    //     trace(i, prime[i]);
-    // }
-    // cout << "\n";
-    if (pre[x] < (y + 1))
+    int n;
+    cin >> n;
+    vi a(n);
+    for (int i = 0; i < n; i++)
+        cin >> a[i];
+
+    int c0 = 0, c1 = 0, c2 = 0;
+    int tot = n / 3;
+    for (int i = 0; i < n; i++)
     {
-        cout << "Chef\n";
+        if (a[i] % 3 == 0)
+            c0++;
+
+        if (a[i] % 3 == 1)
+            c1++;
+
+        if (a[i] % 3 == 2)
+            c2++;
     }
-    else
+
+    // trace(c0, c1, c2);
+    int ans = 0;
+    if (c0 < tot)
     {
-        cout << "Divyam\n";
+        while (c2 > tot && c0 < tot)
+        {
+            ans++;
+            c0++;
+            c2--;
+        }
+
+        while (c1 > tot && c0 < tot)
+        {
+            ans += 2;
+            c0++;
+            c1--;
+        }
     }
+
+    if (c1 < tot)
+    {
+        while (c0 > tot && c1 < tot)
+        {
+            ans++;
+            c0--;
+            c1++;
+        }
+
+        while (c2 > tot && c1 < tot)
+        {
+            ans += 2;
+            c1++;
+            c2--;
+        }
+    }
+
+    if (c2 < tot)
+    {
+        while (c1 > tot && c2 < tot)
+        {
+            ans++;
+            c1--;
+            c2++;
+        }
+
+        while (c0 > tot && c2 < tot)
+        {
+            ans += 2;
+            c2++;
+            c0--;
+        }
+    }
+    cout << ans << "\n";
+    // trace(ans);
 }
 
 int main()
@@ -114,12 +132,7 @@ int main()
     ios_base::sync_with_stdio(0);
     cin.tie(NULL);
     cout.tie(NULL);
-    calc();
 
-    // for (ll i = 0; i < 10; i++)
-    // {
-    //     trace(i, prime[i]);
-    // }
     int t;
     cin >> t;
     while (t > 0)

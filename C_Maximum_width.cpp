@@ -48,6 +48,50 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
+    int n, m;
+    cin >> n >> m;
+    string s, t;
+    cin >> s >> t;
+
+    int left[m], right[m];
+    int ptr = 0;
+
+    for (int i = 0; i < n; i++)
+    {
+        if (s[i] == t[ptr])
+        {
+            left[ptr] = i;
+            ptr++;
+        }
+        if (ptr == m)
+            break;
+    }
+
+    ptr = m - 1;
+    for (int i = n - 1; i >= 0; i--)
+    {
+        if (s[i] == t[ptr])
+        {
+            right[ptr] = i;
+            ptr--;
+        }
+        if (ptr < 0)
+        {
+            break;
+        }
+    }
+
+    // for (int i = 0; i < m; i++)
+    // {
+    //     trace(left[i], right[i]);
+    // }
+
+    int maxx = 0;
+    for (int i = 1; i < m; i++)
+    {
+        maxx = max(maxx, right[i] - left[i - 1]);
+    }
+    cout << maxx << "\n";
 }
 
 int main()
@@ -57,18 +101,6 @@ int main()
     ios_base::sync_with_stdio(0);
     cin.tie(NULL);
     cout.tie(NULL);
-
-    int a = 10, b = 5;
-    trace(a, b, a, a, a, a, a, a);
-    vi v;
-    for (int i = 0; i < 5; i++)
-    {
-        v.PB(i);
-    }
-    for (auto x : v)
-    {
-        trace(x, x, x, x);
-    }
 
     int t = 1;
     // cin >> t;

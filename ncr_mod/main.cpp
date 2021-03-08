@@ -30,9 +30,9 @@ void __f(const char *names, Arg1 &&arg1, Args &&...args)
 #define trace(...)
 #endif
 
-int powmod(int x, int y, int mod)
+ll powmod(ll x, ll y, ll mod)
 {
-    int res = 1;
+    ll res = 1;
     x %= mod;
     if (x == 0)
         return 0;
@@ -46,32 +46,60 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
+const ll N = 1e6 + 10;
+ll fact[N], invfact[N];
+ll n, a, b;
+
+bool check(ll val, ll a, ll b)
+{
+    while (val > 0)
+    {
+        if (val % 10 == a || val % 10 == b)
+        {
+            val /= 10;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+void init()
+{
+    fact[0] = 1;
+    for (int i = 1; i < N; i++)
+    {
+        fact[i] = fact[i - 1] * i;
+        fact[i] %= MOD;
+    }
+}
+
+ll getC(int n, int i)
+{
+    ll res = fact[n];
+    ll div = fact[n - i] * fact[i];
+    div %= MOD;
+    div = powmod(div, MOD - 2, MOD);
+    return (res * div) % MOD;
+}
+
 void solve()
 {
 }
 
 int main()
 {
-    // freopen("filename_input.txt","r",stdin);
-    // freopen("filename_output.txt","w",stdout);
+    init();
+    // freopen("input.txt","r",stdin);
+    // freopen("output.txt","w",stdout);
     ios_base::sync_with_stdio(0);
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int a = 10, b = 5;
-    trace(a, b, a, a, a, a, a, a);
-    vi v;
-    for (int i = 0; i < 5; i++)
-    {
-        v.PB(i);
-    }
-    for (auto x : v)
-    {
-        trace(x, x, x, x);
-    }
-
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while (t > 0)
     {
         solve();

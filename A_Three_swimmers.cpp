@@ -48,6 +48,44 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
+    ll p, a, b, c;
+    cin >> p >> a >> b >> c;
+
+    ll time = 1e18 + 50;
+    // if (p <= a)
+    // {
+    //     time = min(time, a - p);
+    // }
+
+    // if (p <= b)
+    // {
+    //     time = min(time, b - p);
+    // }
+
+    // if (p <= c)
+    // {
+    //     time = min(time, c - p);
+    // }
+
+    ll orig = a;
+    ll d = (p + a - 1) / a;
+    a = a * d;
+    // trace(a);
+    time = min(time, a - p);
+
+    orig = b;
+    d = (p + b - 1) / b;
+    b = b * d;
+    // trace(b);
+    time = min(time, b - p);
+
+    orig = c;
+    d = (p + c - 1) / c;
+    c = c * d;
+    // trace(c);
+    time = min(time, c - p);
+
+    cout << time << "\n";
 }
 
 int main()
@@ -58,20 +96,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int a = 10, b = 5;
-    trace(a, b, a, a, a, a, a, a);
-    vi v;
-    for (int i = 0; i < 5; i++)
-    {
-        v.PB(i);
-    }
-    for (auto x : v)
-    {
-        trace(x, x, x, x);
-    }
-
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while (t > 0)
     {
         solve();

@@ -48,30 +48,65 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
+    int prime[11] = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31};
+    int n;
+    cin >> n;
+    vector<pair<int, int>> v;
+    for (int i = 0; i < n; i++)
+    {
+        int x;
+        cin >> x;
+        v.PB(MP(x, 0));
+    }
+
+    int m = 0;
+    for (int i = 0; i < 11; i++)
+    {
+        // trace(prime[i]);
+        bool changed = false;
+        for (int j = 0; j < n; j++)
+        {
+            if ((v[j].S == 0) && (v[j].F % prime[i] == 0))
+            {
+                changed = true;
+                v[j].S = m + 1;
+            }
+        }
+        if (changed)
+        {
+            m++;
+        }
+        // m++;
+        // if (changed)
+        // {
+        //     m++;
+        //     continue;
+        // }
+        // else
+        // {
+        //     break;
+        // }
+    }
+    // sort(v.begin(), v.end());
+
+    cout << m << "\n";
+    for (auto x : v)
+    {
+        cout << x.S << " ";
+    }
+    cout << "\n";
 }
 
 int main()
 {
-    // freopen("filename_input.txt","r",stdin);
-    // freopen("filename_output.txt","w",stdout);
+    // freopen("input.txt","r",stdin);
+    // freopen("output.txt","w",stdout);
     ios_base::sync_with_stdio(0);
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int a = 10, b = 5;
-    trace(a, b, a, a, a, a, a, a);
-    vi v;
-    for (int i = 0; i < 5; i++)
-    {
-        v.PB(i);
-    }
-    for (auto x : v)
-    {
-        trace(x, x, x, x);
-    }
-
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while (t > 0)
     {
         solve();

@@ -48,30 +48,72 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
+    int n, u, r, d, l;
+    cin >> n >> u >> r >> d >> l;
+    // int uc = u, dc = d, rc = r, lc = l;
+
+    bool flag = false;
+    /*
+    i<<1 = top right
+    i<<2 = top left
+    i<<3 = bottom right
+    i<<4 = bottom left
+    */
+    for (int i = 0; i < 16; i++)
+    {
+        int uc = u, dc = d, rc = r, lc = l;
+        // trace(uc, rc, dc, lc);
+        // trace(i);
+        if (i & 1)
+        {
+            uc--;
+            rc--;
+        }
+
+        if (i & 2)
+        {
+            uc--;
+            lc--;
+        }
+
+        if (i & 4)
+        {
+            dc--;
+            rc--;
+        }
+
+        if (i & 8)
+        {
+            dc--;
+            lc--;
+        }
+
+        if (dc >= 0 && uc >= 0 && rc >= 0 && lc >= 0 && uc <= n - 2 && dc <= n - 2 && rc <= n - 2 && lc <= n - 2)
+        {
+            flag = true;
+        }
+    }
+
+    if (flag)
+    {
+        cout << "YES\n";
+    }
+    else
+    {
+        cout << "NO\n";
+    }
 }
 
 int main()
 {
-    // freopen("filename_input.txt","r",stdin);
-    // freopen("filename_output.txt","w",stdout);
+    // freopen("input.txt","r",stdin);
+    // freopen("output.txt","w",stdout);
     ios_base::sync_with_stdio(0);
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int a = 10, b = 5;
-    trace(a, b, a, a, a, a, a, a);
-    vi v;
-    for (int i = 0; i < 5; i++)
-    {
-        v.PB(i);
-    }
-    for (auto x : v)
-    {
-        trace(x, x, x, x);
-    }
-
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while (t > 0)
     {
         solve();

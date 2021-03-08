@@ -48,30 +48,55 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
+    int n, k;
+    cin >> n >> k;
+    vi ans;
+    int curr_sum = 0;
+    // for (int i = 1; i <= n; i++)
+    // {
+    //     curr_sum += a[i];
+    //     if (curr_sum == k)
+    //     {
+    //         curr_sum = 0;
+    //         continue;
+    //     }
+    //     else
+    //     {
+    //     }
+    // }
+    int ptr = k - 1;
+    for (int i = 1; i <= (k / 2); i++)
+    {
+        ans.PB(ptr);
+        ptr--;
+    }
+    // for (int i = k - 1; i >= (k / 2); i--)
+    // {
+    //     ans.PB(i);
+    // }
+    for (int i = k + 1; i <= n; i++)
+    {
+        ans.PB(i);
+    }
+
+    cout << ans.size() << "\n";
+    for (auto x : ans)
+    {
+        cout << x << " ";
+    }
+    cout << "\n";
 }
 
 int main()
 {
-    // freopen("filename_input.txt","r",stdin);
-    // freopen("filename_output.txt","w",stdout);
+    // freopen("input.txt","r",stdin);
+    // freopen("output.txt","w",stdout);
     ios_base::sync_with_stdio(0);
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int a = 10, b = 5;
-    trace(a, b, a, a, a, a, a, a);
-    vi v;
-    for (int i = 0; i < 5; i++)
-    {
-        v.PB(i);
-    }
-    for (auto x : v)
-    {
-        trace(x, x, x, x);
-    }
-
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while (t > 0)
     {
         solve();

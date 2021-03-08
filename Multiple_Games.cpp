@@ -48,6 +48,16 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
+    ll n, q, m;
+    vector<ll> a;
+    for (ll i = 0; i < n; i++)
+    {
+        ll x;
+        cin >> x;
+        a.PB(x);
+    }
+    
+
 }
 
 int main()
@@ -58,20 +68,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int a = 10, b = 5;
-    trace(a, b, a, a, a, a, a, a);
-    vi v;
-    for (int i = 0; i < 5; i++)
-    {
-        v.PB(i);
-    }
-    for (auto x : v)
-    {
-        trace(x, x, x, x);
-    }
-
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while (t > 0)
     {
         solve();

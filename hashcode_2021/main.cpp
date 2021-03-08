@@ -48,27 +48,41 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
+    int dur, int_sec, no_street, no_car, bonus_pts;
+
+    cin >> dur >> int_sec >> no_street >> no_car >> bonus_pts;
+    int temp = no_street;
+
+    //getting street info
+    while (temp > 0)
+    {
+        int cnt_int_start, cnt_int_end;
+        cin >> cnt_int_start >> cnt_int_end;
+        string street_name;
+        cin >> street_name;
+        int street_time;
+        cin >> street_time;
+        temp--;
+    }
+
+    temp = no_car;
+    //getting path car inpupt
+    while (temp > 0)
+    {
+        int to_travel;
+        cin >> to_travel;
+        
+        temp--;
+    }
 }
 
 int main()
 {
-    // freopen("filename_input.txt","r",stdin);
-    // freopen("filename_output.txt","w",stdout);
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
     ios_base::sync_with_stdio(0);
     cin.tie(NULL);
     cout.tie(NULL);
-
-    int a = 10, b = 5;
-    trace(a, b, a, a, a, a, a, a);
-    vi v;
-    for (int i = 0; i < 5; i++)
-    {
-        v.PB(i);
-    }
-    for (auto x : v)
-    {
-        trace(x, x, x, x);
-    }
 
     int t = 1;
     // cin >> t;

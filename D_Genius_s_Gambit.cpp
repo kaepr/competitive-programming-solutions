@@ -48,6 +48,7 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
+    
 }
 
 int main()
@@ -57,18 +58,6 @@ int main()
     ios_base::sync_with_stdio(0);
     cin.tie(NULL);
     cout.tie(NULL);
-
-    int a = 10, b = 5;
-    trace(a, b, a, a, a, a, a, a);
-    vi v;
-    for (int i = 0; i < 5; i++)
-    {
-        v.PB(i);
-    }
-    for (auto x : v)
-    {
-        trace(x, x, x, x);
-    }
 
     int t = 1;
     // cin >> t;

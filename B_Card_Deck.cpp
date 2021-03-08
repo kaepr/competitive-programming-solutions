@@ -48,6 +48,61 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
+    int n;
+    cin >> n;
+    vi v(n), b(n);
+    map<int, int> mp;
+    for (int i = 0; i < n; i++)
+    {
+        int x;
+        cin >> x;
+        v[i] = x;
+        b[i] = x;
+        mp[x] = 0;
+    }
+
+    sort(b.begin(), b.end());
+    reverse(b.begin(), b.end());
+
+    int maxx = b[0];
+    vi temp;
+    int index = 1;
+    for (int i = n - 1; i >= 0; i--)
+    {
+        if (v[i] != maxx)
+        {
+            mp[v[i]] = 1;
+            temp.PB(v[i]);
+        }
+        else
+        {
+            mp[v[i]] = 1;
+            temp.PB(v[i]);
+
+            for (int i = temp.size() - 1; i >= 0; i--)
+            {
+                cout << temp[i] << " ";
+            }
+
+            temp.clear();
+
+            while (index < n)
+            {
+                if (mp[b[index]] == 0)
+                {
+                    maxx = b[index];
+                    break;
+                }
+                index++;
+            }
+        }
+    }
+
+    for (int i = temp.size() - 1; i >= 0; i--)
+    {
+        cout << temp[i] << " ";
+    }
+    cout << "\n";
 }
 
 int main()
@@ -58,20 +113,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int a = 10, b = 5;
-    trace(a, b, a, a, a, a, a, a);
-    vi v;
-    for (int i = 0; i < 5; i++)
-    {
-        v.PB(i);
-    }
-    for (auto x : v)
-    {
-        trace(x, x, x, x);
-    }
-
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while (t > 0)
     {
         solve();

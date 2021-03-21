@@ -46,48 +46,44 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-int dp[2005][2005];
-int n, k;
-
-// i = elm, k = remaining length
-int sol(int i, int k)
-{
-    if (k <= 0)
-        return 1;
-
-    if (dp[i][k] != -1)
-        return dp[i][k];
-
-    int ans = 0;
-    for (int j = i; j <= n; j += i)
-    {
-        // trace(j, k - 1);
-        ans += (sol(j, k - 1) % MOD);
-        ans %= MOD;
-    }
-    dp[i][k] = ans;
-    dp[i][k] %= MOD;
-    return dp[i][k];
-}
-
 void solve()
 {
-    cin >> n >> k;
-    memset(dp, -1, sizeof(dp));
-    sol(1, k);
-    // for (int i = 1; i <= n; i++)
-    // {
-    // sol(i, k);
-    // }
-    for (int i = 0; i <= n; i++)
+    ll n, d;
+    cin >> n >> d;
+    vector<ll> v;
+    for (ll i = 0; i < n; i++)
     {
-        for (int j = 0; j <= k; j++)
-        {
-            cout << dp[i][j] << " ";
-        }
-        cout << "\n";
+        ll x;
+        cin >> x;
+        v.PB(x);
     }
-    cout << dp[1][k] << "\n";
+
+    ll ans = 0;
+    for (ll i = 0; i < n - 2; i++)
+    {
+        ll curr = v[i];
+        ll maxElm = curr + d + 1;
+        ll index = upper_bound(v.begin(), v.end(), maxElm) - v.begin();
+        index--;
+        if (v[index] - v[i] <= d)
+        {
+            //nothing
+        }
+        else
+        {
+            index--;
+        }
+
+        if (index - i >= 1 && v[index] - v[i] <= d)
+        {
+            // trace(index, i);
+            ll x = index - i;
+            x--;
+            ans += x * (x + 1) / 2;
+            // trace(ans);
+        }
+    }
+    cout << ans << "\n";
 }
 
 int main()

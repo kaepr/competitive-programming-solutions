@@ -20,7 +20,7 @@ void __f(const char *name, Arg1 &&arg1)
     cout << name << " : " << arg1 << endl;
 }
 template <typename Arg1, typename... Args>
-void __f(const char *names, Arg1 &&arg1, Args &&...args)
+void __f(const char *names, Arg1 &&arg1, Args &&... args)
 {
     const char *comma = strchr(names + 1, ',');
     cout.write(names, comma - names) << " : " << arg1 << " | ";
@@ -46,48 +46,8 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-int dp[2005][2005];
-int n, k;
-
-// i = elm, k = remaining length
-int sol(int i, int k)
-{
-    if (k <= 0)
-        return 1;
-
-    if (dp[i][k] != -1)
-        return dp[i][k];
-
-    int ans = 0;
-    for (int j = i; j <= n; j += i)
-    {
-        // trace(j, k - 1);
-        ans += (sol(j, k - 1) % MOD);
-        ans %= MOD;
-    }
-    dp[i][k] = ans;
-    dp[i][k] %= MOD;
-    return dp[i][k];
-}
-
 void solve()
 {
-    cin >> n >> k;
-    memset(dp, -1, sizeof(dp));
-    sol(1, k);
-    // for (int i = 1; i <= n; i++)
-    // {
-    // sol(i, k);
-    // }
-    for (int i = 0; i <= n; i++)
-    {
-        for (int j = 0; j <= k; j++)
-        {
-            cout << dp[i][j] << " ";
-        }
-        cout << "\n";
-    }
-    cout << dp[1][k] << "\n";
 }
 
 int main()
@@ -98,8 +58,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while (t > 0)
     {
         solve();

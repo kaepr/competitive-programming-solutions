@@ -46,48 +46,49 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-int dp[2005][2005];
-int n, k;
-
-// i = elm, k = remaining length
-int sol(int i, int k)
-{
-    if (k <= 0)
-        return 1;
-
-    if (dp[i][k] != -1)
-        return dp[i][k];
-
-    int ans = 0;
-    for (int j = i; j <= n; j += i)
-    {
-        // trace(j, k - 1);
-        ans += (sol(j, k - 1) % MOD);
-        ans %= MOD;
-    }
-    dp[i][k] = ans;
-    dp[i][k] %= MOD;
-    return dp[i][k];
-}
-
 void solve()
 {
+    int n, k;
     cin >> n >> k;
-    memset(dp, -1, sizeof(dp));
-    sol(1, k);
-    // for (int i = 1; i <= n; i++)
-    // {
-    // sol(i, k);
-    // }
-    for (int i = 0; i <= n; i++)
+    string s;
+    cin >> s;
+
+    if (k == 0)
     {
-        for (int j = 0; j <= k; j++)
-        {
-            cout << dp[i][j] << " ";
-        }
-        cout << "\n";
+        cout << "YES\n";
+        return;
     }
-    cout << dp[1][k] << "\n";
+
+    if (k * 2 == n)
+    {
+        cout << "NO\n";
+        return;
+    }
+
+    string beg = "";
+    string end = "";
+    for (int i = 0; i < k; i++)
+    {
+        beg += s[i];
+        end += s[n - 1 - i];
+        // trace(beg, end);
+    }
+    // trace(beg, end);
+    // reverse(end.begin(), end.end());
+    int cnt = 0;
+    for (int i = 0; i < k; i++)
+    {
+        if (beg[i] == end[i])
+            cnt++;
+    }
+    if (cnt == k)
+    {
+        cout << "YES\n";
+    }
+    else
+    {
+        cout << "NO\n";
+    }
 }
 
 int main()
@@ -98,8 +99,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while (t > 0)
     {
         solve();

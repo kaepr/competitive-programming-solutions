@@ -46,48 +46,34 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-int dp[2005][2005];
-int n, k;
-
-// i = elm, k = remaining length
-int sol(int i, int k)
-{
-    if (k <= 0)
-        return 1;
-
-    if (dp[i][k] != -1)
-        return dp[i][k];
-
-    int ans = 0;
-    for (int j = i; j <= n; j += i)
-    {
-        // trace(j, k - 1);
-        ans += (sol(j, k - 1) % MOD);
-        ans %= MOD;
-    }
-    dp[i][k] = ans;
-    dp[i][k] %= MOD;
-    return dp[i][k];
-}
+const ll mod = 998244353;
+const ll N = 2e5 + 5;
+ll power[N];
 
 void solve()
 {
-    cin >> n >> k;
-    memset(dp, -1, sizeof(dp));
-    sol(1, k);
-    // for (int i = 1; i <= n; i++)
-    // {
-    // sol(i, k);
-    // }
-    for (int i = 0; i <= n; i++)
+    ll n;
+    cin >> n;
+    power[0] = 1;
+    for (ll i = 1; i <= N; i++)
     {
-        for (int j = 0; j <= k; j++)
-        {
-            cout << dp[i][j] << " ";
-        }
-        cout << "\n";
+        power[i] = (10 * power[i - 1]) % mod;
+        power[i] %= mod;
     }
-    cout << dp[1][k] << "\n";
+    // for (ll i = 0; i <= n; i++)
+    // {
+    //     cout << power[i] << " ";
+    // }
+    // cout << "\n";
+    ll ans = 0;
+    for (ll i = 1; i < n; i++)
+    {
+        ans = (180 * power[n - i - 1]) % mod + ((n - i - 1) * (810) * (power[n - i - 2])) % mod;
+        ans %= mod;
+        cout << ans << " ";
+    }
+    cout << 10;
+    // ans += 2 * (81) *
 }
 
 int main()

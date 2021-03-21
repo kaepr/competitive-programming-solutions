@@ -30,9 +30,9 @@ void __f(const char *names, Arg1 &&arg1, Args &&...args)
 #define trace(...)
 #endif
 
-int powmod(int x, int y, int mod)
+ll powmod(ll x, ll y, ll mod)
 {
-    int res = 1;
+    ll res = 1;
     x %= mod;
     if (x == 0)
         return 0;
@@ -46,48 +46,36 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-int dp[2005][2005];
-int n, k;
-
-// i = elm, k = remaining length
-int sol(int i, int k)
-{
-    if (k <= 0)
-        return 1;
-
-    if (dp[i][k] != -1)
-        return dp[i][k];
-
-    int ans = 0;
-    for (int j = i; j <= n; j += i)
-    {
-        // trace(j, k - 1);
-        ans += (sol(j, k - 1) % MOD);
-        ans %= MOD;
-    }
-    dp[i][k] = ans;
-    dp[i][k] %= MOD;
-    return dp[i][k];
-}
+const ll mod = 998244353;
 
 void solve()
 {
-    cin >> n >> k;
-    memset(dp, -1, sizeof(dp));
-    sol(1, k);
-    // for (int i = 1; i <= n; i++)
-    // {
-    // sol(i, k);
-    // }
-    for (int i = 0; i <= n; i++)
+    ll n;
+    cin >> n;
+    ll a[n];
+    for (ll i = 0; i < n; i++)
     {
-        for (int j = 0; j <= k; j++)
-        {
-            cout << dp[i][j] << " ";
-        }
-        cout << "\n";
+        cin >> a[i];
     }
-    cout << dp[1][k] << "\n";
+
+    map<ll, ll> mp;
+    for (ll i = 0; i < n; i++)
+    {
+        mp[a[i]] = i;
+    }
+
+    ll ans = 0, x = 0;
+    for (ll i = 0; i < n; i++)
+    {
+        x = max(x, mp[a[i]]);
+        if (x == i)
+        {
+            x++;
+            ans++;
+        }
+    }
+    // trace(ans, x);
+    cout << powmod(2, ans - 1, mod);
 }
 
 int main()

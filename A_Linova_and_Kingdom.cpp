@@ -46,48 +46,57 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-int dp[2005][2005];
-int n, k;
+const ll N = 2e5 + 5;
+ll n, k;
+vector<ll> adj[N];
+ll vis[N];
+// vector<ll> vals;
+ll sz[N];
+ll dep[N];
+ll dp[N];
+vector<ll> v;
 
-// i = elm, k = remaining length
-int sol(int i, int k)
+void dfs(ll node, ll level)
 {
-    if (k <= 0)
-        return 1;
+    vis[node] = 1;
+    dp[node] = 1;
+    dep[node] = level;
 
-    if (dp[i][k] != -1)
-        return dp[i][k];
-
-    int ans = 0;
-    for (int j = i; j <= n; j += i)
+    for (auto x : adj[node])
     {
-        // trace(j, k - 1);
-        ans += (sol(j, k - 1) % MOD);
-        ans %= MOD;
+        if (vis[x] == 0)
+        {
+            // vals.push_back(val + 1);
+            dfs(x, level + 1);
+            dp[node] += dp[x];
+        }
     }
-    dp[i][k] = ans;
-    dp[i][k] %= MOD;
-    return dp[i][k];
 }
 
 void solve()
 {
     cin >> n >> k;
-    memset(dp, -1, sizeof(dp));
-    sol(1, k);
-    // for (int i = 1; i <= n; i++)
-    // {
-    // sol(i, k);
-    // }
-    for (int i = 0; i <= n; i++)
+    for (ll i = 0; i < n - 1; i++)
     {
-        for (int j = 0; j <= k; j++)
-        {
-            cout << dp[i][j] << " ";
-        }
-        cout << "\n";
+        ll x, y;
+        cin >> x >> y;
+        adj[x].PB(y);
+        adj[y].PB(x);
     }
-    cout << dp[1][k] << "\n";
+    dfs(1, 1);
+
+    for (ll i = 1; i <= n; i++)
+    {
+        v.PB(dp[i] - dep[i]);
+    }
+
+    sort(v.begin(), v.end());
+    reverse(v.begin(), v.end());
+
+    ll sum = 0;
+    for (ll i = 0; i < (n - k); i++)
+        sum += v[i];
+    cout << sum << "\n";
 }
 
 int main()

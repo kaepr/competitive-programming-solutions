@@ -4,7 +4,7 @@ using ll = long long;
 using ull = unsigned long long;
 using vi = vector<int>;
 
-const int MOD = 998244353;
+const ll MOD = 998244353;
 
 #define PB push_back
 #define F first
@@ -32,6 +32,7 @@ void __f(const char *names, Arg1 &&arg1, Args &&...args)
 
 ll powmod(ll x, ll y, ll mod)
 {
+    // trace(x, y, MOD);
     ll res = 1;
     x %= mod;
     if (x == 0)
@@ -51,24 +52,44 @@ ll n;
 
 const ll N = 300005;
 
-ll fact[N];
+ll fact[N], invfact[N];
 void init()
 {
     fact[0] = 1;
-    for (ll i = 1; i < N; i++)
+    ll i;
+    for (i = 1; i < N; i++)
     {
         fact[i] = fact[i - 1] * i;
-        fact[i] %= MOD;
+        fact[i] %= mod;
     }
+    i--;
+    invfact[i] = powmod(fact[i], mod - 2, mod);
+    for (i--; i >= 0; i--)
+    {
+        invfact[i] = (invfact[i + 1] * (i + 1)) % mod;
+        // invfact[i] %= MOD;
+    }
+}
+
+ll ncr(ll n, ll r)
+{
+    // trace(n, r);
+    if (n < 0 || r < 0 || n < r)
+    {
+        return 0;
+    }
+    ll ans = fact[n] * invfact[n - r] % mod * invfact[r] % mod;
+    ans %= mod;
+    return ans;
 }
 
 ll getC(int n, int i)
 {
     ll res = fact[n];
     ll div = fact[n - i] * fact[i];
-    div %= MOD;
-    div = powmod(div, MOD - 2, MOD);
-    return (res * div) % MOD;
+    div %= mod;
+    div = powmod(div, mod - 2, mod);
+    return (res * div) % mod;
 }
 
 void solve()
@@ -89,29 +110,33 @@ void solve()
         a.push_back(x);
     }
     sort(a.begin(), a.end());
-    // for (ll i = 0; i < n; i++)
+    // for (ll i = 0; i < 2 * n; i++)
     // {
     //     cout << a[i] << " ";
     // }
     // cout << "\n";
     ll sum1 = 0;
-    for (int i = 0; i < n; i++)
+    for (ll i = 0; i < n; i++)
     {
-        sum1 += a[i];
-        sum1 %= MOD;
+        sum1 = (sum1 + a[2 * n - i - 1] - a[i]) % mod;
     }
-    ll sum2 = 0;
-    for (int i = n; i < 2 * n; i++)
-    {
-        sum2 += a[i];
-        sum2 %= MOD;
-    }
-    ll diff = sum2 - sum1;
-    diff %= MOD;
-    ll cnt = getC(2 * n, n);
-    cnt %= MOD;
-    ll ans = diff * cnt;
-    ans %= MOD;
+    // for (int i = 0; i < n; i++)
+    // {
+    //     sum1 += a[i];
+    //     sum1 %= mod;
+    // }
+    // ll sum2 = 0;
+    // for (int i = n; i < 2 * n; i++)
+    // {
+    //     sum2 += a[i];
+    //     sum2 %= mod;
+    // }
+    // ll diff = abs(sum2 - sum1);
+    // diff %= mod;
+    ll cnt = ncr(2 * n, n);
+    // cnt %= mod;
+    ll ans = sum1 * cnt;
+    ans %= mod;
     cout << ans;
 }
 

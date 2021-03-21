@@ -108,3 +108,48 @@ int main()
 
     return 0;
 }
+
+const ll mod = 998244353;
+ll n;
+
+const ll N = 300005;
+
+ll fact[N], invfact[N];
+void init()
+{
+    fact[0] = 1;
+    ll i;
+    for (i = 1; i < N; i++)
+    {
+        fact[i] = fact[i - 1] * i;
+        fact[i] %= mod;
+    }
+    i--;
+    invfact[i] = powmod(fact[i], mod - 2, mod);
+    for (i--; i >= 0; i--)
+    {
+        invfact[i] = (invfact[i + 1] * (i + 1)) % mod;
+        // invfact[i] %= MOD;
+    }
+}
+
+ll ncr(ll n, ll r)
+{
+    // trace(n, r);
+    if (n < 0 || r < 0 || n < r)
+    {
+        return 0;
+    }
+    ll ans = fact[n] * invfact[n - r] % mod * invfact[r] % mod;
+    ans %= mod;
+    return ans;
+}
+
+ll getC(int n, int i)
+{
+    ll res = fact[n];
+    ll div = fact[n - i] * fact[i];
+    div %= mod;
+    div = powmod(div, mod - 2, mod);
+    return (res * div) % mod;
+}

@@ -46,48 +46,54 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-int dp[2005][2005];
-int n, k;
-
-// i = elm, k = remaining length
-int sol(int i, int k)
-{
-    if (k <= 0)
-        return 1;
-
-    if (dp[i][k] != -1)
-        return dp[i][k];
-
-    int ans = 0;
-    for (int j = i; j <= n; j += i)
-    {
-        // trace(j, k - 1);
-        ans += (sol(j, k - 1) % MOD);
-        ans %= MOD;
-    }
-    dp[i][k] = ans;
-    dp[i][k] %= MOD;
-    return dp[i][k];
-}
-
 void solve()
 {
-    cin >> n >> k;
-    memset(dp, -1, sizeof(dp));
-    sol(1, k);
-    // for (int i = 1; i <= n; i++)
-    // {
-    // sol(i, k);
-    // }
-    for (int i = 0; i <= n; i++)
+    int n;
+    cin >> n;
+    vi a(n);
+    for (int i = 0; i < n; i++)
+        cin >> a[i];
+
+    sort(a.begin(), a.end());
+    map<int, int> mp;
+    for (int i = 0; i < n; i++)
     {
-        for (int j = 0; j <= k; j++)
-        {
-            cout << dp[i][j] << " ";
-        }
-        cout << "\n";
+        mp[a[i]]++;
     }
-    cout << dp[1][k] << "\n";
+    vi v;
+    for (auto x : mp)
+    {
+        if (x.second >= 1)
+        {
+            v.PB(x.first);
+            mp[x.first]--;
+        }
+    }
+
+    sort(v.begin(), v.end());
+    vi tmp;
+    for (auto x : mp)
+    {
+        int cnt = x.second;
+        while (cnt > 0)
+        {
+            if (cnt == 0)
+            {
+                break;
+            }
+            tmp.PB(x.first);
+            cnt--;
+        }
+    }
+    for (auto x : v)
+    {
+        cout << x << " ";
+    }
+    for (auto x : tmp)
+    {
+        cout << x << " ";
+    }
+    cout << "\n";
 }
 
 int main()
@@ -98,8 +104,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while (t > 0)
     {
         solve();

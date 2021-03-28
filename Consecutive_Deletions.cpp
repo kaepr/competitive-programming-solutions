@@ -20,7 +20,7 @@ void __f(const char *name, Arg1 &&arg1)
     cout << name << " : " << arg1 << endl;
 }
 template <typename Arg1, typename... Args>
-void __f(const char *names, Arg1 &&arg1, Args &&... args)
+void __f(const char *names, Arg1 &&arg1, Args &&...args)
 {
     const char *comma = strchr(names + 1, ',');
     cout.write(names, comma - names) << " : " << arg1 << " | ";
@@ -48,12 +48,65 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    ll n;
-    cin>>n;
-    map<int, vector<int>> mp;
-    for(int i=1; i<=n; i++){
-        
+    ll n, k;
+    cin >> n >> k;
+    ll a[n];
+    for (ll i = 0; i < n; i++)
+    {
+        cin >> a[i];
     }
+    ll start_index = 0;
+    ll curr_sum = 0;
+    ll minn_index = 0;
+    for (ll i = start_index; i < k; i++)
+    {
+        if (a[i] == 1)
+        {
+            curr_sum++;
+        }
+    }
+    ll minn_sum = curr_sum;
+    ll prev_index = 0;
+    for (ll i = k; i < n; i++)
+    {
+        if (a[prev_index] == 1)
+        {
+            curr_sum--;
+        }
+        if (a[i] == 1)
+        {
+            curr_sum++;
+        }
+
+        //curr_sum holds sum of current range
+        prev_index++;
+        if (curr_sum <= minn_sum)
+        {
+            minn_sum = min(minn_sum, curr_sum);
+            minn_index = prev_index;
+        }
+    }
+
+    // trace(minn_index, minn_sum);
+
+    for (ll i = 0; i < k; i++)
+    {
+        a[minn_index] = 0;
+        minn_index++;
+    }
+
+    ll ans = 0;
+    for (ll i = 0; i < n; i++)
+    {
+        if (a[i])
+        {
+            ans++;
+        }
+    }
+
+    ans += (minn_sum) * (minn_sum + 1) / 2;
+    // trace(ans)
+    cout << ans << "\n";
 }
 
 int main()

@@ -18,7 +18,6 @@ template <typename Arg1>
 void __f(const char *name, Arg1 &&arg1)
 {
     cout << name << " : " << arg1 << endl;
-    //use cerr if u want to display at the bottom
 }
 template <typename Arg1, typename... Args>
 void __f(const char *names, Arg1 &&arg1, Args &&...args)
@@ -49,15 +48,51 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    ll a, b;
-    cin >> a >> b;
-    cout << a * b << "\n";
+    priority_queue<pair<int, int>> q;
+    int n;
+    cin >> n;
+    map<int, int> mp;
+    for (int i = 0; i < n; i++)
+    {
+        int x;
+        cin >> x;
+        mp[x]++;
+    }
+    for (auto x : mp)
+    {
+        q.push(MP(x.second, x.first));
+    }
+
+    int sz = n;
+    while (q.size() >= 2)
+    {
+        // auto [cnt1, x1] = q.top();
+        auto x = q.top();
+        int cnt1 = x.first, x1 = x.second;
+        q.pop();
+        // auto [cnt2, x2] = q.top();
+        x = q.top();
+        int cnt2 = x.first, x2 = x.second;
+        q.pop();
+        cnt1--;
+        cnt2--;
+        sz -= 2;
+        if (cnt1)
+        {
+            q.push(MP(cnt1, x1));
+        }
+        if (cnt2)
+        {
+            q.push(MP(cnt2, x2));
+        }
+    }
+    cout << sz << "\n";
 }
 
 int main()
 {
-    // freopen("filename.in","r",stdin);
-    // freopen("filename.out","w",stdout);
+    // freopen("input.txt","r",stdin);
+    // freopen("output.txt","w",stdout);
     ios_base::sync_with_stdio(0);
     cin.tie(NULL);
     cout.tie(NULL);

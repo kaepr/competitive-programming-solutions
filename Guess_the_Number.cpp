@@ -18,7 +18,6 @@ template <typename Arg1>
 void __f(const char *name, Arg1 &&arg1)
 {
     cout << name << " : " << arg1 << endl;
-    //use cerr if u want to display at the bottom
 }
 template <typename Arg1, typename... Args>
 void __f(const char *names, Arg1 &&arg1, Args &&...args)
@@ -47,20 +46,40 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
+vector<ll> nums;
+
 void solve()
 {
-    ll a, b;
-    cin >> a >> b;
-    cout << a * b << "\n";
+    // for (int i = 0; i < 10;)
+    for (int i = 0; i < nums.size(); i++)
+    {
+        cout << nums[i] << "\n";
+        int x = 0;
+        cin >> x;
+        if (x == 1)
+        {
+            return;
+        }
+    }
 }
 
 int main()
 {
-    // freopen("filename.in","r",stdin);
-    // freopen("filename.out","w",stdout);
+    // freopen("input.txt","r",stdin);
+    // freopen("output.txt","w",stdout);
     ios_base::sync_with_stdio(0);
     cin.tie(NULL);
     cout.tie(NULL);
+
+    for (int i = 1; i <= 2000; i++)
+    {
+        nums.PB(i * i);
+    }
+
+    // for (int i = 0; i < 10; i++)
+    // {
+    //     cout << nums[i] << " ";
+    // }
 
     int t;
     cin >> t;

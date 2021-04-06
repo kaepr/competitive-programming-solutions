@@ -45,13 +45,34 @@ int powmod(int x, int y, int mod)
     }
     return res;
 }
-
-const ll maxn = 1e6 + 5;
-ll dp[maxn], a[maxn];
-ll n, sum;
-
+int deg[1001];
 void solve()
 {
+    memset(deg, 0, sizeof(deg));
+    int n, x;
+    cin >> n >> x;
+    int temp = n;
+    while (temp - 1 > 0)
+    {
+        int a, b;
+        cin >> a >> b;
+        deg[a]++;
+        deg[b]++;
+        temp--;
+    }
+    if (deg[x] == 1 || n == 1)
+    {
+        cout << "Ayush\n";
+        return;
+    }
+    if (n % 2 == 0)
+    {
+        cout << "Ayush\n";
+    }
+    else
+    {
+        cout << "Ashish\n";
+    }
 }
 
 int main()
@@ -62,8 +83,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while (t > 0)
     {
         solve();

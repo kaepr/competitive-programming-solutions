@@ -46,12 +46,20 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-const ll maxn = 1e6 + 5;
-ll dp[maxn], a[maxn];
-ll n, sum;
-
 void solve()
 {
+    ll n;
+    cin >> n;
+    ll ans = 0;
+    ll div = 1;
+    ll add = n / div;
+    while (add > 0)
+    {
+        ans += add;
+        div *= 2;
+        add = n / div;
+    }
+    cout << ans << "\n";
 }
 
 int main()
@@ -62,8 +70,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while (t > 0)
     {
         solve();

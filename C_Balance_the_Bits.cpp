@@ -50,69 +50,83 @@ void solve()
 {
     int n;
     cin >> n;
-    int a[n];
+    string s;
+    cin >> s;
+    int one_cnt = 0, zero_cnt = 0;
     for (int i = 0; i < n; i++)
     {
-        cin >> a[i];
-    }
-    bool flag = true;
-    for (int i = 0; i < n; i++)
-    {
-        if (a[i] != (i + 1))
+        if (s[i] == '1')
         {
-            flag = false;
+            one_cnt++;
+        }
+        else
+        {
+            zero_cnt++;
         }
     }
-    if (flag)
+
+    if ((s[0] != '1') || (s[n - 1] != '1'))
     {
-        cout << 0 << "\n";
+        cout << "NO\n";
         return;
     }
+
+    if (one_cnt % 2 != 0 || zero_cnt % 2 != 0)
+    {
+        cout << "NO\n";
+        return;
+    }
+
+    vi a(n, 0), b(n, 0);
     int cnt = 0;
-    int start_index = 0, end_index = n;
+    int a_last = 0, b_last = 1;
     for (int i = 0; i < n; i++)
     {
-        if (a[i] == (i + 1))
+        if (s[i] == '1')
         {
-            start_index = i;
-        }
-        else
-        {
-            break;
-        }
-    }
+            if (cnt < one_cnt / 2)
+            {
+                a[i] = 1;
+                b[i] = 1;
+            }
 
-    for (int i = n - 1; i >= 0; i--)
-    {
-        if (a[i] == (i + 1))
-        {
-            end_index = i;
-        }
-        else
-        {
-            break;
-        }
-    }
-
-    // trace(start_index, end_index);
-
-    for (int i = start_index + 1; i < end_index; i++)
-    {
-        if (a[i] == (i + 1))
-        {
-            // trace(i);
             cnt++;
         }
-    }
+        else
+        {
+            a[i] = a_last;
+            b[i] = b_last;
 
-    if (cnt)
-    {
-        cout << 2 << "\n";
+            a_last = 1 - a_last;
+            b_last = 1 - b_last;
+        }
     }
-    else
+    cout << "YES\n";
+    for (auto x : a)
     {
-        cout << 1 << "\n";
+        if (x == 1)
+        {
+            cout << '(';
+        }
+        else
+        {
+            cout << ')';
+        }
+        // cout << x << " ";
     }
+    cout << "\n";
+    for (auto x : b)
+    {
+        if (x == 1)
+        {
+            cout << '(';
+        }
+        else
+        {
+            cout << ')';
+        }
+    }
+    cout << "\n";
 }
 
 int main()

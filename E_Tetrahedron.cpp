@@ -46,12 +46,31 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-const ll maxn = 1e6 + 5;
-ll dp[maxn], a[maxn];
-ll n, sum;
-
 void solve()
 {
+    ll n;
+    cin >> n;
+    ll dp[2][n + 1];
+    /*
+    1 -> top vertex
+    0 -> bottom
+
+    at the zero'th turn, we are already at top vertex, so dp[1][0] = 1
+    at the zero'th turn, we cannot be at the bottom vertexes, so dp[0][0] = 0
+    */
+
+    dp[1][0] = 1;
+    dp[0][0] = 0;
+    for (ll i = 1; i <= n; i++)
+    {
+        //ways of reaching dp[1][i] from the bottom positions
+        dp[1][i] = (3 * (dp[0][i - 1])) % MOD;
+
+        //ways of reaching dp[0][i] from the various positoins
+        dp[0][i] = (((2 * dp[0][i - 1] + dp[1][i - 1]) % MOD)) % MOD;
+    }
+
+    cout << dp[1][n] << "\n";
 }
 
 int main()

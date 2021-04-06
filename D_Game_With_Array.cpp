@@ -46,12 +46,37 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-const ll maxn = 1e6 + 5;
-ll dp[maxn], a[maxn];
-ll n, sum;
-
 void solve()
 {
+    int n, s;
+    cin >> n >> s;
+    if (s < 2 * n)
+    {
+        cout << "NO\n";
+    }
+    else
+    {
+        cout << "YES\n";
+        int a[n];
+        int sum = s;
+        for (int i = 0; i < n; i++)
+        {
+            if (i == n - 1)
+            {
+                a[i] = s;
+            }
+            else
+            {
+                a[i] = 2;
+                s -= 2;
+            }
+        }
+        for (int i = 0; i < n; i++)
+        {
+            cout << a[i] << " ";
+        }
+        cout << "\n1\n";
+    }
 }
 
 int main()

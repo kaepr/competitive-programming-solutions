@@ -46,12 +46,51 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-const ll maxn = 1e6 + 5;
-ll dp[maxn], a[maxn];
-ll n, sum;
-
 void solve()
 {
+    int n;
+    cin >> n;
+    string s;
+    cin >> s;
+    vi ans(n);
+    vi p0, p1;
+    for (int i = 0; i < n; i++)
+    {
+        int npos = p0.size() + p1.size();
+        if (s[i] == '0')
+        {
+            if (p1.empty())
+            {
+                p0.PB(npos);
+            }
+            else
+            {
+                npos = p1.back();
+                p1.pop_back();
+                p0.PB(npos);
+            }
+        }
+        else
+        {
+            if (p0.empty())
+            {
+                p1.PB(npos);
+            }
+            else
+            {
+                npos = p0.back();
+                p0.pop_back();
+                p1.PB(npos);
+            }
+        }
+        ans[i] = npos;
+    }
+    cout << p0.size() + p1.size() << "\n";
+    for (auto x : ans)
+    {
+        cout << x + 1 << " ";
+    }
+    cout << "\n";
 }
 
 int main()
@@ -62,8 +101,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while (t > 0)
     {
         solve();

@@ -30,9 +30,9 @@ void __f(const char *names, Arg1 &&arg1, Args &&...args)
 #define trace(...)
 #endif
 
-int powmod(int x, int y, int mod)
+ll powmod(ll x, ll y, ll mod)
 {
-    int res = 1;
+    ll res = 1;
     x %= mod;
     if (x == 0)
         return 0;
@@ -46,24 +46,76 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-const ll maxn = 1e6 + 5;
-ll dp[maxn], a[maxn];
-ll n, sum;
+int dp[1001][1001][2];
+int N, K;
+
+int calc(int n, int k, int dir)
+{
+    if (k == 1)
+        return 1;
+
+    if (dp[n][k][dir] != -1)
+        return dp[n][k][dir];
+
+    int ans = 2;
+
+    if (dir)
+    {
+        //goes right
+        if (n < N)
+        {
+            ans += calc(n + 1, k, dir) - 1;
+            ans %= MOD;
+        }
+
+        if (n > 1)
+        {
+            ans += calc(n - 1, k - 1, 1 - dir) - 1;
+            ans %= MOD;
+        }
+
+        dp[n][k][dir] = ans;
+    }
+    else
+    {
+        //goes left
+        if (n > 1)
+        {
+            ans += calc(n - 1, k, dir) - 1;
+            ans %= MOD;
+        }
+
+        if (n < N)
+        {
+            ans += calc(n + 1, k - 1, 1 - dir) - 1;
+            ans %= MOD;
+        }
+
+        ans %= MOD;
+        dp[n][k][dir] = ans;
+    }
+    return dp[n][k][dir];
+}
 
 void solve()
 {
+    memset(dp, -1, sizeof(dp));
+    // ll n, k;
+    cin >> N >> K;
+    cout << calc(1, K, 1) << "\n";
 }
 
 int main()
 {
+
     // freopen("input.txt","r",stdin);
     // freopen("output.txt","w",stdout);
     ios_base::sync_with_stdio(0);
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while (t > 0)
     {
         solve();

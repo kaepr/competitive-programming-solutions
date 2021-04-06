@@ -1,21 +1,48 @@
 #include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
-const int mod = 1e9 + 7;
+using ull = unsigned long long;
+using vi = vector<int>;
 
-int solve(const string &s, int x, int y)
+const int MOD = 1e9 + 7;
+
+#define PB push_back
+#define F first
+#define S second
+#define MP make_pair
+
+#define TRACE
+#ifdef TRACE
+#define trace(...) __f(#__VA_ARGS__, __VA_ARGS__)
+template <typename Arg1>
+void __f(const char *name, Arg1 &&arg1)
 {
-    int res = 0;
-    for (auto c : s)
-        if (c - '0' == x)
-        {
-            ++res;
-            swap(x, y);
-        }
+    cout << name << " : " << arg1 << endl;
+}
+template <typename Arg1, typename... Args>
+void __f(const char *names, Arg1 &&arg1, Args &&...args)
+{
+    const char *comma = strchr(names + 1, ',');
+    cout.write(names, comma - names) << " : " << arg1 << " | ";
+    __f(comma + 1, args...);
+}
+#else
+#define trace(...)
+#endif
 
-    if (x != y && res % 2 == 1)
-        --res;
-
+int powmod(int x, int y, int mod)
+{
+    int res = 1;
+    x %= mod;
+    if (x == 0)
+        return 0;
+    while (y > 0)
+    {
+        if (y & 1)
+            res = (res * x) % mod;
+        y = y >> 1;
+        x = (x * x) % mod;
+    }
     return res;
 }
 
@@ -23,18 +50,69 @@ void solve()
 {
     string s;
     cin >> s;
-    int ans = 0;
+    int cnt = 0;
     for (int i = 0; i < 10; i++)
+    {
         for (int j = 0; j < 10; j++)
-            ans = max(ans, solve(s, i, j));
+        {
+            int a = i, b = j;
 
-    cout << s.size() - ans << "\n";
+            int t_cnt = 0;
+            if (a == b)
+            {
+                // trace(a, b);
+                for (auto c : s)
+                {
+                    int val = c - '0';
+                    if (val == a)
+                    {
+                        t_cnt++;
+                    }
+                }
+                // trace(t_cnt);
+                cnt = max(t_cnt, cnt);
+            }
+            else
+            {
+                int aCheck = 0;
+                for (auto c : s)
+                {
+                    int val = c - '0';
+                    if (aCheck)
+                    {
+                        if (val == b)
+                        {
+                            aCheck = 0;
+                            t_cnt++;
+                        }
+                    }
+                    if (val == a)
+                    {
+                        if (aCheck != 1)
+                        {
+                            aCheck = 1;
+                            t_cnt++;
+                        }
+                    }
+                }
+                if (t_cnt % 2 == 1)
+                {
+                    t_cnt = 0;
+                }
+                // trace(a, b, t_cnt);
+            }
+            cnt = max(cnt, t_cnt);
+            // trace(cnt);
+        }
+    }
+    // trace(cnt);
+    cout << s.length() - cnt << "\n";
 }
 
 int main()
 {
-    // freopen("filename.in","r",stdin);
-    // freopen("filename.out","w",stdout);
+    // freopen("input.txt","r",stdin);
+    // freopen("output.txt","w",stdout);
     ios_base::sync_with_stdio(0);
     cin.tie(NULL);
     cout.tie(NULL);

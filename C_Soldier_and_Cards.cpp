@@ -45,74 +45,96 @@ int powmod(int x, int y, int mod)
     }
     return res;
 }
+int x, y;
+bool isSame(int arr1[], int arr2[], queue<int> q1, queue<int> q2)
+{
+    // bool f = true;
+    for (int i = 0; i < x; i++)
+    {
+        int temp = q1.front();
+        q1.pop();
+        if (temp != arr1[i])
+        {
+            return false;
+        }
+    }
+
+    for (int i = 0; i < y; i++)
+    {
+        int temp = q2.front();
+        q2.pop();
+        if (temp != arr2[i])
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
 
 void solve()
 {
     int n;
     cin >> n;
-    int a[n];
-    for (int i = 0; i < n; i++)
+    queue<int> q1, q2;
+    // int arr1[n] = {0}, arr2[n] = {0};
+
+    // int x, y;
+    cin >> x;
+    int arr1[x];
+    for (int i = 0; i < x; i++)
     {
-        cin >> a[i];
+        cin >> arr1[i];
+        q1.push(arr1[i]);
     }
-    bool flag = true;
-    for (int i = 0; i < n; i++)
+    cin >> y;
+    int arr2[y];
+    for (int i = 0; i < y; i++)
     {
-        if (a[i] != (i + 1))
-        {
-            flag = false;
-        }
-    }
-    if (flag)
-    {
-        cout << 0 << "\n";
-        return;
+        cin >> arr2[i];
+        q2.push(arr2[i]);
     }
     int cnt = 0;
-    int start_index = 0, end_index = n;
-    for (int i = 0; i < n; i++)
+    // trace(x, y);
+    while (!q1.empty() && !q2.empty())
     {
-        if (a[i] == (i + 1))
+        int t1 = q1.front();
+        int t2 = q2.front();
+        q1.pop();
+        q2.pop();
+        if (t1 > t2)
         {
-            start_index = i;
+            q1.push(t2);
+            q1.push(t1);
         }
         else
         {
-            break;
+            //t2 > t1
+            q2.push(t1);
+            q2.push(t2);
+        }
+        if (isSame(arr1, arr2, q1, q2))
+        {
+            cout << "-1\n";
+            return;
+        }
+        cnt++;
+        if (cnt > 110)
+        {
+            cout << -1 << "\n";
+            return;
         }
     }
-
-    for (int i = n - 1; i >= 0; i--)
+    int win = 0;
+    if (q1.empty())
     {
-        if (a[i] == (i + 1))
-        {
-            end_index = i;
-        }
-        else
-        {
-            break;
-        }
-    }
-
-    // trace(start_index, end_index);
-
-    for (int i = start_index + 1; i < end_index; i++)
-    {
-        if (a[i] == (i + 1))
-        {
-            // trace(i);
-            cnt++;
-        }
-    }
-
-    if (cnt)
-    {
-        cout << 2 << "\n";
+        win = 2;
     }
     else
     {
-        cout << 1 << "\n";
+        win = 1;
     }
+    cout << cnt << " " << win << "\n";
 }
 
 int main()
@@ -123,8 +145,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t;
-    cin >> t;
+    int t = 1;
+    // cin >> t;
     while (t > 0)
     {
         solve();

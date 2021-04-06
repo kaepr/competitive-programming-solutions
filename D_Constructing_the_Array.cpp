@@ -46,73 +46,80 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
+using key = pair<int, pair<int, int>>;
+struct cmp
+{
+    bool operator()(const key &k1, const key &k2)
+    {
+        //length of first, second
+        int l1 = k1.first;
+        int l2 = k2.first;
+        if (l1 != l2)
+        {
+            return l1 < l2;
+        }
+
+        //start indexes of the subarrays
+        int i1 = k1.second.first;
+        int i2 = k2.second.first;
+        return i1 > i2;
+    }
+};
+
+const int MAXN = 2e5 + 10;
+int arr[MAXN];
+
 void solve()
 {
     int n;
     cin >> n;
-    int a[n];
-    for (int i = 0; i < n; i++)
+    int k = 1;
+    priority_queue<key, vector<key>, cmp> pq;
+
+    //starting index
+    pq.push({n, {0, n - 1}});
+    int len, mid, right, left;
+    while (!pq.empty())
     {
-        cin >> a[i];
-    }
-    bool flag = true;
-    for (int i = 0; i < n; i++)
-    {
-        if (a[i] != (i + 1))
+        //max length of interval to be chosen
+        key fr = pq.top();
+
+        pq.pop();
+        len = fr.first;
+        left = fr.second.first;
+        right = fr.second.second;
+        if (left == right)
         {
-            flag = false;
+            arr[left] = k;
+            k++;
+            continue;
         }
-    }
-    if (flag)
-    {
-        cout << 0 << "\n";
-        return;
-    }
-    int cnt = 0;
-    int start_index = 0, end_index = n;
-    for (int i = 0; i < n; i++)
-    {
-        if (a[i] == (i + 1))
+
+        if (len & 1)
         {
-            start_index = i;
+            mid = left + (right - left) / 2;
         }
         else
         {
-            break;
+            mid = (left + right - 1) / 2;
         }
-    }
-
-    for (int i = n - 1; i >= 0; i--)
-    {
-        if (a[i] == (i + 1))
+        arr[mid] = k;
+        k++;
+        if (mid + 1 <= right)
         {
-            end_index = i;
+            //{start, end} is valid
+            pq.push({right - mid, {mid + 1, right}});
         }
-        else
+        if (left <= mid - 1)
         {
-            break;
+            pq.push({mid - left, {left, mid - 1}});
         }
     }
-
-    // trace(start_index, end_index);
-
-    for (int i = start_index + 1; i < end_index; i++)
+    for (int i = 0; i < n; i++)
     {
-        if (a[i] == (i + 1))
-        {
-            // trace(i);
-            cnt++;
-        }
+        cout << arr[i] << " ";
     }
-
-    if (cnt)
-    {
-        cout << 2 << "\n";
-    }
-    else
-    {
-        cout << 1 << "\n";
-    }
+    cout << "\n";
 }
 
 int main()

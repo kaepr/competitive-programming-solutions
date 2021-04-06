@@ -46,12 +46,55 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-const ll maxn = 1e6 + 5;
-ll dp[maxn], a[maxn];
-ll n, sum;
+bool isPalin(string s)
+{
+    int n = s.length();
+    for (int i = 0; i < n / 2; i++)
+    {
+        if (s[i] != s[n - i - 1])
+        {
+            return false;
+        }
+    }
+    return true;
+}
 
 void solve()
 {
+    string s;
+    cin >> s;
+    bool chk = true;
+    set<int> st;
+    int n = s.length();
+    for (int i = 0; i < n; i++)
+    {
+        if (s[i] != 'a')
+        {
+            chk = false;
+        }
+    }
+    if (chk)
+    {
+        cout << "NO\n";
+    }
+
+    string s1 = 'a' + s;
+    string s2 = s + 'a';
+    // trace(s1, s2);
+
+    if (!isPalin(s1))
+    {
+        cout << "YES\n";
+        cout << s1 << "\n";
+        return;
+    }
+
+    if (!isPalin(s2))
+    {
+        cout << "YES\n";
+        cout << s2 << "\n";
+        return;
+    }
 }
 
 int main()
@@ -62,8 +105,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while (t > 0)
     {
         solve();

@@ -45,38 +45,62 @@ int powmod(int x, int y, int mod)
     }
     return res;
 }
+int ptr1 = 1, ptr2 = 1, n, m, k;
+bool f;
+void print(int times)
+{
+    for (int x = 1; x <= times; x++)
+    {
+        /*
+        ptr1 -> row number ( n )
+        ptr2 -> column number ( m )
+        */
+        cout << ptr1 << " " << ptr2 << " ";
+        if (f)
+        {
+            ptr2++;
+        }
+        else
+        {
+            ptr2--;
+        }
+
+        if (ptr2 == (m + 1))
+        {
+            // cout << "\n";
+            ptr2 = m;
+            ptr1++;
+            f = false;
+        }
+        if (ptr2 == 0)
+        {
+            ptr2 = 1;
+            ptr1++;
+            f = true;
+        }
+    }
+}
 
 void solve()
 {
-    int n;
-    cin >> n;
-    int a[n];
-    for (int i = 0; i < n; i++)
+    cin >> n >> m >> k;
+    ptr1 = 1;
+    ptr2 = 1;
+    f = true;
+    for (int i = 1; i <= k; i++)
     {
-        cin >> a[i];
-    }
-    int l = 0, r = 0;
-    for (int i = 0; i < n; i++)
-    {
-        if (a[i] != i + 1)
+        if (i == k)
         {
-            l = i + 1;
-            r = a[i];
-            reverse(a + l - 1, a + r);
-            break;
+            cout << (n * m - (k - 1) * 2) << " ";
+            print(n * m - (k - 1) * 2);
+        }
+        else
+        {
+            cout << 2 << " ";
+            print(2);
+            cout << "\n";
         }
     }
-    for (int i = 0; i < n; i++)
-    {
-        if (a[i] != i + 1)
-        {
-            cout << "0 0\n";
-            return;
-        }
-    }
-    cout << l << " " << r << "\n";
-
-    // cout << "0 0\n";
 }
 
 int main()

@@ -48,35 +48,15 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    int n;
-    cin >> n;
-    int a[n];
-    for (int i = 0; i < n; i++)
-    {
-        cin >> a[i];
-    }
-    int l = 0, r = 0;
-    for (int i = 0; i < n; i++)
-    {
-        if (a[i] != i + 1)
-        {
-            l = i + 1;
-            r = a[i];
-            reverse(a + l - 1, a + r);
-            break;
-        }
-    }
-    for (int i = 0; i < n; i++)
-    {
-        if (a[i] != i + 1)
-        {
-            cout << "0 0\n";
-            return;
-        }
-    }
-    cout << l << " " << r << "\n";
+    string s;
+    cin >> s;
 
-    // cout << "0 0\n";
+    /*
+    typo type 1 = xxx
+    typo type 2 = xxyy
+    */
+
+   
 }
 
 int main()

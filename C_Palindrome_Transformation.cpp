@@ -48,35 +48,59 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    int n;
-    cin >> n;
-    int a[n];
-    for (int i = 0; i < n; i++)
-    {
-        cin >> a[i];
-    }
-    int l = 0, r = 0;
-    for (int i = 0; i < n; i++)
-    {
-        if (a[i] != i + 1)
-        {
-            l = i + 1;
-            r = a[i];
-            reverse(a + l - 1, a + r);
-            break;
-        }
-    }
-    for (int i = 0; i < n; i++)
-    {
-        if (a[i] != i + 1)
-        {
-            cout << "0 0\n";
-            return;
-        }
-    }
-    cout << l << " " << r << "\n";
+    int n, p;
+    cin >> n >> p;
+    string s;
+    cin >> s;
+    p--;
 
-    // cout << "0 0\n";
+    int cost[n] = {0};
+    for (int i = 0; i < n; i++)
+    {
+        int val1 = s[i] - 'a' + 1;
+        int val2 = s[n - i - 1] - 'a' + 1;
+        if (val2 < val1)
+        {
+            swap(val1, val2);
+        }
+        cost[i] = min(val2 - val1, 26 - val2 + val1);
+    }
+
+    // cout << "\n";
+    int ans = 0;
+    // trace(p);
+    if (p >= n / 2)
+    {
+        p = n - p - 1;
+    }
+    // trace(p);
+
+    // smallest index <= p such that cost[i] != 0
+
+    vi v;
+    int total = 0;
+
+    for (int i = 0; i < n / 2; i++)
+    {
+        if (cost[i] != 0)
+        {
+            v.PB(i);
+        }
+        total += cost[i];
+    }
+    if (v.size() == 0)
+    {
+        cout << "0\n";
+        return;
+    }
+    // trace(total);
+    int l = v[0];
+    int r = v[v.size() - 1];
+    r = max(r, p);
+    l = min(l, p);
+    int cnt1 = total + (r - l) + (r - p);
+    int cnt2 = total + (r - l) + (p - l);
+    cout << min(cnt1, cnt2) << "\n";
 }
 
 int main()

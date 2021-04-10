@@ -18,10 +18,9 @@ template <typename Arg1>
 void __f(const char *name, Arg1 &&arg1)
 {
     cout << name << " : " << arg1 << endl;
-    //use cerr if u want to display at the bottom
 }
 template <typename Arg1, typename... Args>
-void __f(const char *names, Arg1 &&arg1, Args &&... args)
+void __f(const char *names, Arg1 &&arg1, Args &&...args)
 {
     const char *comma = strchr(names + 1, ',');
     cout.write(names, comma - names) << " : " << arg1 << " | ";
@@ -46,36 +45,43 @@ int powmod(int x, int y, int mod)
     }
     return res;
 }
-
-#define N 100005
-
-ll dp[N];
-ll freq[N];
+const ll maxn = 1e5 + 5;
+ll freq[maxn + 1], a[maxn + 1], dp[maxn + 1];
+ll n;
 
 void solve()
 {
-    ll n;
+
+    // ll n;
     cin >> n;
-    vi a;
-    for (int i = 0; i < n; i++)
+    // ll a[n],freq[n+1]
+    for (ll i = 0; i < n; i++)
     {
-        int x;
-        cin >> x;
-        freq[x]++;
+        cin >> a[i];
+        freq[a[i]]++;
     }
     dp[0] = 0;
     dp[1] = freq[1];
-    for (ll i = 2; i <= N; i++)
+    // for (int i = 1; i <= n; i++)
+    // {
+    //     cout << i << " " << freq[i] << "\n";
+    // }
+    // cout << dp[0] << " " << dp[1] << " ";
+    for (ll i = 2; i <= maxn; i++)
     {
+        // either chose previous (i-1), or choose previous to previous, and add current sum
         dp[i] = max(dp[i - 1], dp[i - 2] + freq[i] * i);
+        // cout << dp[i] << " ";
     }
-    cout << dp[N] << "\n";
+    // cout << "\n";
+
+    cout << dp[maxn] << "\n";
 }
 
 int main()
 {
-    // freopen("filename_input.txt","r",stdin);
-    // freopen("filename_output.txt","w",stdout);
+    // freopen("input.txt","r",stdin);
+    // freopen("output.txt","w",stdout);
     ios_base::sync_with_stdio(0);
     cin.tie(NULL);
     cout.tie(NULL);

@@ -48,35 +48,31 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    int n;
-    cin >> n;
-    int a[n];
-    for (int i = 0; i < n; i++)
-    {
-        cin >> a[i];
-    }
-    int l = 0, r = 0;
-    for (int i = 0; i < n; i++)
-    {
-        if (a[i] != i + 1)
-        {
-            l = i + 1;
-            r = a[i];
-            reverse(a + l - 1, a + r);
-            break;
-        }
-    }
-    for (int i = 0; i < n; i++)
-    {
-        if (a[i] != i + 1)
-        {
-            cout << "0 0\n";
-            return;
-        }
-    }
-    cout << l << " " << r << "\n";
+    int n, m;
+    cin >> n >> m;
+    trace(n, m);
+    int a[n][m] = {0};
 
-    // cout << "0 0\n";
+    for (int i = 0; i < n; i++)
+    {
+        string s;
+        cin >> s;
+        for (int j = 0; j < m; j++)
+        {
+            a[i][j] = s[j] - '0';
+        }
+    }
+
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            cout << a[i][j] << " ";
+        }
+        cout << "\n";
+    }
+
+    
 }
 
 int main()

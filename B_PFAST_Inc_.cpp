@@ -48,35 +48,62 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    int n;
-    cin >> n;
-    int a[n];
+    int n, m;
+    cin >> n >> m;
+    vector<string> ppl;
     for (int i = 0; i < n; i++)
     {
-        cin >> a[i];
+        string s;
+        cin >> s;
+        ppl.PB(s);
     }
-    int l = 0, r = 0;
-    for (int i = 0; i < n; i++)
+    map<pair<string, string>, int> mp;
+    for (int i = 0; i < m; i++)
     {
-        if (a[i] != i + 1)
+        string a, b;
+        cin >> a >> b;
+        mp[{a, b}] = 1;
+        mp[{b, a}] = 1;
+    }
+    vector<string> ans;
+    int val = pow(2, n);
+    for (int i = 0; i < val; i++)
+    {
+        vector<string> cur;
+        for (int j = 0; j < n; j++)
         {
-            l = i + 1;
-            r = a[i];
-            reverse(a + l - 1, a + r);
-            break;
+            if ((i >> j) & 1)
+            {
+                cur.PB(ppl[j]);
+            }
+        }
+        bool f = true;
+        for (int j = 0; j < cur.size(); j++)
+        {
+            for (int k = j + 1; k < cur.size(); k++)
+            {
+                if (mp[{cur[j], cur[k]}] == 1)
+                {
+                    f = false;
+                    break;
+                }
+            }
+            if (!f)
+            {
+                break;
+            }
+        }
+        if (f && cur.size() > ans.size())
+        {
+            ans = cur;
         }
     }
-    for (int i = 0; i < n; i++)
+    sort(ans.begin(), ans.end());
+    cout << ans.size() << "\n";
+    for (auto x : ans)
     {
-        if (a[i] != i + 1)
-        {
-            cout << "0 0\n";
-            return;
-        }
+        cout << x << "\n";
     }
-    cout << l << " " << r << "\n";
-
-    // cout << "0 0\n";
 }
 
 int main()

@@ -48,35 +48,49 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    int n;
-    cin >> n;
-    int a[n];
-    for (int i = 0; i < n; i++)
+    int n, x;
+    cin >> n >> x;
+    int dp[n + 1][x + 1];
+    int a[n + 1];
+    a[0] = 0;
+    for (int i = 1; i <= n; i++)
     {
         cin >> a[i];
     }
-    int l = 0, r = 0;
-    for (int i = 0; i < n; i++)
-    {
-        if (a[i] != i + 1)
-        {
-            l = i + 1;
-            r = a[i];
-            reverse(a + l - 1, a + r);
-            break;
-        }
-    }
-    for (int i = 0; i < n; i++)
-    {
-        if (a[i] != i + 1)
-        {
-            cout << "0 0\n";
-            return;
-        }
-    }
-    cout << l << " " << r << "\n";
 
-    // cout << "0 0\n";
+    // dp[0][0] = 0;
+
+    //If remaining sum is 0, then we have one way of choosing a coin ( not choosing it at all )
+    //which gives the requried sum
+    for (int i = 1; i <= n; i++)
+    {
+        for (int curr = 0; curr <= x; curr++)
+        {
+            if (curr == 0)
+            {
+                dp[i][curr] = 1;
+            }
+            else
+            {
+
+                int first = 0, second = 0;
+                //only choose this option if curr - a[i] >= 0
+                if (curr - a[i] >= 0)
+                {
+                    first = dp[i][curr - a[i]];
+                }
+
+                //only choose this option if we have more than 1 numbers remaining
+                if (i > 1)
+                {
+                    second = dp[i - 1][curr];
+                }
+                dp[i][curr] = (first + second) % MOD;
+            }
+        }
+    }
+
+    cout << dp[n][x] << "\n";
 }
 
 int main()

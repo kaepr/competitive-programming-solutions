@@ -20,7 +20,7 @@ void __f(const char *name, Arg1 &&arg1)
     cout << name << " : " << arg1 << endl;
 }
 template <typename Arg1, typename... Args>
-void __f(const char *names, Arg1 &&arg1, Args &&...args)
+void __f(const char *names, Arg1 &&arg1, Args &&... args)
 {
     const char *comma = strchr(names + 1, ',');
     cout.write(names, comma - names) << " : " << arg1 << " | ";
@@ -48,39 +48,6 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    string s;
-    cin >> s;
-    int n = s.length();
-    int i = 0;
-    while (i < n - 1)
-    {
-        if (s[i] == s[i + 1])
-        {
-            i++;
-            // keep removing the next characters, this fixes xxxxx... typos
-            while (i < n - 1 && s[i] == s[i + 1])
-            {
-                s.erase(i + 1, 1);
-                n--;
-            }
-        }
-        else
-        {
-            i++;
-        }
-    }
-
-    // trace(s);
-
-    for (int i = 0; i < n - 3; i++)
-    {
-        if (s[i] == s[i + 1] && s[i + 2] == s[i + 3])
-        {
-            s.erase(i + 3, 1);
-            n--;
-        }
-    }
-    cout << s << "\n";
 }
 
 int main()

@@ -48,39 +48,79 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    string s;
-    cin >> s;
-    int n = s.length();
-    int i = 0;
-    while (i < n - 1)
+    ll n;
+    cin >> n;
+    vector<ll> b;
+    for (ll i = 0; i < n + 2; i++)
     {
-        if (s[i] == s[i + 1])
-        {
-            i++;
-            // keep removing the next characters, this fixes xxxxx... typos
-            while (i < n - 1 && s[i] == s[i + 1])
-            {
-                s.erase(i + 1, 1);
-                n--;
-            }
-        }
-        else
-        {
-            i++;
-        }
+        ll x;
+        cin >> x;
+        b.PB(x);
     }
 
-    // trace(s);
+    sort(b.begin(), b.end());
+    // map<ll, ll> mp;
 
-    for (int i = 0; i < n - 3; i++)
+    ll total_sum = 0;
+    for (auto x : b)
     {
-        if (s[i] == s[i + 1] && s[i + 2] == s[i + 3])
+        // mp[x]++;
+        total_sum += x;
+    }
+
+    ll sum_till_n = 0;
+    for (ll i = 0; i < n; i++)
+    {
+        sum_till_n += b[i];
+    }
+    ll bsz = n + 2;
+
+    ll pre_sum[bsz];
+    pre_sum[0] = b[0];
+    for (ll i = 1; i < b.size(); i++)
+    {
+        pre_sum[i] = pre_sum[i - 1] + b[i];
+    }
+
+    if (sum_till_n == b[bsz - 1] || sum_till_n == b[bsz - 2])
+    {
+        // trace(sum_till_n);
+        for (ll i = 0; i < n; i++)
         {
-            s.erase(i + 3, 1);
-            n--;
+            cout << b[i] << " ";
+        }
+        cout << "\n";
+        return;
+    }
+
+    ll yess = pre_sum[bsz - 2];
+    // trace(yess);
+    ll index = -1;
+    for (ll i = 0; i < bsz - 1; i++)
+    {
+        //do not take b[i]
+        ll rem_sum = yess - b[i];
+        if (rem_sum == b[bsz - 1])
+        {
+            index = i;
+            break;
         }
     }
-    cout << s << "\n";
+    // trace(index);
+    // trace(yess);
+    if (index == -1)
+    {
+        cout << "-1\n";
+        return;
+    }
+    for (ll i = 0; i < bsz - 1; i++)
+    {
+        if (index != i)
+        {
+            cout << b[i] << " ";
+        }
+    }
+    cout << "\n";
 }
 
 int main()
@@ -91,8 +131,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while (t > 0)
     {
         solve();

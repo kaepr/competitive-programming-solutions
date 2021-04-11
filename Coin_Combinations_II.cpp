@@ -72,7 +72,6 @@ void solve()
             }
             else
             {
-
                 int first = 0, second = 0;
                 //only choose this option if curr - a[i] >= 0
                 if (curr - a[i] >= 0)

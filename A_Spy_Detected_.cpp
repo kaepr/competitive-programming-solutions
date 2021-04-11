@@ -48,39 +48,33 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    string s;
-    cin >> s;
-    int n = s.length();
-    int i = 0;
-    while (i < n - 1)
+    int n;
+    cin >> n;
+    int a[n];
+    map<int, int> mp;
+    for (int i = 0; i < n; i++)
     {
-        if (s[i] == s[i + 1])
-        {
-            i++;
-            // keep removing the next characters, this fixes xxxxx... typos
-            while (i < n - 1 && s[i] == s[i + 1])
-            {
-                s.erase(i + 1, 1);
-                n--;
-            }
-        }
-        else
-        {
-            i++;
-        }
+        cin >> a[i];
+        mp[a[i]]++;
     }
 
-    // trace(s);
-
-    for (int i = 0; i < n - 3; i++)
+    int elm = 0;
+    for (auto x : mp)
     {
-        if (s[i] == s[i + 1] && s[i + 2] == s[i + 3])
+        if (x.second == 1)
         {
-            s.erase(i + 3, 1);
-            n--;
+            elm = x.first;
+            break;
         }
     }
-    cout << s << "\n";
+    for (int i = 0; i < n; i++)
+    {
+        if (a[i] == elm)
+        {
+            cout << i + 1 << "\n";
+            return;
+        }
+    }
 }
 
 int main()
@@ -91,8 +85,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while (t > 0)
     {
         solve();

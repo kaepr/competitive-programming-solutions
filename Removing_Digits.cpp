@@ -48,39 +48,25 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    string s;
-    cin >> s;
-    int n = s.length();
-    int i = 0;
-    while (i < n - 1)
+    int n;
+    cin >> n;
+    // trace(n);
+    int dp[n + 1];
+    dp[0] = 0;
+    for (int i = 1; i <= n; i++)
     {
-        if (s[i] == s[i + 1])
+        int val = 1e6 + 10;
+        for (auto c : to_string(i))
         {
-            i++;
-            // keep removing the next characters, this fixes xxxxx... typos
-            while (i < n - 1 && s[i] == s[i + 1])
+            int digit = c - '0';
+            if (digit != 0)
             {
-                s.erase(i + 1, 1);
-                n--;
+                val = min(val, dp[i - digit] + 1);
             }
         }
-        else
-        {
-            i++;
-        }
+        dp[i] = val;
     }
-
-    // trace(s);
-
-    for (int i = 0; i < n - 3; i++)
-    {
-        if (s[i] == s[i + 1] && s[i + 2] == s[i + 3])
-        {
-            s.erase(i + 3, 1);
-            n--;
-        }
-    }
-    cout << s << "\n";
+    cout << dp[n];
 }
 
 int main()

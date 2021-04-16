@@ -48,11 +48,76 @@ int powmod(int x, int y, int mod)
 
 void solve()
 {
-    string s;
-    cin >> s;
-    ll a, b;
-    cin >> a >> b;
-    
+    int n, q;
+    cin >> n >> q;
+    vector<int> v;
+    map<int, int> mp;
+
+    for (int i = 0; i < n; i++)
+    {
+        int x;
+        cin >> x;
+        // trace(x);
+        if (mp[x])
+        {
+        }
+        else
+        {
+            mp[x] = i + 1;
+        }
+        v.PB(x);
+    }
+    vector<int> ans;
+
+    // for (auto x : mp)
+    // {
+    //     cout << x.first << " " << x.second << "\n";
+    // }
+
+    int prev = 0;
+    while (q > 0)
+    {
+        int x;
+        cin >> x;
+        int minn = mp[x];
+        // trace(x, minn);
+        // trace(x);
+        for (auto y : mp)
+        {
+            if (y.second < minn)
+            {
+                int val = y.second;
+                mp[y.first] = val + 1;
+            }
+        }
+        mp[x] = 1;
+
+        ans.PB(minn);
+        q--;
+    }
+
+    // for (auto x : mp)
+    // {
+    //     cout << x.first << "\n";
+    //     for (auto y : x.second)
+    //     {
+    //         cout << y << " ";
+    //     }
+    //     cout << "\n";
+    // }
+
+    // for (ll i = 0; i <= n; i++)
+    // {
+    //     cout << offset[i] << " ";
+    // }
+    // cout << "\n";
+
+    for (auto x : ans)
+    {
+        cout << x << " ";
+        // change++;
+    }
+    cout << "\n";
 }
 
 int main()

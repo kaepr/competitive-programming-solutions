@@ -46,93 +46,36 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-bool chk(int max_value, int poss_sum, int len)
-{
-    int maxx = 0, minn = 0;
-
-    for (int i = 0; i < len; i++)
-    {
-        minn += i + 1;
-        maxx += (max_value - i);
-    }
-
-    if (poss_sum > maxx || poss_sum < minn)
-    {
-        return false;
-    }
-    return true;
-}
-
 void solve()
 {
-    int n, l, r, s;
-    cin >> n >> l >> r >> s;
-
-    int maxx = 0, minn = 0;
-
-    int x = r - l + 1;
-
-    /*
-    x positions to fill
-    all elements should be <= n, and distinct
-    and their sum should be s
-    */
-
-    if (!chk(n, s, x))
+    int n, k;
+    cin >> n >> k;
+    if ((k * 2) >= n)
     {
         cout << -1 << "\n";
         return;
     }
 
-    // trace(n, x, minn, maxx);
-
-    int ans[n + 1] = {0};
-    map<int, int> val;
-
-    bool f = false;
-    int sum_rem = s;
-    int rem_len = r - l + 1;
-    int index = l;
-    vi not_chosen;
-    for (int i = n; i >= 1; i--)
-    {
-        if (sum_rem - i >= 0 && chk(i - 1, sum_rem - i, rem_len - 1))
-        {
-            // add i to ans array
-            ans[index] = i;
-            index++;
-            val[i]++;
-            sum_rem -= i;
-            rem_len--;
-        }
-        else
-        {
-            not_chosen.PB(i);
-        }
-    }
-
-    if (sum_rem != 0 || rem_len != 0)
-    {
-        cout << -1 << "\n";
-        return;
-    }
-
-    int ptr = 0;
-
+    int a[n + 1];
     for (int i = 1; i <= n; i++)
     {
-        if (ans[i] == 0)
+        a[i] = i;
+    }
+
+    for (int i = 2; i <= n; i++)
+    {
+        if (k > 0)
         {
-            ans[i] = not_chosen[ptr];
-            ptr++;
+            swap(a[i], a[i + 1]);
+            i++;
+            k--;
         }
     }
 
     for (int i = 1; i <= n; i++)
     {
-        cout << ans[i] << " ";
+        cout << a[i] << " ";
     }
-
     cout << "\n";
 }
 

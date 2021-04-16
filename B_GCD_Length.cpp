@@ -4,7 +4,7 @@ using ll = long long;
 using ull = unsigned long long;
 using vi = vector<int>;
 
-const int MOD = 1000000007;
+const int MOD = 1e9 + 7;
 
 #define PB push_back
 #define F first
@@ -18,7 +18,6 @@ template <typename Arg1>
 void __f(const char *name, Arg1 &&arg1)
 {
     cout << name << " : " << arg1 << endl;
-    //use cerr if u want to display at the bottom
 }
 template <typename Arg1, typename... Args>
 void __f(const char *names, Arg1 &&arg1, Args &&...args)
@@ -47,40 +46,51 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
+vector<ll> primes;
+
+ll numDigits(ll n)
+{
+    ll cnt = 0;
+    while (n > 0)
+    {
+        cnt++;
+        n /= 10;
+    }
+    return cnt;
+}
+
 void solve()
 {
-    ll n, m;
-    cin >> n >> m;
+    ll a, b, c;
+    cin >> a >> b >> c;
 
-    set<ll> st[m];
-    for (ll i = 0; i < n; i++)
+    ll primes[9] = {1, 11, 101, 1009, 10007, 100001, 1000003, 10000019, 100000007};
+    ll numm = primes[c - 1];
+    ll x = numm;
+    ll y = numm;
+    while (numDigits(x) < a)
     {
-        string s;
-        cin >> s;
-        for (ll j = 0; j < m; j++)
-        {
-            st[j].insert(s[j]);
-        }
+        x *= 9;
     }
-    ll ans = 1;
-    for (ll i = 0; i < m; i++)
-    {
-        ans = (ans * st[i].size()) % MOD;
-    }
-    cout << ans << "\n";
 
+    while (numDigits(y) < b)
+    {
+        y *= 10;
+    }
+
+    cout << x << " " << y << "\n";
 }
 
 int main()
 {
-    // freopen("filename_input.txt","r",stdin);
-    // freopen("filename_output.txt","w",stdout);
+    // freopen("input.txt","r",stdin);
+    // freopen("output.txt","w",stdout);
     ios_base::sync_with_stdio(0);
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while (t > 0)
     {
         solve();

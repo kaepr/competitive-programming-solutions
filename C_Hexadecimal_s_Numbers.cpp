@@ -4,7 +4,7 @@ using ll = long long;
 using ull = unsigned long long;
 using vi = vector<int>;
 
-const int MOD = 1000000007;
+const int MOD = 1e9 + 7;
 
 #define PB push_back
 #define F first
@@ -18,7 +18,6 @@ template <typename Arg1>
 void __f(const char *name, Arg1 &&arg1)
 {
     cout << name << " : " << arg1 << endl;
-    //use cerr if u want to display at the bottom
 }
 template <typename Arg1, typename... Args>
 void __f(const char *names, Arg1 &&arg1, Args &&...args)
@@ -47,34 +46,37 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-void solve()
+int solve(string s, int n)
 {
-    ll n, m;
-    cin >> n >> m;
-
-    set<ll> st[m];
-    for (ll i = 0; i < n; i++)
+    if (s.length() <= 10)
     {
-        string s;
-        cin >> s;
-        for (ll j = 0; j < m; j++)
+        if (stoi(s) > n)
         {
-            st[j].insert(s[j]);
+            return 0;
         }
     }
-    ll ans = 1;
-    for (ll i = 0; i < m; i++)
+    else
     {
-        ans = (ans * st[i].size()) % MOD;
+        return 0;
     }
-    cout << ans << "\n";
 
+    return 1 + solve(s + '0', n) + solve(s + '1', n);
+}
+
+void solve()
+{
+    string s = "1";
+    int ans = 0;
+    int n;
+    cin >> n;
+    ans = solve(s, n);
+    cout << ans << "\n";
 }
 
 int main()
 {
-    // freopen("filename_input.txt","r",stdin);
-    // freopen("filename_output.txt","w",stdout);
+    // freopen("input.txt","r",stdin);
+    // freopen("output.txt","w",stdout);
     ios_base::sync_with_stdio(0);
     cin.tie(NULL);
     cout.tie(NULL);

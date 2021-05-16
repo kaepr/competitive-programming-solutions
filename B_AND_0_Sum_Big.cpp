@@ -18,7 +18,7 @@ void __f(const char *name, Arg1 &&arg1)
     cout << name << " : " << arg1 << endl;
 }
 template <typename Arg1, typename... Args>
-void __f(const char *names, Arg1 &&arg1, Args &&... args)
+void __f(const char *names, Arg1 &&arg1, Args &&...args)
 {
     const char *comma = strchr(names + 1, ',');
     cout.write(names, comma - names) << " : " << arg1 << " | ";
@@ -28,9 +28,9 @@ void __f(const char *names, Arg1 &&arg1, Args &&... args)
 #define trace(...)
 #endif
 
-int powmod(int x, int y, int mod)
+ll powmod(ll x, ll y, ll mod)
 {
-    int res = 1;
+    ll res = 1;
     x %= mod;
     if (x == 0)
         return 0;
@@ -44,11 +44,15 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-const int MOD = 1e9 + 7;
+const ll MOD = 1e9 + 7;
 
 void solve()
 {
-    
+    ll n, k;
+    cin >> n >> k;
+    ll num = powmod(n, k, MOD);
+    cout << num << "\n";
+    // trace(num);
 }
 
 int main()

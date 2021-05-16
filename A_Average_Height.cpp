@@ -4,6 +4,8 @@ using ll = long long;
 using ull = unsigned long long;
 using vi = vector<int>;
 
+const int MOD = 1e9 + 7;
+
 #define PB push_back
 #define F first
 #define S second
@@ -18,7 +20,7 @@ void __f(const char *name, Arg1 &&arg1)
     cout << name << " : " << arg1 << endl;
 }
 template <typename Arg1, typename... Args>
-void __f(const char *names, Arg1 &&arg1, Args &&... args)
+void __f(const char *names, Arg1 &&arg1, Args &&...args)
 {
     const char *comma = strchr(names + 1, ',');
     cout.write(names, comma - names) << " : " << arg1 << " | ";
@@ -44,11 +46,46 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-const int MOD = 1e9 + 7;
-
 void solve()
 {
-    
+    ll n;
+    cin >> n;
+    vector<ll> a;
+    vector<ll> odd;
+    vector<ll> even;
+    for (ll i = 0; i < n; i++)
+    {
+        ll x;
+        cin >> x;
+        a.PB(x);
+        if (x % 2 == 0)
+        {
+            even.PB(x);
+        }
+        else
+        {
+            odd.PB(x);
+        }
+    }
+
+    for (int i = 0; i < odd.size(); i++)
+    {
+        if (i == odd.size() - 1)
+        {
+            cout << odd[i] << " ";
+        }
+        else
+        {
+            cout << odd[i] << " ";
+        }
+    }
+
+    for (int i = 0; i < even.size(); i++)
+    {
+
+        cout << even[i] << " ";
+    }
+    cout << "\n";
 }
 
 int main()

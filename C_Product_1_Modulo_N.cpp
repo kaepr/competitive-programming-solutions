@@ -18,7 +18,7 @@ void __f(const char *name, Arg1 &&arg1)
     cout << name << " : " << arg1 << endl;
 }
 template <typename Arg1, typename... Args>
-void __f(const char *names, Arg1 &&arg1, Args &&... args)
+void __f(const char *names, Arg1 &&arg1, Args &&...args)
 {
     const char *comma = strchr(names + 1, ',');
     cout.write(names, comma - names) << " : " << arg1 << " | ";
@@ -48,7 +48,37 @@ const int MOD = 1e9 + 7;
 
 void solve()
 {
-    
+    int n;
+    cin >> n;
+    vi dig;
+    int a[n + 1] = {0};
+    int prod = 1;
+    int cnt = 0;
+    for (int i = 1; i < n; i++)
+    {
+        if (__gcd(n, i) == 1)
+        {
+            prod *= i;
+            prod %= n;
+            a[i] = 1;
+            cnt++;
+        }
+    }
+
+    if (prod != 1)
+    {
+        cnt--;
+        a[prod] = 0;
+    }
+    cout<<cnt<<"\n";
+    for (int i = 1; i < n; i++)
+    {
+        if (a[i])
+        {
+            cout << i << " ";
+        }
+    }
+    cout << "\n";
 }
 
 int main()
@@ -59,8 +89,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t;
-    cin >> t;
+    int t = 1;
+    // cin >> t;
     while (t > 0)
     {
         solve();

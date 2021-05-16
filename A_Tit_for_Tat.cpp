@@ -18,7 +18,7 @@ void __f(const char *name, Arg1 &&arg1)
     cout << name << " : " << arg1 << endl;
 }
 template <typename Arg1, typename... Args>
-void __f(const char *names, Arg1 &&arg1, Args &&... args)
+void __f(const char *names, Arg1 &&arg1, Args &&...args)
 {
     const char *comma = strchr(names + 1, ',');
     cout.write(names, comma - names) << " : " << arg1 << " | ";
@@ -48,7 +48,38 @@ const int MOD = 1e9 + 7;
 
 void solve()
 {
-    
+    int n, k;
+    cin >> n >> k;
+    int a[n];
+    for (int i = 0; i < n; i++)
+    {
+        cin >> a[i];
+    }
+    int ptr1 = 0, ptr2 = n - 1;
+
+    while (k > 0 && ptr1 < ptr2)
+    {
+        if (a[ptr1] == 0)
+        {
+            ptr1++;
+            continue;
+        }
+
+        if (ptr1 == ptr2)
+        {
+            break;
+        }
+
+        a[ptr1]--;
+        a[ptr2]++;
+        k--;
+    }
+
+    for (int i = 0; i < n; i++)
+    {
+        cout << a[i] << " ";
+    }
+    cout << "\n";
 }
 
 int main()

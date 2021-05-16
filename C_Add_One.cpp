@@ -4,8 +4,6 @@ using ll = long long;
 using ull = unsigned long long;
 using vi = vector<int>;
 
-const ll MOD = 1e9 + 7;
-
 #define PB push_back
 #define F first
 #define S second
@@ -46,61 +44,60 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-ll cntDigits(ll n)
+const int MOD = 1e9 + 7;
+
+const int maxn = 2e5 + 10;
+
+int dp[maxn][10];
+
+int calc(int m_rem, int digit)
 {
-    ll cnt = 0;
-    while (n > 0)
+
+    if (m_rem == 0)
     {
-        cnt++;
-        n /= 10;
+        return 1;
     }
-    return cnt;
+
+    if (dp[m_rem][digit] != -1)
+    {
+        return dp[m_rem][digit];
+    }
+
+    int ans = 0;
+
+    if (digit == 9)
+    {
+        ans = calc(m_rem - 1, 0) % MOD;
+        ans %= MOD;
+        ans += calc(m_rem - 1, 1) % MOD;
+        ans %= MOD;
+    }
+    else
+    {
+        ans = calc(m_rem - 1, digit + 1) % MOD;
+        ans %= MOD;
+    }
+
+    dp[m_rem][digit] = ans;
+    return ans;
 }
 
 void solve()
 {
-    ll n, m;
+    int n, m;
     cin >> n >> m;
-    // ll curr = cntDigits(n);
-    map<ll, ll> mp;
-    ll ans = 0;
+
+    int ans = 0;
+
     while (n > 0)
     {
-        ll digit = n % 10;
-
-        ll curr = 0;
-        ll req_to_zero = 10 - digit;
-        if (m < req_to_zero)
-        {
-            curr = 1;
-        }
-        else
-        {
-            // it will increase count atleast once
-            // how many times it will increase is the question
-            ll temp_m = m - req_to_zero;
-            curr = 2;
-            trace(temp_m);
-            //now digit is at 10
-            ll to_add = 1;
-            ll times = temp_m / 10;
-            while (times > 0)
-            {
-                to_add += to_add;
-                times--;
-            }
-            // temp_m--;
-
-            curr += to_add;
-            curr %= MOD;
-            // trace(times);
-        }
-        ans = (ans + curr) % MOD;
+        int dig = n % 10;
+        ans += (dp[m][dig] % MOD);
         ans %= MOD;
         n /= 10;
     }
 
-    cout << (ans % MOD) << "\n";
+    cout << ans << "\n";
 }
 
 int main()
@@ -111,37 +108,29 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    ll num = 12;
-    ll temp = 100;
-    while (temp > 0)
+    memset(dp, 0, sizeof(dp));
+    // calc(50, 0);
+    for (int i = 0; i < 10; i++)
     {
-        string res = "";
-        while (num > 0)
-        {
-            ll digit = num % 10;
-            digit++;
-            res = res + to_string(digit);
-            num /= 10;
-        }
-        trace(res);
-        ll power = 1;
-        num = 0;
-        for (int i = res.length() - 1; i >= 0; i--)
-        {
-            num += power * (res[i] - '0');
-            power *= 10;
-        }
-        // num = (ll)stoi(res);
-        temp--;
+        dp[0][i] = 1;
     }
 
-    // int t;
-    // cin >> t;
-    // while (t > 0)
-    // {
-    //     solve();
-    //     t--;
-    // }
+    for (int i = 1; i < maxn; i++)
+    {
+        for (int j = 0; j < 9; j++)
+        {
+            dp[i][j] = dp[i - 1][j + 1];
+        }
+        dp[i][9] = (dp[i - 1][0] + dp[i - 1][1]) % MOD;
+    }
+
+    int t;
+    cin >> t;
+    while (t > 0)
+    {
+        solve();
+        t--;
+    }
 
     return 0;
 }

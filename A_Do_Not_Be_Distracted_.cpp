@@ -18,7 +18,7 @@ void __f(const char *name, Arg1 &&arg1)
     cout << name << " : " << arg1 << endl;
 }
 template <typename Arg1, typename... Args>
-void __f(const char *names, Arg1 &&arg1, Args &&... args)
+void __f(const char *names, Arg1 &&arg1, Args &&...args)
 {
     const char *comma = strchr(names + 1, ',');
     cout.write(names, comma - names) << " : " << arg1 << " | ";
@@ -48,7 +48,46 @@ const int MOD = 1e9 + 7;
 
 void solve()
 {
-    
+    int n;
+    cin >> n;
+    string s;
+    cin >> s;
+
+    map<char, int> mp;
+
+    bool f = true;
+    mp[s[0]] = 1;
+    for (int i = 1; i < n; i++)
+    {
+        char a = s[i];
+        if (mp[a])
+        {
+            int last_occur = mp[a];
+            // trace(a, last_occur);
+            if ((i + 1) - last_occur > 1)
+            {
+                f = false;
+                break;
+            }
+            else
+            {
+                mp[a] = i + 1;
+            }
+        }
+        else
+        {
+            mp[a] = i + 1;
+        }
+    }
+
+    if (f)
+    {
+        cout << "YES\n";
+    }
+    else
+    {
+        cout << "NO\n";
+    }
 }
 
 int main()

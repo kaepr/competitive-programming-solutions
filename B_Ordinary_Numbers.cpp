@@ -18,7 +18,7 @@ void __f(const char *name, Arg1 &&arg1)
     cout << name << " : " << arg1 << endl;
 }
 template <typename Arg1, typename... Args>
-void __f(const char *names, Arg1 &&arg1, Args &&... args)
+void __f(const char *names, Arg1 &&arg1, Args &&...args)
 {
     const char *comma = strchr(names + 1, ',');
     cout.write(names, comma - names) << " : " << arg1 << " | ";
@@ -46,9 +46,46 @@ int powmod(int x, int y, int mod)
 
 const int MOD = 1e9 + 7;
 
+/*
+
+1 - 9 => 9
+10 -> 99 => 9
+
+
+*/
+
+ll getNum(string s)
+{
+    ll base = 1;
+    reverse(s.begin(), s.end());
+
+    ll num = 0;
+
+    for (ll i = 0; i < s.length(); i++)
+    {
+        num += (s[i] - '0') * base;
+        base *= 10;
+    }
+
+    return num;
+}
+
 void solve()
 {
-    
+    int n;
+    cin >> n;
+    int res = 0;
+    for (ll pw = 1; pw <= n; pw = pw * 10 + 1)
+    {
+        for (int d = 1; d <= 9; d++)
+        {
+            if (pw * d <= n)
+            {
+                res++;
+            }
+        }
+    }
+    cout << res << "\n";
 }
 
 int main()

@@ -4,8 +4,6 @@ using ll = long long;
 using ull = unsigned long long;
 using vi = vector<int>;
 
-const int MOD = 1e9 + 7;
-
 #define PB push_back
 #define F first
 #define S second
@@ -46,63 +44,43 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
+const int MOD = 1e9 + 7;
+
 void solve()
 {
-    ll n, x;
-    cin >> n >> x;
-    vector<ll> v;
-    for (ll i = 0; i < n; i++)
+    ll total_tiles, good_days, bad_days;
+    cin >> total_tiles >> good_days >> bad_days;
+
+    ll minimumGoodTiles = total_tiles / 2;
+
+    if (total_tiles % 2 != 0)
     {
-        ll temp;
-        cin >> temp;
-        v.PB(temp);
+        minimumGoodTiles++;
     }
 
-    ll cnt = 0;
-    sort(v.begin(), v.end());
-    reverse(v.begin(), v.end());
-    ll total = 0;
-    ll num = 0;
-    ll curr_min = 1e18;
+    ll minimumBadTiles = total_tiles - minimumGoodTiles;
 
-    // for (auto x : v)
-    // {
-    //     cout << x << " ";
-    // }
-    // cout << "\n";
+    // g b g b g ...
 
-    for (ll i = 0; i < n; i++)
+    // need goodTimes iterations to paint all the good blocks
+    ll totalG = (minimumGoodTiles / good_days) * (good_days + bad_days);
+
+    if (minimumGoodTiles % good_days == 0)
     {
-        if (total == 0)
-        {
-            total += v[i];
-            num = 1;
-            curr_min = min(curr_min, v[i]);
-        }
-        else
-        {
-            num++;
-            total += v[i];
-            curr_min = min(curr_min, v[i]);
-        }
-
-        // trace(curr_min, num);
-
-        if (curr_min * num >= x)
-        {
-            cnt++;
-            num = 0;
-            curr_min = 1e18;
-            total = 0;
-        }
+        totalG -= bad_days;
     }
-    cout << cnt << "\n";
+    else
+    {
+        totalG += minimumGoodTiles % good_days;
+    }
+
+    cout << max(total_tiles, totalG) << "\n";
 }
 
 int main()
 {
     // freopen("input.txt","r",stdin);
-    // freopen("output.txt","w",stdout);
+    // freopen("output.txt","w",stdout)Tiles = ;
     ios_base::sync_with_stdio(0);
     cin.tie(NULL);
     cout.tie(NULL);

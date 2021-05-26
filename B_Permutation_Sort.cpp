@@ -4,8 +4,6 @@ using ll = long long;
 using ull = unsigned long long;
 using vi = vector<int>;
 
-const int MOD = 1e9 + 7;
-
 #define PB push_back
 #define F first
 #define S second
@@ -46,57 +44,39 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
+const int MOD = 1e9 + 7;
+
 void solve()
 {
-    ll n, x;
-    cin >> n >> x;
-    vector<ll> v;
-    for (ll i = 0; i < n; i++)
+    vi v;
+    int n;
+    cin >> n;
+    for (int i = 0; i < n; i++)
     {
-        ll temp;
-        cin >> temp;
-        v.PB(temp);
+        int x;
+        cin >> x;
+        v.PB(x);
     }
 
-    ll cnt = 0;
-    sort(v.begin(), v.end());
-    reverse(v.begin(), v.end());
-    ll total = 0;
-    ll num = 0;
-    ll curr_min = 1e18;
-
-    // for (auto x : v)
-    // {
-    //     cout << x << " ";
-    // }
-    // cout << "\n";
-
-    for (ll i = 0; i < n; i++)
+    if (is_sorted(v.begin(), v.end()))
     {
-        if (total == 0)
-        {
-            total += v[i];
-            num = 1;
-            curr_min = min(curr_min, v[i]);
-        }
-        else
-        {
-            num++;
-            total += v[i];
-            curr_min = min(curr_min, v[i]);
-        }
-
-        // trace(curr_min, num);
-
-        if (curr_min * num >= x)
-        {
-            cnt++;
-            num = 0;
-            curr_min = 1e18;
-            total = 0;
-        }
+        cout << "0\n";
+        return;
     }
-    cout << cnt << "\n";
+
+    if ((v[0] == 1) || (v[n - 1] == n))
+    {
+        cout << 1 << "\n";
+        return;
+    }
+
+    if (v[0] == n && v[n - 1] == 1)
+    {
+        cout << 3 << "\n";
+        return;
+    }
+
+    cout << 2 << "\n";
 }
 
 int main()

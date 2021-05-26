@@ -4,8 +4,6 @@ using ll = long long;
 using ull = unsigned long long;
 using vi = vector<int>;
 
-const int MOD = 1e9 + 7;
-
 #define PB push_back
 #define F first
 #define S second
@@ -46,57 +44,67 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
+const int MOD = 1e9 + 7;
+
+vector<int> adj[10];
+int n, m;
+
+int commonCount(int a, int b)
+{
+    int res = 0;
+    for (auto x : adj[a])
+    {
+        for (auto y : adj[b])
+        {
+            if (x == y)
+            {
+                res++;
+            }
+        }
+    }
+    return res;
+}
+
+/*
+ for n <= 6
+ ans = m, as all dominos can be used up
+
+ for n==7
+ convert the question into a simpler version i.e. of n = 6
+ merge two vertices, and reduce their common count from the total edges
+
+ as n == 7, thus this solution works
+*/
+
 void solve()
 {
-    ll n, x;
-    cin >> n >> x;
-    vector<ll> v;
-    for (ll i = 0; i < n; i++)
+    cin >> n >> m;
+
+    for (int i = 0; i < m; i++)
     {
-        ll temp;
-        cin >> temp;
-        v.PB(temp);
+        int a, b;
+        cin >> a >> b;
+
+        adj[a].PB(b);
+        adj[b].PB(a);
     }
 
-    ll cnt = 0;
-    sort(v.begin(), v.end());
-    reverse(v.begin(), v.end());
-    ll total = 0;
-    ll num = 0;
-    ll curr_min = 1e18;
-
-    // for (auto x : v)
-    // {
-    //     cout << x << " ";
-    // }
-    // cout << "\n";
-
-    for (ll i = 0; i < n; i++)
+    if (n < 7)
     {
-        if (total == 0)
-        {
-            total += v[i];
-            num = 1;
-            curr_min = min(curr_min, v[i]);
-        }
-        else
-        {
-            num++;
-            total += v[i];
-            curr_min = min(curr_min, v[i]);
-        }
+        cout << m << "\n";
+        return;
+    }
 
-        // trace(curr_min, num);
+    int minn = m;
 
-        if (curr_min * num >= x)
+    for (int a = 1; a <= n; a++)
+    {
+        for (int b = a + 1; b <= n; b++)
         {
-            cnt++;
-            num = 0;
-            curr_min = 1e18;
-            total = 0;
+            minn = min(minn, commonCount(a, b));
         }
     }
-    cout << cnt << "\n";
+    cout << m - minn << "\n";
 }
 
 int main()
@@ -107,8 +115,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t;
-    cin >> t;
+    int t = 1;
+    // cin >> t;
     while (t > 0)
     {
         solve();

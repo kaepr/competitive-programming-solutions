@@ -48,7 +48,6 @@ int powmod(int x, int y, int mod)
 }
 
 /*
-
 Left Shift ( << )
 It shifts some number of bits in the given pattern to the left and append 0 at the end.
 It is equivalent to multiplying the number/bit pattern with 2^k
@@ -64,11 +63,9 @@ It shifts some number of bits in the given bit pattern to the right and appends 
 
 4 >> 1 = 4 / 2 = 2
 16 >> 4 = 16 / (2*4) = 2
-
 */
 
 /*
-
 Check if given number is power of 2
 Consider any number x.
 Now consider x - 1, in the binary representation of x - 1, all the bits will be same as x except for the rightmost 1 in x, and all the bits to the right of the righmost 1.
@@ -150,7 +147,7 @@ void possibleSubsets(char A[], int N)
     {
         for (int j = 0; j < N; ++j)
             if (i & (1 << j))
-                cout << A[j] << ‘ ‘;
+                cout << A[j] << " ";
         cout << endl;
     }
 }

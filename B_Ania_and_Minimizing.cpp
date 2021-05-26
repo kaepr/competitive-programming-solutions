@@ -4,8 +4,6 @@ using ll = long long;
 using ull = unsigned long long;
 using vi = vector<int>;
 
-const int MOD = 1e9 + 7;
-
 #define PB push_back
 #define F first
 #define S second
@@ -46,57 +44,47 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
+const int MOD = 1e9 + 7;
+
 void solve()
 {
-    ll n, x;
-    cin >> n >> x;
-    vector<ll> v;
-    for (ll i = 0; i < n; i++)
+    ll n, k;
+    cin >> n >> k;
+    string s;
+    cin >> s;
+    int ptr = 0;
+
+    if (n == 1)
     {
-        ll temp;
-        cin >> temp;
-        v.PB(temp);
+        if (k > 0)
+        {
+            s[0] = '0';
+        }
+        cout << s << "\n";
+        return;
     }
 
-    ll cnt = 0;
-    sort(v.begin(), v.end());
-    reverse(v.begin(), v.end());
-    ll total = 0;
-    ll num = 0;
-    ll curr_min = 1e18;
-
-    // for (auto x : v)
-    // {
-    //     cout << x << " ";
-    // }
-    // cout << "\n";
-
-    for (ll i = 0; i < n; i++)
+    while (k > 0 && ptr < n)
     {
-        if (total == 0)
+        if (ptr == 0)
         {
-            total += v[i];
-            num = 1;
-            curr_min = min(curr_min, v[i]);
+            if (s[ptr] != '1')
+            {
+                s[ptr] = '1';
+                k--;
+            }
         }
         else
         {
-            num++;
-            total += v[i];
-            curr_min = min(curr_min, v[i]);
+            if (s[ptr] != '0')
+            {
+                s[ptr] = '0';
+                k--;
+            }
         }
-
-        // trace(curr_min, num);
-
-        if (curr_min * num >= x)
-        {
-            cnt++;
-            num = 0;
-            curr_min = 1e18;
-            total = 0;
-        }
+        ptr++;
     }
-    cout << cnt << "\n";
+    cout << s << "\n";
 }
 
 int main()
@@ -107,8 +95,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t;
-    cin >> t;
+    int t = 1;
+    // cin >> t;
     while (t > 0)
     {
         solve();

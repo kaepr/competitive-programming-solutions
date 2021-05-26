@@ -4,8 +4,6 @@ using ll = long long;
 using ull = unsigned long long;
 using vi = vector<int>;
 
-const int MOD = 1e9 + 7;
-
 #define PB push_back
 #define F first
 #define S second
@@ -46,57 +44,21 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
+const int MOD = 1e9 + 7;
+
 void solve()
 {
-    ll n, x;
-    cin >> n >> x;
-    vector<ll> v;
-    for (ll i = 0; i < n; i++)
+    ll n;
+    cin >> n;
+
+    if (n == 2)
     {
-        ll temp;
-        cin >> temp;
-        v.PB(temp);
+        cout << 1 << "\n";
     }
-
-    ll cnt = 0;
-    sort(v.begin(), v.end());
-    reverse(v.begin(), v.end());
-    ll total = 0;
-    ll num = 0;
-    ll curr_min = 1e18;
-
-    // for (auto x : v)
-    // {
-    //     cout << x << " ";
-    // }
-    // cout << "\n";
-
-    for (ll i = 0; i < n; i++)
+    else
     {
-        if (total == 0)
-        {
-            total += v[i];
-            num = 1;
-            curr_min = min(curr_min, v[i]);
-        }
-        else
-        {
-            num++;
-            total += v[i];
-            curr_min = min(curr_min, v[i]);
-        }
-
-        // trace(curr_min, num);
-
-        if (curr_min * num >= x)
-        {
-            cnt++;
-            num = 0;
-            curr_min = 1e18;
-            total = 0;
-        }
+        cout << n - 2 << "\n";
     }
-    cout << cnt << "\n";
 }
 
 int main()

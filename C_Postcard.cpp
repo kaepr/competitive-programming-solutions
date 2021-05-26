@@ -45,101 +45,100 @@ int powmod(int x, int y, int mod)
 }
 
 const int MOD = 1e9 + 7;
-int n, m, k, need, s, cnt;
-int vis[505][505];
-char arr[505][505];
-
-/*
-        (x,y+1)
-(x-1,y),(x,y) (x+1,y)
-        (x,y-1)
-
-
-*/
-
-int dx[] = {0, 1, 0, -1};
-int dy[] = {1, 0, -1, 0};
-
-bool isValid(int x, int y)
-{
-    if (x < n && y < m && x >= 0 && y >= 0 && arr[x][y] == '.' && vis[x][y] == 0)
-    {
-        return true;
-    }
-    return false;
-}
-
-void dfs(int x, int y)
-{
-    if (cnt >= need)
-    {
-        return;
-    }
-
-    vis[x][y] = 1;
-
-    for (int i = 0; i < 4; i++)
-    {
-        if (isValid(x + dx[i], y + dy[i]))
-        {
-            cnt++;
-            dfs(x + dx[i], y + dy[i]);
-        }
-    }
-}
 
 void solve()
 {
-    cin >> n >> m >> k;
-    memset(vis, 0, sizeof(vis));
-    memset(arr, 'a', sizeof(arr));
-    int cnt = 0;
-    pair<int, int> p;
-    for (int i = 0; i < n; i++)
+
+    /*
+    
+    * - snowflake
+    ? - candy cone
+
+    */
+    string s;
+    cin >> s;
+    int k;
+    cin >> k;
+    int n = s.length();
+
+    int snow = 0, candy = 0, cnt = 0;
+    for (auto x : s)
     {
-        for (int j = 0; j < m; j++)
+        if (x == '*')
         {
-            char c;
-            cin >> c;
-            arr[i][j] = c;
-            if (c == '.')
-            {
-                s++;
-                p.F = i;
-                p.S = j;
-            }
-            // arr[i][j] = c;
+            snow++;
+        }
+        else if (x == '?')
+        {
+            candy++;
+        }
+        else
+        {
+            cnt++;
         }
     }
 
-    need = s - k;
-
-    // trace(need, k, s);
-    cnt = 1;
-    dfs(p.F, p.S);
-
-    for (int i = 0; i < n; i++)
+    if (cnt - snow - candy > k || (cnt < k && !snow))
     {
-        for (int j = 0; j < m; j++)
-        {
-            if (arr[i][j] == '#')
-            {
-                cout << '#';
-            }
-            else
-            {
-                if (vis[i][j])
-                {
-                    cout << '.';
-                }
-                else
-                {
-                    cout << 'X';
-                }
-            }
-        }
-        cout << "\n";
+        cout << "Impossible\n";
+        return;
     }
+
+    string ans = "";
+    int rm = max(k, cnt) - k, ad = k - min(k, cnt);
+    // trace(rm, ad);
+    if (!rm)
+    {
+        for (int i = 0; i < n; i++)
+        {
+            char c = 'a', c1 = s[i];
+            if (i + 1 < n)
+            {
+                c = s[i + 1];
+            }
+
+            if (c == '*')
+            {
+                i++;
+                if (ad)
+                {
+                    ans.append(ad, c1);
+                    ad = 0;
+                }
+            }
+
+            if (c == '?')
+            {
+                i++;
+            }
+            ans.append(1, c1);
+        }
+    }
+
+    if (rm)
+    {
+        for (int i = 0; i < n; i++)
+        {
+            char c = 'a', c1 = s[i];
+            if (i + 1 < n)
+            {
+                c = s[i + 1];
+            }
+
+            if (c == '?' || c == '*')
+            {
+                i++;
+                if (rm)
+                {
+                    rm--;
+                    continue;
+                }
+            }
+            ans.append(1, c1);
+        }
+    }
+
+    cout << ans;
 }
 
 int main()

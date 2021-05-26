@@ -4,8 +4,6 @@ using ll = long long;
 using ull = unsigned long long;
 using vi = vector<int>;
 
-const int MOD = 1e9 + 7;
-
 #define PB push_back
 #define F first
 #define S second
@@ -46,57 +44,40 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
+const int MOD = 1e9 + 7;
+
 void solve()
 {
-    ll n, x;
-    cin >> n >> x;
-    vector<ll> v;
-    for (ll i = 0; i < n; i++)
+    int n;
+    cin >> n;
+    vi a(n);
+    vi cnt(n + 1);
+    int ans = 0;
+    for (auto &it : a)
     {
-        ll temp;
-        cin >> temp;
-        v.PB(temp);
+        cin >> it;
+        cnt[it]++;
     }
 
-    ll cnt = 0;
-    sort(v.begin(), v.end());
-    reverse(v.begin(), v.end());
-    ll total = 0;
-    ll num = 0;
-    ll curr_min = 1e18;
-
-    // for (auto x : v)
-    // {
-    //     cout << x << " ";
-    // }
-    // cout << "\n";
-
-    for (ll i = 0; i < n; i++)
+    for (int l = 0; l < n; l++)
     {
-        if (total == 0)
+        int sum = 0;
+        for (int r = l; r < n; r++)
         {
-            total += v[i];
-            num = 1;
-            curr_min = min(curr_min, v[i]);
-        }
-        else
-        {
-            num++;
-            total += v[i];
-            curr_min = min(curr_min, v[i]);
-        }
+            sum += a[r];
+            if (l == r)
+            {
+                continue;
+            }
 
-        // trace(curr_min, num);
-
-        if (curr_min * num >= x)
-        {
-            cnt++;
-            num = 0;
-            curr_min = 1e18;
-            total = 0;
+            if (sum <= n)
+            {
+                ans += cnt[sum];
+                cnt[sum] = 0;
+            }
         }
     }
-    cout << cnt << "\n";
+    cout << ans << "\n";
 }
 
 int main()

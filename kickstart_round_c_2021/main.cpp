@@ -4,8 +4,6 @@ using ll = long long;
 using ull = unsigned long long;
 using vi = vector<int>;
 
-const int MOD = 1e9 + 7;
-
 #define PB push_back
 #define F first
 #define S second
@@ -46,57 +44,62 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
+const int MOD = 1e9 + 7;
+
+int caseNo = 1;
+
 void solve()
 {
-    ll n, x;
-    cin >> n >> x;
-    vector<ll> v;
-    for (ll i = 0; i < n; i++)
+    int ans = 0;
+
+    int n, k;
+    cin >> n >> k;
+    string s;
+    cin >> s;
+
+    int options[n] = {0};
+
+    for (int i = 0; i < n; i++)
     {
-        ll temp;
-        cin >> temp;
-        v.PB(temp);
+        int val = s[i] - 'a' + 1;
+        options[i] = min(val, k);
     }
 
-    ll cnt = 0;
-    sort(v.begin(), v.end());
-    reverse(v.begin(), v.end());
-    ll total = 0;
-    ll num = 0;
-    ll curr_min = 1e18;
-
-    // for (auto x : v)
-    // {
-    //     cout << x << " ";
-    // }
-    // cout << "\n";
-
-    for (ll i = 0; i < n; i++)
+    for (int i = 0; i < n; i++)
     {
-        if (total == 0)
+        cout << options[i] << " ";
+    }
+    cout << "\n";
+
+    for (int i = 0; i < n / 2; i++)
+    {
+        int num = min(options[i], options[n - i - 1]);
+        int toAdd = (num * (num + 1) / 2) % MOD;
+
+        if (ans == 0)
         {
-            total += v[i];
-            num = 1;
-            curr_min = min(curr_min, v[i]);
+            ans = num;
         }
         else
         {
-            num++;
-            total += v[i];
-            curr_min = min(curr_min, v[i]);
+            ans = (ans * num + ans) % MOD;
+            // ans = (ans * num) % MOD;
+            ans %= MOD;
         }
 
-        // trace(curr_min, num);
-
-        if (curr_min * num >= x)
-        {
-            cnt++;
-            num = 0;
-            curr_min = 1e18;
-            total = 0;
-        }
+        trace(i, ans, num, toAdd);
     }
-    cout << cnt << "\n";
+
+    if (n == 1)
+    {
+        ans = options[0];
+    }
+
+    ans %= MOD;
+    // ans = (ans * 2) % MOD;
+
+    cout << "Case #" << caseNo << ": " << ans << "\n";
+    caseNo++;
 }
 
 int main()

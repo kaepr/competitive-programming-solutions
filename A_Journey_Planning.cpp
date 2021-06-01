@@ -50,48 +50,39 @@ void solve()
 {
     ll n;
     cin >> n;
-    vector<ll> v;
-
+    vector<ll> b;
     for (ll i = 0; i < n; i++)
     {
         ll x;
         cin >> x;
-        v.PB(x);
+        b.PB(x);
     }
 
-    sort(v.begin(), v.end());
-    ll index = lower_bound(v.begin(), v.end(), 1) - v.begin();
-
-    // for (auto x : v)
-    // {
-    //     cout << x << " ";
-    // }
-    // cout << "\n";
-    // trace(index);
-    if (index == n)
+    if (n == 1)
     {
-        cout << n << "\n";
+        cout << b[0] << "\n";
         return;
     }
 
-    ll x = v[index];
-    // x is the minimum positive element
-
-    bool f = true;
-    for (int i = 1; i < index; i++)
+    ll val[n];
+    for (ll i = 0; i < n; i++)
     {
-        if (abs(v[i] - v[i - 1]) < x)
-        {
-            f = false;
-            break;
-        }
+        val[i] = b[i] - i;
     }
 
-    // trace(index, f, x);
-    int ans = index + 1;
-    if (!f)
+    map<ll, ll> mp;
+
+    for (ll i = 0; i < n; i++)
     {
-        ans--;
+        // cout << val[i] << " ";
+        mp[val[i]] += b[i];
+    }
+    // cout << "\n";
+    ll ans = 0;
+    for (auto x : mp)
+    {
+        ans = max(ans, x.second);
+        // cout << x.first << " " << x.second << "\n";
     }
     cout << ans << "\n";
 }
@@ -104,8 +95,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t;
-    cin >> t;
+    int t = 1;
+    // cin >> t;
     while (t > 0)
     {
         solve();

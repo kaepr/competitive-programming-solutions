@@ -21,7 +21,7 @@ void __f(const char *name, Arg1 &&arg1)
     //use cerr if u want to display at the bottom
 }
 template <typename Arg1, typename... Args>
-void __f(const char *names, Arg1 &&arg1, Args &&... args)
+void __f(const char *names, Arg1 &&arg1, Args &&...args)
 {
     const char *comma = strchr(names + 1, ',');
     cout.write(names, comma - names) << " : " << arg1 << " | ";
@@ -58,19 +58,26 @@ void solve()
     }
     sort(a.begin(), a.end());
     ll sum = 0;
-    for (int i = 0; i < n - 1; i++)
+    for (int i = 0; i < n; i++)
     {
         sum += a[i];
     }
 
-    if ((sum + a[n - 1]) % 2 == 0 && a[n - 1] <= sum)
-    {
-        cout << "YES\n";
-    }
-    else
+    if (sum % 2 != 0)
     {
         cout << "NO\n";
+        return;
     }
+
+    sum -= a[n - 1];
+
+    if (a[n - 1] > sum)
+    {
+        cout << "NO\n";
+        return;
+    }
+
+    cout << "YES\n";
 }
 
 int main()

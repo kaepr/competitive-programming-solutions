@@ -45,55 +45,50 @@ int powmod(int x, int y, int mod)
 }
 
 const int MOD = 1e9 + 7;
+const int maxn = 200005;
+
+void showpq(priority_queue<ll> gq)
+{
+    priority_queue<ll> g = gq;
+    while (!g.empty())
+    {
+        cout << ' ' << g.top();
+        g.pop();
+    }
+    cout << '\n';
+}
 
 void solve()
 {
     ll n;
     cin >> n;
-    vector<ll> v;
-
+    ll arr[n];
     for (ll i = 0; i < n; i++)
     {
-        ll x;
-        cin >> x;
-        v.PB(x);
+        cin >> arr[i];
     }
 
-    sort(v.begin(), v.end());
-    ll index = lower_bound(v.begin(), v.end(), 1) - v.begin();
+    ll curr_sum = 0, cnt = 0;
 
-    // for (auto x : v)
-    // {
-    //     cout << x << " ";
-    // }
-    // cout << "\n";
-    // trace(index);
-    if (index == n)
+    priority_queue<ll> pq;
+    for (int i = 0; i < n; i++)
     {
-        cout << n << "\n";
-        return;
-    }
-
-    ll x = v[index];
-    // x is the minimum positive element
-
-    bool f = true;
-    for (int i = 1; i < index; i++)
-    {
-        if (abs(v[i] - v[i - 1]) < x)
+        pq.push(-arr[i]);
+        cnt++;
+        curr_sum += arr[i];
+        if (curr_sum < 0)
         {
-            f = false;
-            break;
+            int x = pq.top();
+            x *= -1;
+            curr_sum -= x;
+            pq.pop();
+            cnt--;
         }
+        // trace(curr_sum);
+        // showpq(pq);
     }
 
-    // trace(index, f, x);
-    int ans = index + 1;
-    if (!f)
-    {
-        ans--;
-    }
-    cout << ans << "\n";
+    cout << cnt << "\n";
 }
 
 int main()
@@ -104,8 +99,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int t;
-    cin >> t;
+    int t = 1;
+    // cin >> t;
     while (t > 0)
     {
         solve();

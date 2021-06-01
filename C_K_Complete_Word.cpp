@@ -48,51 +48,47 @@ const int MOD = 1e9 + 7;
 
 void solve()
 {
-    ll n;
-    cin >> n;
-    vector<ll> v;
+    int n, k;
+    cin >> n >> k;
+    // n is divisible by k
 
-    for (ll i = 0; i < n; i++)
+    vector<vector<int>> vk;
+    string s;
+    cin >> s;
+
+    // can contain maximum of 'k' characters
+
+    int ans = 0, num_group = n / k;
+
+    for (int i = 0; i < k; i++)
     {
-        ll x;
-        cin >> x;
-        v.PB(x);
-    }
-
-    sort(v.begin(), v.end());
-    ll index = lower_bound(v.begin(), v.end(), 1) - v.begin();
-
-    // for (auto x : v)
-    // {
-    //     cout << x << " ";
-    // }
-    // cout << "\n";
-    // trace(index);
-    if (index == n)
-    {
-        cout << n << "\n";
-        return;
-    }
-
-    ll x = v[index];
-    // x is the minimum positive element
-
-    bool f = true;
-    for (int i = 1; i < index; i++)
-    {
-        if (abs(v[i] - v[i - 1]) < x)
+        vi temp;
+        map<char, int> mp;
+        int extra = 0;
+        for (int j = i; j < n; j += k)
         {
-            f = false;
-            break;
+            mp[s[j]]++;
+            if (k % 2 == 1 && i == (num_group / 2))
+            {
+                char c1 = s[j], c2 = s[(i + 1) * k - j];
+                trace(i, j);
+                trace(c1, c2);
+                if (c1 == c2)
+                {
+                    trace("hello");
+                }
+            }
         }
+
+        int max_freq = 0, total = 0;
+        for (auto x : mp)
+        {
+            total += x.second;
+            max_freq = max(max_freq, x.second);
+        }
+        ans += (total - max_freq);
     }
 
-    // trace(index, f, x);
-    int ans = index + 1;
-    if (!f)
-    {
-        ans--;
-    }
     cout << ans << "\n";
 }
 

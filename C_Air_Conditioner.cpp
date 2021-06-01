@@ -48,52 +48,33 @@ const int MOD = 1e9 + 7;
 
 void solve()
 {
-    ll n;
-    cin >> n;
-    vector<ll> v;
-
+    ll n, m;
+    cin >> n >> m;
+    vector<ll> time, low, high;
+    vector<pair<ll, pair<ll, ll>>> data;
     for (ll i = 0; i < n; i++)
     {
-        ll x;
-        cin >> x;
-        v.PB(x);
+        ll x, y, z;
+        cin >> x >> y >> z;
+        time.PB(x);
+        low.PB(y);
+        high.PB(z);
+        data.PB(MP(x, MP(y, z)));
     }
 
-    sort(v.begin(), v.end());
-    ll index = lower_bound(v.begin(), v.end(), 1) - v.begin();
-
-    // for (auto x : v)
-    // {
-    //     cout << x << " ";
-    // }
-    // cout << "\n";
-    // trace(index);
-    if (index == n)
+    for (auto x : data)
     {
-        cout << n << "\n";
-        return;
+        trace(x.F, x.S.F, x.S.S);
     }
 
-    ll x = v[index];
-    // x is the minimum positive element
+    sort(data.begin(), data.end());
 
-    bool f = true;
-    for (int i = 1; i < index; i++)
+    for (auto x : data)
     {
-        if (abs(v[i] - v[i - 1]) < x)
-        {
-            f = false;
-            break;
-        }
+        trace(x.F, x.S.F, x.S.S);
     }
 
-    // trace(index, f, x);
-    int ans = index + 1;
-    if (!f)
-    {
-        ans--;
-    }
-    cout << ans << "\n";
+    cout << "New Case\n";
 }
 
 int main()

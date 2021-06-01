@@ -4,8 +4,6 @@ using ll = long long;
 using ull = unsigned long long;
 using vi = vector<int>;
 
-const int MOD = 1e9 + 7;
-
 #define PB push_back
 #define F first
 #define S second
@@ -46,47 +44,23 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
+const int MOD = 1e9 + 7;
+
 void solve()
 {
-    priority_queue<pair<int, int>> q;
     int n;
     cin >> n;
+    vi v;
     map<int, int> mp;
     for (int i = 0; i < n; i++)
     {
         int x;
         cin >> x;
+        v.PB(x);
         mp[x]++;
     }
-    for (auto x : mp)
-    {
-        q.push(MP(x.second, x.first));
-    }
+    
 
-    int sz = n;
-    while (q.size() >= 2)
-    {
-        // auto [cnt1, x1] = q.top();
-        auto x = q.top();
-        int cnt1 = x.first, x1 = x.second;
-        q.pop();
-        // auto [cnt2, x2] = q.top();
-        x = q.top();
-        int cnt2 = x.first, x2 = x.second;
-        q.pop();
-        cnt1--;
-        cnt2--;
-        sz -= 2;
-        if (cnt1)
-        {
-            q.push(MP(cnt1, x1));
-        }
-        if (cnt2)
-        {
-            q.push(MP(cnt2, x2));
-        }
-    }
-    cout << sz << "\n";
 }
 
 int main()

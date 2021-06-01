@@ -51,6 +51,7 @@ void solve()
     ll n;
     cin >> n;
     vector<pair<ll, ll>> v;
+
     for (ll i = 0; i < n; i++)
     {
         ll x, y;
@@ -58,8 +59,55 @@ void solve()
         v.PB(MP(x, y));
     }
 
-    
+    /*
+    v[i].F = inital health
+    v[i].S = deals b[i] damage
+    */
+    ll startIndex = -1;
+    ll maxDiff = 1e18;
 
+    for (ll i = 0; i < n; i++)
+    {
+
+        ll next = (i + 1) % n;
+        ll currDiff = v[next].F - max((ll)0, v[next].F - v[i].S);
+
+        if (currDiff < maxDiff)
+        {
+            startIndex = next;
+            maxDiff = currDiff;
+        }
+    }
+
+    // trace(startIndex);
+
+    ll total = v[startIndex].F;
+    for (ll i = startIndex + 1; i < n; i++)
+    {
+        if (i == 0)
+        {
+            total += max((ll)0, v[i].F - v[n - 1].S);
+        }
+        else
+        {
+            total += max((ll)0, v[i].F - v[i - 1].S);
+        }
+    }
+
+    // trace(total);
+
+    for (ll i = 0; i < startIndex; i++)
+    {
+        if (i == 0)
+        {
+            total += max((ll)0, v[i].F - v[n - 1].S);
+        }
+        else
+        {
+            total += max((ll)0, v[i].F - v[i - 1].S);
+        }
+    }
+    cout << total << "\n";
 }
 
 int main()

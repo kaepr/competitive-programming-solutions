@@ -50,50 +50,31 @@ void solve()
 {
     ll n;
     cin >> n;
-    vector<ll> v;
-
-    for (ll i = 0; i < n; i++)
+    vector<ll> a;
+    for (ll i = 0; i < 2 * n; i++)
     {
         ll x;
         cin >> x;
-        v.PB(x);
+        a.PB(x);
     }
 
-    sort(v.begin(), v.end());
-    ll index = lower_bound(v.begin(), v.end(), 1) - v.begin();
-
-    // for (auto x : v)
-    // {
-    //     cout << x << " ";
-    // }
-    // cout << "\n";
-    // trace(index);
-    if (index == n)
-    {
-        cout << n << "\n";
-        return;
-    }
-
-    ll x = v[index];
-    // x is the minimum positive element
-
+    vector<ll> b;
+    sort(a.begin(), a.end());
     bool f = true;
-    for (int i = 1; i < index; i++)
+    for (ll i = 0; i < n; i++)
     {
-        if (abs(v[i] - v[i - 1]) < x)
-        {
-            f = false;
-            break;
-        }
+        ll elm1 = a[2 * n - i - 1];
+        ll elm2 = a[i];
+        // trace(elm1, elm2);
+        b.PB(a[2 * n - i - 1]);
+        b.PB(a[i]);
     }
 
-    // trace(index, f, x);
-    int ans = index + 1;
-    if (!f)
+    for (auto x : b)
     {
-        ans--;
+        cout << x << " ";
     }
-    cout << ans << "\n";
+    cout << "\n";
 }
 
 int main()

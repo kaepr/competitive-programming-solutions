@@ -48,52 +48,73 @@ const int MOD = 1e9 + 7;
 
 void solve()
 {
-    ll n;
-    cin >> n;
-    vector<ll> v;
-
-    for (ll i = 0; i < n; i++)
+    ll n, s, k;
+    cin >> n >> s >> k;
+    vi v;
+    for (int i = 0; i < k; i++)
     {
-        ll x;
+        int x;
         cin >> x;
         v.PB(x);
     }
 
     sort(v.begin(), v.end());
-    ll index = lower_bound(v.begin(), v.end(), 1) - v.begin();
 
-    // for (auto x : v)
-    // {
-    //     cout << x << " ";
-    // }
-    // cout << "\n";
-    // trace(index);
-    if (index == n)
+    if (!binary_search(v.begin(), v.end(), s))
     {
-        cout << n << "\n";
+        cout << 0 << "\n";
         return;
     }
 
-    ll x = v[index];
-    // x is the minimum positive element
+    int rightDistance = 0;
+    int index = upper_bound(v.begin(), v.end(), s) - v.begin();
+    index--;
+    int orig = v[index];
+    int tempElement = v[index];
 
-    bool f = true;
-    for (int i = 1; i < index; i++)
+    bool f = false;
+    while (true)
     {
-        if (abs(v[i] - v[i - 1]) < x)
+        tempElement++;
+        if (!binary_search(v.begin(), v.end(), tempElement))
         {
-            f = false;
+            rightDistance = tempElement - orig;
+            f = true;
             break;
         }
     }
 
-    // trace(index, f, x);
-    int ans = index + 1;
-    if (!f)
+    if (tempElement >= 1 && tempElement <= n)
     {
-        ans--;
     }
-    cout << ans << "\n";
+    else
+    {
+        rightDistance = 1e9;
+    }
+
+    tempElement = orig;
+    f = false;
+    int leftDistance = 0;
+    while (true)
+    {
+        tempElement--;
+        if (!binary_search(v.begin(), v.end(), tempElement))
+        {
+            leftDistance = orig - tempElement;
+            f = true;
+            break;
+        }
+    }
+
+    if (tempElement >= 1 && tempElement <= n)
+    {
+    }
+    else
+    {
+        leftDistance = 1e9;
+    }
+
+    cout << min(leftDistance, rightDistance) << "\n";
 }
 
 int main()

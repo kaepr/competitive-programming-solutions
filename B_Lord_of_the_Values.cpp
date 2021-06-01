@@ -50,50 +50,67 @@ void solve()
 {
     ll n;
     cin >> n;
-    vector<ll> v;
-
+    vector<ll> a;
     for (ll i = 0; i < n; i++)
     {
         ll x;
         cin >> x;
-        v.PB(x);
+        a.PB(x);
     }
 
-    sort(v.begin(), v.end());
-    ll index = lower_bound(v.begin(), v.end(), 1) - v.begin();
+    vector<vector<ll>> ans;
 
-    // for (auto x : v)
-    // {
-    //     cout << x << " ";
-    // }
-    // cout << "\n";
-    // trace(index);
-    if (index == n)
+    for (ll i = 0; i < n; i += 2)
     {
-        cout << n << "\n";
-        return;
+        vector<ll> tmp;
+        ll index = i + 1, index2 = i + 2;
+
+        tmp.clear();
+        tmp.PB(1);
+        tmp.PB(index);
+        tmp.PB(index2);
+        ans.PB(tmp);
+
+        tmp.clear();
+        tmp.PB(2);
+        tmp.PB(index);
+        tmp.PB(index2);
+        ans.PB(tmp);
+
+        tmp.clear();
+        tmp.PB(1);
+        tmp.PB(index);
+        tmp.PB(index2);
+        ans.PB(tmp);
+
+        tmp.clear();
+        tmp.PB(1);
+        tmp.PB(index);
+        tmp.PB(index2);
+        ans.PB(tmp);
+
+        tmp.clear();
+        tmp.PB(2);
+        tmp.PB(index);
+        tmp.PB(index2);
+        ans.PB(tmp);
+
+        tmp.clear();
+        tmp.PB(1);
+        tmp.PB(index);
+        tmp.PB(index2);
+        ans.PB(tmp);
     }
 
-    ll x = v[index];
-    // x is the minimum positive element
-
-    bool f = true;
-    for (int i = 1; i < index; i++)
+    cout << ans.size() << "\n";
+    for (auto x : ans)
     {
-        if (abs(v[i] - v[i - 1]) < x)
+        for (auto y : x)
         {
-            f = false;
-            break;
+            cout << y << " ";
         }
+        cout << "\n";
     }
-
-    // trace(index, f, x);
-    int ans = index + 1;
-    if (!f)
-    {
-        ans--;
-    }
-    cout << ans << "\n";
 }
 
 int main()

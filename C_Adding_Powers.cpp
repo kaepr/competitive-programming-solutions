@@ -46,54 +46,63 @@ int powmod(int x, int y, int mod)
 
 const int MOD = 1e9 + 7;
 
+// bool chk(ll num, ll pow)
+// {
+//     if (num == 0)
+//     {
+//         return true;
+//     }
+
+//     while (num >= 1)
+//     {
+//         if (num == 1)
+//         {
+//             break;
+//         }
+//         if (num % pow != 0)
+//         {
+//             return false;
+//         }
+//         num /= pow;
+//     }
+
+//     return true;
+// }
+
 void solve()
 {
-    ll n;
-    cin >> n;
-    vector<ll> v;
+    ll n, k;
+    cin >> n >> k;
+    ll a[n], b[n];
+    ll zeros = 0;
+    set<ll> st;
+    for (ll i = 0; i < n; i++)
+    {
+        cin >> a[i];
+    }
+
+    ll c[60] = {0};
 
     for (ll i = 0; i < n; i++)
     {
-        ll x;
-        cin >> x;
-        v.PB(x);
-    }
-
-    sort(v.begin(), v.end());
-    ll index = lower_bound(v.begin(), v.end(), 1) - v.begin();
-
-    // for (auto x : v)
-    // {
-    //     cout << x << " ";
-    // }
-    // cout << "\n";
-    // trace(index);
-    if (index == n)
-    {
-        cout << n << "\n";
-        return;
-    }
-
-    ll x = v[index];
-    // x is the minimum positive element
-
-    bool f = true;
-    for (int i = 1; i < index; i++)
-    {
-        if (abs(v[i] - v[i - 1]) < x)
+        ll j = 0;
+        while (a[i] > 0)
         {
-            f = false;
-            break;
+            c[j] += a[i] % k;
+            j++;
+            a[i] /= k;
         }
     }
 
-    // trace(index, f, x);
-    int ans = index + 1;
-    if (!f)
+    for (ll i = 0; i < 60; i++)
     {
-        ans--;
+        if (c[i] > 1)
+        {
+            cout << "NO\n";
+            return;
+        }
     }
-    cout << ans << "\n";
+    cout << "YES\n";
 }
 
 int main()

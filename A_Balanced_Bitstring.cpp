@@ -48,52 +48,58 @@ const int MOD = 1e9 + 7;
 
 void solve()
 {
-    ll n;
-    cin >> n;
-    vector<ll> v;
+    int n, k;
+    cin >> n >> k;
+    string s;
+    cin >> s;
 
-    for (ll i = 0; i < n; i++)
+    for (int i = 0; i < k; i++)
     {
-        ll x;
-        cin >> x;
-        v.PB(x);
-    }
-
-    sort(v.begin(), v.end());
-    ll index = lower_bound(v.begin(), v.end(), 1) - v.begin();
-
-    // for (auto x : v)
-    // {
-    //     cout << x << " ";
-    // }
-    // cout << "\n";
-    // trace(index);
-    if (index == n)
-    {
-        cout << n << "\n";
-        return;
-    }
-
-    ll x = v[index];
-    // x is the minimum positive element
-
-    bool f = true;
-    for (int i = 1; i < index; i++)
-    {
-        if (abs(v[i] - v[i - 1]) < x)
+        if (s[i] == '?')
         {
-            f = false;
-            break;
+            for (int j = i + k; j < n; j += k)
+            {
+                if (s[j] != '?')
+                {
+                    s[i] = s[j];
+                    break;
+                }
+            }
         }
     }
 
-    // trace(index, f, x);
-    int ans = index + 1;
-    if (!f)
+    for (int i = 0; i < k; i++)
     {
-        ans--;
+        if (s[i] != '?')
+        {
+            for (int j = i + k; j < n; j += k)
+            {
+                if (s[j] == '?')
+                {
+                    s[j] = s[i];
+                }
+                else if (s[j] != s[i])
+                {
+                    cout << "NO\n";
+                    return;
+                }
+            }
+        }
     }
-    cout << ans << "\n";
+
+    int one = 0, zero = 0;
+    for (int i = 0; i < k; i++)
+    {
+        if (s[i] == '1')
+            one++;
+        if (s[i] == '0')
+            zero++;
+    }
+
+    if (one <= k / 2 && zero <= k / 2)
+        cout << "YES\n";
+    else
+        cout << "NO\n";
 }
 
 int main()

@@ -48,52 +48,55 @@ const int MOD = 1e9 + 7;
 
 void solve()
 {
-    ll n;
+    ll n, sum = 0;
     cin >> n;
-    vector<ll> v;
+    ll a[n];
+    for (ll i = 0; i < n; i++)
+    {
+        cin >> a[i];
+        sum += a[i];
+    }
+
+    ll num = sum / n;
+    // trace(num);
+    ll odd[n], even[n];
 
     for (ll i = 0; i < n; i++)
     {
-        ll x;
-        cin >> x;
-        v.PB(x);
-    }
-
-    sort(v.begin(), v.end());
-    ll index = lower_bound(v.begin(), v.end(), 1) - v.begin();
-
-    // for (auto x : v)
-    // {
-    //     cout << x << " ";
-    // }
-    // cout << "\n";
-    // trace(index);
-    if (index == n)
-    {
-        cout << n << "\n";
-        return;
-    }
-
-    ll x = v[index];
-    // x is the minimum positive element
-
-    bool f = true;
-    for (int i = 1; i < index; i++)
-    {
-        if (abs(v[i] - v[i - 1]) < x)
+        if (i % 2 == 0)
         {
-            f = false;
-            break;
+            even[i] = a[i];
+            odd[i] = 1;
+        }
+        else
+        {
+            even[i] = 1;
+            odd[i] = a[i];
         }
     }
 
-    // trace(index, f, x);
-    int ans = index + 1;
-    if (!f)
+    ll odd_sum = 0, even_sum = 0;
+    for (ll i = 0; i < n; i++)
     {
-        ans--;
+        odd_sum += abs(odd[i] - a[i]);
+        even_sum += abs(even[i] - a[i]);
     }
-    cout << ans << "\n";
+
+    if (odd_sum * 2 <= sum)
+    {
+        for (ll i = 0; i < n; i++)
+        {
+            cout << odd[i] << " ";
+        }
+    }
+    else
+    {
+        for (ll i = 0; i < n; i++)
+        {
+            cout << even[i] << " ";
+        }
+    }
+    cout << "\n";
 }
 
 int main()

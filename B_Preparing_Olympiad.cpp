@@ -45,72 +45,46 @@ int powmod(int x, int y, int mod)
 }
 
 const int MOD = 1e9 + 7;
-int n, sum;
-const int maxn = 1e6 + 5;
-int dp[maxn];
-int coins[105];
-// int dp[maxn];
-
-// dp[i] stores minimum numbers of coins required to form this sum
-
-int calc(int rem_sum, int ptr)
-{
-    if (rem_sum < 0 || ptr < 0)
-    {
-        return 1e9;
-    }
-
-    if (rem_sum == 0)
-    {
-        return 0;
-    }
-
-    if (dp[rem_sum] != -1)
-    {
-        return dp[rem_sum];
-    }
-
-    int ans = 1e9;
-    if (rem_sum >= coins[ptr])
-    {
-        // chose this coin again
-        ans = min(ans, 1 + calc(rem_sum - coins[ptr], ptr));
-
-        // choose this coin and move forward
-        ans = min(ans, 1 + calc(rem_sum - coins[ptr], ptr - 1));
-
-        // do not choose this coin
-        // ans = min(ans, calc(rem_sum, ptr - 1));
-    }
-    else
-    {
-        ans = calc(rem_sum, ptr - 1);
-    }
-
-    dp[rem_sum] = ans;
-
-    return ans;
-}
 
 void solve()
 {
-    cin >> n >> sum;
+    int n, l, r, x;
+    cin >> n >> l >> r >> x;
+    vi c;
+    int ans = 0;
     for (int i = 0; i < n; i++)
     {
-        cin >> coins[i];
+        int x;
+        cin >> x;
+        c.PB(x);
     }
 
-    memset(dp, -1, sizeof(dp));
+    for (int i = 0; i < (1 << n); i++)
+    {
+        // trace(i);
+        vi tmp;
+        int sum = 0;
+        for (int j = 0; j < n; j++)
+        {
+            if (i & (1 << j))
+            {
+                tmp.PB(c[j]);
+                sum += c[j];
+            }
+        }
 
-    int ans = calc(sum, n - 1);
-    if (ans >= 1e9 || ans == -1)
-    {
-        cout << -1 << "\n";
+        if (tmp.size() >= 2)
+        {
+            int low = *min_element(tmp.begin(), tmp.end());
+            int high = *max_element(tmp.begin(), tmp.end());
+
+            if (high - low >= x && sum >= l && sum <= r)
+            {
+                ans++;
+            }
+        }
     }
-    else
-    {
-        cout << ans << "\n";
-    }
+    cout << ans << "\n";
 }
 
 int main()

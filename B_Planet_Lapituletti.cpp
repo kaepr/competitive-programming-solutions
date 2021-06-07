@@ -11,7 +11,7 @@ const int MOD = 1e9 + 7;
 #define S second
 #define MP make_pair
 
-#define TRACE
+#define TRACE̥
 #ifdef TRACE
 #define trace(...) __f(#__VA_ARGS__, __VA_ARGS__)
 template <typename Arg1>

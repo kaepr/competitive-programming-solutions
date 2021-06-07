@@ -45,71 +45,52 @@ int powmod(int x, int y, int mod)
 }
 
 const int MOD = 1e9 + 7;
-int n, sum;
-const int maxn = 1e6 + 5;
-int dp[maxn];
-int coins[105];
-// int dp[maxn];
-
-// dp[i] stores minimum numbers of coins required to form this sum
-
-int calc(int rem_sum, int ptr)
-{
-    if (rem_sum < 0 || ptr < 0)
-    {
-        return 1e9;
-    }
-
-    if (rem_sum == 0)
-    {
-        return 0;
-    }
-
-    if (dp[rem_sum] != -1)
-    {
-        return dp[rem_sum];
-    }
-
-    int ans = 1e9;
-    if (rem_sum >= coins[ptr])
-    {
-        // chose this coin again
-        ans = min(ans, 1 + calc(rem_sum - coins[ptr], ptr));
-
-        // choose this coin and move forward
-        ans = min(ans, 1 + calc(rem_sum - coins[ptr], ptr - 1));
-
-        // do not choose this coin
-        // ans = min(ans, calc(rem_sum, ptr - 1));
-    }
-    else
-    {
-        ans = calc(rem_sum, ptr - 1);
-    }
-
-    dp[rem_sum] = ans;
-
-    return ans;
-}
 
 void solve()
 {
-    cin >> n >> sum;
+    int n, m, d;
+    cin >> n >> m >> d;
+    int a[n][m];
+    set<int> st;
+    int sum = 0;
     for (int i = 0; i < n; i++)
     {
-        cin >> coins[i];
+        for (int j = 0; j < m; j++)
+        {
+            int x;
+            cin >> x;
+            a[i][j] = x;
+            int c = x % d;
+            st.insert(c);
+            sum += x;
+        }
     }
 
-    memset(dp, -1, sizeof(dp));
-
-    int ans = calc(sum, n - 1);
-    if (ans >= 1e9 || ans == -1)
+    if (st.size() == 1)
     {
-        cout << -1 << "\n";
+        vi ans;
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < m; j++)
+            {
+                ans.PB(a[i][j]);
+            }
+        }
+
+        int sum = 0;
+        int k = n * m;
+        sort(ans.begin(), ans.end());
+        int median = ans[k / 2];
+        // trace(median);
+        for (auto x : ans)
+        {
+            sum += abs(x - median);
+        }
+        cout << sum / d << "\n";
     }
     else
     {
-        cout << ans << "\n";
+        cout << -1 << "\n";
     }
 }
 

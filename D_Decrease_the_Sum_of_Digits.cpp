@@ -30,6 +30,8 @@ ull sumDigits(ull n)
     return ans;
 }
 
+
+
 void solve()
 {
     ull n, s;

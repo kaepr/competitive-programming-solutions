@@ -53,16 +53,37 @@ void solve()
     string s;
     cin >> s;
     sort(s.begin(), s.end());
-
-    vector<string> v(k, "");
-    int ptr = 0;
-    for (int i = 0; i < n; i++)
+    if (s[0] != s[k - 1])
     {
-        v[i % k] += s[i];
+        cout << s[k - 1] << "\n";
+        return;
     }
 
-    sort(v.begin(), v.end());
-    cout << v[v.size() - 1] << "\n";
+    string ans = "";
+    ans += s[0];
+
+    if (s[k] == s[n - 1])
+    {
+        int cnt = (n - k) / k;
+        if ((n - k) % k != 0)
+        {
+            cnt++;
+        }
+
+        for (int i = 0; i < cnt; i++)
+        {
+            ans += s[k];
+        }
+    }
+    else
+    {
+        for (int i = k; i < n; i++)
+        {
+            ans += s[i];
+        }
+    }
+
+    cout << ans << "\n";
 }
 
 int main()

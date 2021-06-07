@@ -45,71 +45,98 @@ int powmod(int x, int y, int mod)
 }
 
 const int MOD = 1e9 + 7;
-int n, sum;
-const int maxn = 1e6 + 5;
-int dp[maxn];
-int coins[105];
-// int dp[maxn];
-
-// dp[i] stores minimum numbers of coins required to form this sum
-
-int calc(int rem_sum, int ptr)
-{
-    if (rem_sum < 0 || ptr < 0)
-    {
-        return 1e9;
-    }
-
-    if (rem_sum == 0)
-    {
-        return 0;
-    }
-
-    if (dp[rem_sum] != -1)
-    {
-        return dp[rem_sum];
-    }
-
-    int ans = 1e9;
-    if (rem_sum >= coins[ptr])
-    {
-        // chose this coin again
-        ans = min(ans, 1 + calc(rem_sum - coins[ptr], ptr));
-
-        // choose this coin and move forward
-        ans = min(ans, 1 + calc(rem_sum - coins[ptr], ptr - 1));
-
-        // do not choose this coin
-        // ans = min(ans, calc(rem_sum, ptr - 1));
-    }
-    else
-    {
-        ans = calc(rem_sum, ptr - 1);
-    }
-
-    dp[rem_sum] = ans;
-
-    return ans;
-}
 
 void solve()
 {
-    cin >> n >> sum;
-    for (int i = 0; i < n; i++)
+    string s, t;
+    cin >> s >> t;
+    int slen = s.length(), tlen = t.length();
+
+    // s -> t
+    if (tlen > slen)
     {
-        cin >> coins[i];
+        cout << "need tree\n";
+        return;
     }
 
-    memset(dp, -1, sizeof(dp));
-
-    int ans = calc(sum, n - 1);
-    if (ans >= 1e9 || ans == -1)
+    map<char, int> smp, tmp;
+    for (int i = 0; i < tlen; i++)
     {
-        cout << -1 << "\n";
+        tmp[t[i]]++;
+    }
+
+    for (int i = 0; i < slen; i++)
+    {
+        smp[s[i]]++;
+    }
+
+    int vis[tlen];
+    memset(vis, 0, sizeof(vis));
+
+    int tptr = 0, sptr = 0;
+    while (sptr < slen)
+    {
+        if (s[sptr] == t[tptr])
+        {
+            vis[tptr] = 1;
+            tptr++;
+            sptr++;
+        }
+        else
+        {
+            sptr++;
+        }
+    }
+
+    bool f2 = true;
+    for (auto x : tmp)
+    {
+        if (smp[x.F] < x.S)
+        {
+            f2 = false;
+            break;
+        }
+    }
+
+    if (!f2)
+    {
+        cout << "need tree\n";
+        return;
+    }
+
+    bool f1 = true;
+    for (int i = 0; i < tlen; i++)
+    {
+        if (!vis[i])
+        {
+            f1 = false;
+        }
+    }
+
+    if (f1)
+    {
+        cout << "automaton\n";
     }
     else
     {
-        cout << ans << "\n";
+        bool f3 = true;
+        for (auto x : tmp)
+        {
+            if (smp[x.F] != x.S)
+            {
+                f3 = false;
+                break;
+            }
+        }
+
+        if (f3 && smp.size() == tmp.size())
+        {
+            cout << "array\n";
+        }
+        else
+        {
+            cout << "both\n";
+        }
     }
 }
 

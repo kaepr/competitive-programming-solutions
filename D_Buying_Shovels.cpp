@@ -1,67 +1,81 @@
 #include <bits/stdc++.h>
-#define MOD 1000000007
-#define ull unsigned long long int
-#define ll long long int
-#define P pair
-#define PLL pair<long long, long long>
-#define PII pair<int, int>
-#define PUU pair<unsigned long long int, unsigned long long int>
-#define L list
-#define V vector
-#define D deque
-#define ST set
-#define MS multiset
-#define M map
-#define UM unordered_map
-#define mp make_pair
-#define pb push_back
-#define pf push_front
-#define MM multimap
+using namespace std;
+using ll = long long;
+using ull = unsigned long long;
+using vi = vector<int>;
+
+#define PB push_back
 #define F first
 #define S second
-#define IT iterator
-#define RIT reverse_iterator
-#define FAST                          \
-    ios_base::sync_with_stdio(false); \
-    cin.tie();                        \
-    cout.tie();
-#define FILE_READ_IN freopen("input.txt", "r", stdin);
-#define FILE_READ_OUT freopen("output.txt", "w", stdout);
-using namespace std;
-const ll maxn = 1e5;
-const ll inf = 1e9;
-const double pi = acos(-1);
+#define MP make_pair
+
+// #define TRACE
+// #ifdef TRACE
+// #define trace(...) __f(#__VA_ARGS__, __VA_ARGS__)
+// template <typename Arg1>
+// void __f(const char *name, Arg1 &&arg1)
+// {
+//     cout << name << " : " << arg1 << endl;
+// }
+// template <typename Arg1, typename... Args>
+// void __f(const char *names, Arg1 &&arg1, Args &&...args)
+// {
+//     const char *comma = strchr(names + 1, ',');
+//     cout.write(names, comma - names) << " : " << arg1 << " | ";
+//     __f(comma + 1, args...);
+// }
+// #else
+// #define trace(...)
+// #endif
+
+int powmod(int x, int y, int mod)
+{
+    int res = 1;
+    x %= mod;
+    if (x == 0)
+        return 0;
+    while (y > 0)
+    {
+        if (y & 1)
+            res = (res * x) % mod;
+        y = y >> 1;
+        x = (x * x) % mod;
+    }
+    return res;
+}
+
+const int MOD = 1e9 + 7;
+
+#define deb(...) logger(#__VA_ARGS__, __VA_ARGS__)
+template <typename... Args>
+void logger(string vars, Args &&...values)
+{
+    cout << vars << " = ";
+    string delim = "";
+    (..., (cout << delim << values, delim = ", "));
+}
 
 void solve()
 {
-    ll n, k, ans;
-    cin >> n >> k;
-    ans = n;
-    for (ll j = 1; j * j <= n; j++)
-    {
-        if (n % j == 0)
-        {
-            if (j <= k)
-            {
-                ans = min(ans, n / j);
-            }
-
-            if (n / j <= k)
-            {
-                ans = min(ans, j);
-            }
-        }
-    }
-    cout << ans << "\n";
+    int x = 5;
+    deb(x);
 }
 
 int main()
 {
-    FAST int t;
-    cin >> t;
-    while (t--)
+    // freopen("input.txt","r",stdin);
+    // freopen("output.txt","w",stdout);
+    ios_base::sync_with_stdio(0);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
+    int t = 1;
+    // cin >> t;
+    while (t > 0)
     {
         solve();
+        t--;
     }
+
     return 0;
 }

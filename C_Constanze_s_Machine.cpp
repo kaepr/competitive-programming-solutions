@@ -45,72 +45,44 @@ int powmod(int x, int y, int mod)
 }
 
 const int MOD = 1e9 + 7;
-int n, sum;
-const int maxn = 1e6 + 5;
-int dp[maxn];
-int coins[105];
-// int dp[maxn];
-
-// dp[i] stores minimum numbers of coins required to form this sum
-
-int calc(int rem_sum, int ptr)
-{
-    if (rem_sum < 0 || ptr < 0)
-    {
-        return 1e9;
-    }
-
-    if (rem_sum == 0)
-    {
-        return 0;
-    }
-
-    if (dp[rem_sum] != -1)
-    {
-        return dp[rem_sum];
-    }
-
-    int ans = 1e9;
-    if (rem_sum >= coins[ptr])
-    {
-        // chose this coin again
-        ans = min(ans, 1 + calc(rem_sum - coins[ptr], ptr));
-
-        // choose this coin and move forward
-        ans = min(ans, 1 + calc(rem_sum - coins[ptr], ptr - 1));
-
-        // do not choose this coin
-        // ans = min(ans, calc(rem_sum, ptr - 1));
-    }
-    else
-    {
-        ans = calc(rem_sum, ptr - 1);
-    }
-
-    dp[rem_sum] = ans;
-
-    return ans;
-}
 
 void solve()
 {
-    cin >> n >> sum;
+    string s;
+    cin >> s;
+    int n = s.length();
+    bool f = false;
     for (int i = 0; i < n; i++)
     {
-        cin >> coins[i];
+        if (s[i] == 'm' || s[i] == 'w')
+        {
+            f = true;
+            break;
+        }
     }
 
-    memset(dp, -1, sizeof(dp));
+    if (f)
+    {
+        cout << 0 << "\n";
+        return;
+    }
 
-    int ans = calc(sum, n - 1);
-    if (ans >= 1e9 || ans == -1)
+    vi dp(n + 1);
+    dp[0] = 1, dp[1] = 1;
+
+    for (int i = 2; i <= n; i++)
     {
-        cout << -1 << "\n";
+        // dp[i] = dp[i - 1];
+        if (s[i - 1] == s[i - 2] && (s[i - 1] == 'u' || s[i - 1] == 'n'))
+        {
+            dp[i] = (dp[i - 1] + dp[i - 2]) % MOD;
+        }
+        else
+        {
+            dp[i] = dp[i - 1];
+        }
     }
-    else
-    {
-        cout << ans << "\n";
-    }
+    cout << dp[n] << "\n";
 }
 
 int main()

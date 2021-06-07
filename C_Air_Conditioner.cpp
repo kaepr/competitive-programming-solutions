@@ -62,19 +62,37 @@ void solve()
         data.PB(MP(x, MP(y, z)));
     }
 
-    for (auto x : data)
+    // for (auto x : data)
+    // {
+    //     trace(x.F, x.S.F, x.S.S);
+    // }
+
+    // // cout << "New Case\n";
+
+    // keep track of range
+    ll rmin = m, rmax = m, prev = 0;
+    for (ll i = 0; i < n; i++)
     {
-        trace(x.F, x.S.F, x.S.S);
+        ll diff = time[i] - prev;
+        rmax += diff;
+        rmin -= diff;
+
+        // trace(low[i], high[i], rmax, rmin);
+        // trace(prev, diff, time[i]);
+
+        if (rmax < low[i] || rmin > high[i])
+        {
+            cout << "NO\n";
+            return;
+        }
+
+        rmin = max(rmin, low[i]);
+        rmax = min(rmax, high[i]);
+
+        // trace(rmin, rmax);
+        prev = time[i];
     }
-
-    sort(data.begin(), data.end());
-
-    for (auto x : data)
-    {
-        trace(x.F, x.S.F, x.S.S);
-    }
-
-    cout << "New Case\n";
+    cout << "YES\n";
 }
 
 int main()

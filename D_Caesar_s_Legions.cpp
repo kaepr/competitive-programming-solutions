@@ -44,73 +44,67 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-const int MOD = 1e9 + 7;
-int n, sum;
-const int maxn = 1e6 + 5;
-int dp[maxn];
-int coins[105];
-// int dp[maxn];
+const int MOD = 1e8;
+int n1, n2, k1, k2;
+int dp[101][101][11][11];
 
-// dp[i] stores minimum numbers of coins required to form this sum
-
-int calc(int rem_sum, int ptr)
+int calc(int rem_n1, int rem_n2, int consec_n1, int consec_n2)
 {
-    if (rem_sum < 0 || ptr < 0)
-    {
-        return 1e9;
-    }
-
-    if (rem_sum == 0)
+    if (rem_n1 < 0 || rem_n2 < 0)
     {
         return 0;
     }
 
-    if (dp[rem_sum] != -1)
+    if (consec_n1 > k1 || consec_n2 > k2)
     {
-        return dp[rem_sum];
+        return 0;
     }
 
-    int ans = 1e9;
-    if (rem_sum >= coins[ptr])
+    if (rem_n1 == 0 && rem_n2 == 0)
     {
-        // chose this coin again
-        ans = min(ans, 1 + calc(rem_sum - coins[ptr], ptr));
-
-        // choose this coin and move forward
-        ans = min(ans, 1 + calc(rem_sum - coins[ptr], ptr - 1));
-
-        // do not choose this coin
-        // ans = min(ans, calc(rem_sum, ptr - 1));
-    }
-    else
-    {
-        ans = calc(rem_sum, ptr - 1);
+        return 1;
     }
 
-    dp[rem_sum] = ans;
+    if (dp[rem_n1][rem_n2][consec_n1][consec_n2] != -1)
+    {
+        return dp[rem_n1][rem_n2][consec_n1][consec_n2];
+    }
+
+    int ans = 0;
+
+    ans += calc(rem_n1 - 1, rem_n2, consec_n1 + 1, 0) % MOD;
+    ans %= MOD;
+
+    ans += calc(rem_n1, rem_n2 - 1, 0, consec_n2 + 1) % MOD;
+    ans %= MOD;
+
+    dp[rem_n1][rem_n2][consec_n1][consec_n2] = ans;
 
     return ans;
 }
 
 void solve()
 {
-    cin >> n >> sum;
-    for (int i = 0; i < n; i++)
-    {
-        cin >> coins[i];
-    }
-
     memset(dp, -1, sizeof(dp));
 
-    int ans = calc(sum, n - 1);
-    if (ans >= 1e9 || ans == -1)
-    {
-        cout << -1 << "\n";
-    }
-    else
-    {
-        cout << ans << "\n";
-    }
+    cin >> n1 >> n2 >> k1 >> k2;
+
+    int ans = calc(n1, n2, 0, 0);
+
+    // for (int i = 0; i < 10; i++)
+    // {
+    //     for (int j = 0; j < 10; j++)
+    //     {
+    //         for (int k = 0; k < 10; k++)
+    //         {
+    //             for (int c = 0; c < 10; c++)
+    //             {
+    //                 cout << dp[i][j][k][c] << " ";
+    //             }
+    //         }
+    //     }
+    // }
+    cout << ans << "\n";
 }
 
 int main()

@@ -4,8 +4,6 @@ using ll = long long;
 using ull = unsigned long long;
 using vi = vector<int>;
 
-const int MOD = 1e9 + 7;
-
 #define PB push_back
 #define F first
 #define S second
@@ -18,10 +16,9 @@ template <typename Arg1>
 void __f(const char *name, Arg1 &&arg1)
 {
     cout << name << " : " << arg1 << endl;
-    //use cerr if u want to display at the bottom
 }
 template <typename Arg1, typename... Args>
-void __f(const char *names, Arg1 &&arg1, Args &&... args)
+void __f(const char *names, Arg1 &&arg1, Args &&...args)
 {
     const char *comma = strchr(names + 1, ',');
     cout.write(names, comma - names) << " : " << arg1 << " | ";
@@ -47,32 +44,38 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
+const ll MOD = 1e9 + 7;
+
 void solve()
 {
     ll n;
     cin >> n;
     ll dp[n + 1];
-    memset(dp, 0, sizeof(dp));
     dp[0] = 1;
+
+    // dp[i] represents how many ways to make sum i using dice combinations
+    // dp[1] = 1;
+    // dp[2] = 2;
     for (ll i = 1; i <= n; i++)
     {
+        ll ans = 0;
         for (ll j = 1; j <= 6; j++)
         {
-            if (j > i)
+            if (j <= i)
             {
-                break;
+                ans = (ans + dp[i - j]) % MOD;
             }
-            dp[i] += (dp[i - j]) % MOD;
-            dp[i] %= MOD;
         }
+        ans %= MOD;
+        dp[i] = ans;
     }
-    cout << dp[n] % MOD;
+    cout << dp[n] << "\n";
 }
 
 int main()
 {
-    // freopen("filename_input.txt","r",stdin);
-    // freopen("filename_output.txt","w",stdout);
+    // freopen("input.txt","r",stdin);
+    // freopen("output.txt","w",stdout);
     ios_base::sync_with_stdio(0);
     cin.tie(NULL);
     cout.tie(NULL);

@@ -15,15 +15,13 @@ const int MOD = 1e9 + 7;
 #ifdef TRACE
 #define trace(...) __f(#__VA_ARGS__, __VA_ARGS__)
 template <typename Arg1>
-void __f(const char *name, Arg1 &&arg1)
-{
+void __f(const char* name, Arg1&& arg1) {
     cout << name << " : " << arg1 << endl;
     //use cerr if u want to display at the bottom
 }
 template <typename Arg1, typename... Args>
-void __f(const char *names, Arg1 &&arg1, Args &&... args)
-{
-    const char *comma = strchr(names + 1, ',');
+void __f(const char* names, Arg1&& arg1, Args &&... args) {
+    const char* comma = strchr(names + 1, ',');
     cout.write(names, comma - names) << " : " << arg1 << " | ";
     __f(comma + 1, args...);
 }
@@ -31,14 +29,12 @@ void __f(const char *names, Arg1 &&arg1, Args &&... args)
 #define trace(...)
 #endif
 
-int powmod(int x, int y, int mod)
-{
+int powmod(int x, int y, int mod) {
     int res = 1;
     x %= mod;
     if (x == 0)
         return 0;
-    while (y > 0)
-    {
+    while (y > 0) {
         if (y & 1)
             res = (res * x) % mod;
         y = y >> 1;
@@ -47,45 +43,36 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-void solve()
-{
+void solve() {
     stack<char> st;
     string s;
     cin >> s;
     int cnt = 0;
     int open1 = 0, open2 = 0;
-    for (int i = 0; i < s.length(); i++)
-    {
-        if (s[i] == '(')
-        {
+    for (int i = 0; i < s.length(); i++) {
+        if (s[i] == '(') {
             open1++;
         }
-        else if (s[i] == '[')
-        {
+        else if (s[i] == '[') {
             open2++;
         }
-        else if (s[i] == ')')
-        {
-            if (open1 > 0)
-            {
+        else if (s[i] == ')') {
+            if (open1 > 0) {
                 open1--;
                 cnt++;
             }
         }
-        else if (s[i] == ']')
-        {
-            if (open2 > 0)
-            {
+        else if (s[i] == ']') {
+            if (open2 > 0) {
                 open2--;
                 cnt++;
             }
         }
     }
-    cout <<cnt << '\n';
+    cout << cnt << '\n';
 }
 
-int main()
-{
+int main() {
     // freopen("filename.in","r",stdin);
     // freopen("filename.out","w",stdout);
     ios_base::sync_with_stdio(0);
@@ -94,8 +81,7 @@ int main()
 
     int t;
     cin >> t;
-    while (t > 0)
-    {
+    while (t > 0) {
         solve();
         t--;
     }

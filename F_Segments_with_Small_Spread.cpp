@@ -64,35 +64,97 @@ ll find_min(multiset<ll> &st)
     return 1e18;
 }
 
+struct custom_stack{
+    vector<ll> s, smin={LLONG_MAX},smax={LLONG_MIN};
+
+    void push(ll x){
+        s.PB(x);
+
+        ll x1 = smin.back();
+        smin.PB(min(x1,x));
+        x1 = smax.back();
+        smax.PB(max(x1,x));
+    }
+
+    ll pop(){
+        smin.pop_back();
+        smax.pop_back();
+        ll ret = s.back();
+        s.pop_back();
+        return ret;
+    }
+
+    bool empty(){
+        return s.empty();
+    }
+
+    ll cur_min(){
+        return smin.back();
+    }
+
+    ll cur_max(){
+        return smax.back();
+    }
+};
+
+struct custom_stack s1, s2;
+
+void add(ll x){
+    s2.push(x);   
+}
+
+void remove(){
+    if(s1.empty()){
+        while(!s2.empty()){
+            s1.push(s2.pop());
+        }
+    }
+    s1.pop();
+}
+
+ll n,k,ans=0;
+
+bool good(){
+    ll mx = max(s1.cur_max(), s2.cur_max());
+    ll mn = min(s1.cur_min(), s2.cur_min());
+
+    if(mx - mn > k){
+        return false;
+    }else{
+        return true;
+    }
+}
+
 void solve()
 {
-    ll n, k, ans = 0;
     cin >> n >> k;
-    multiset<ll> st;
     ll arr[n];
+
+    
     for (ll i = 0; i < n; i++)
     {
         cin >> arr[i];
     }
 
-    ll l = 0;
-    for (ll r = 0; r < n; r++)
-    {
-        st.insert(arr[r]);
+    // vi v = {1,2,3,4,5};
 
-        while (find_max(st) - find_min(st) > k)
-        {
-            auto it = st.find(arr[l]);
-            st.erase(it);
+    // cout<<v.back()<<"\n";
+
+    ll l = 0;
+    for(ll r=0; r<n; r++){
+        add(arr[r]);
+        while(!good()){
+            remove();
             l++;
         }
-        ll change = find_max(st) - find_min(st);
-        if (change <= k && change >= 0)
-        {
-            ans += r - l + 1;
+        if(good()){
+             ans += r - l + 1;
         }
+       
     }
-    cout << ans << "\n";
+
+    cout<<ans<<"\n";
+
 }
 
 int main()

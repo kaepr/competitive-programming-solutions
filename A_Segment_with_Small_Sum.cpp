@@ -70,6 +70,7 @@ void solve()
         ans = max(ans, r - l + 1LL);
     }
     cout << ans << "\n";
+    vector<int> my_vector;
 }
 
 int main()

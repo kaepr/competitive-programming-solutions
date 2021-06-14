@@ -4,8 +4,6 @@ using ll = long long;
 using ull = unsigned long long;
 using vi = vector<int>;
 
-const int MOD = 1e9 + 7;
-
 #define PB push_back
 #define F first
 #define S second
@@ -20,7 +18,7 @@ void __f(const char *name, Arg1 &&arg1)
     cout << name << " : " << arg1 << endl;
 }
 template <typename Arg1, typename... Args>
-void __f(const char *names, Arg1 &&arg1, Args &&...args)
+void __f(const char *names, Arg1 &&arg1, Args &&... args)
 {
     const char *comma = strchr(names + 1, ',');
     cout.write(names, comma - names) << " : " << arg1 << " | ";
@@ -46,50 +44,11 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
+const int MOD = 1e9 + 7;
+
 void solve()
 {
-    int n, x;
-    cin >> n >> x;
-    int dp[n + 1][x + 1];
-    int a[n + 1];
-    a[0] = 0;
-    for (int i = 1; i <= n; i++)
-    {
-        cin >> a[i];
-    }
 
-    // dp[0][0] = 0;
-
-    //If remaining sum is 0, then we have one way of choosing a coin ( not choosing it at all )
-    //which gives the requried sum
-    for (int i = 1; i <= n; i++)
-    {
-        for (int curr = 0; curr <= x; curr++)
-        {
-            if (curr == 0)
-            {
-                dp[i][curr] = 1;
-            }
-            else
-            {
-                int first = 0, second = 0;
-                //only choose this option if curr - a[i] >= 0
-                if (curr - a[i] >= 0)
-                {
-                    first = dp[i][curr - a[i]];
-                }
-
-                //only choose this option if we have more than 1 numbers remaining
-                if (i > 1)
-                {
-                    second = dp[i - 1][curr];
-                }
-                dp[i][curr] = (first + second) % MOD;
-            }
-        }
-    }
-
-    cout << dp[n][x] << "\n";
 }
 
 int main()

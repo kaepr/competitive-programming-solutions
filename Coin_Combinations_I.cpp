@@ -4,8 +4,6 @@ using ll = long long;
 using ull = unsigned long long;
 using vi = vector<int>;
 
-const int MOD = 1e9 + 7;
-
 #define PB push_back
 #define F first
 #define S second
@@ -20,7 +18,7 @@ void __f(const char *name, Arg1 &&arg1)
     cout << name << " : " << arg1 << endl;
 }
 template <typename Arg1, typename... Args>
-void __f(const char *names, Arg1 &&arg1, Args &&...args)
+void __f(const char *names, Arg1 &&arg1, Args &&... args)
 {
     const char *comma = strchr(names + 1, ',');
     cout.write(names, comma - names) << " : " << arg1 << " | ";
@@ -46,35 +44,74 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
+const int MOD = 1e9 + 7;
+const int MAXN = 1e6 + 5;
+
+int arr[MAXN];
+
+int calc(int ptr, int sum){
+    
+    if(ptr < 0){
+        return 0;
+    }
+
+    if(sum==0){
+        return 1;
+    }
+    
+
+    int ans = 0;
+    if(arr[ptr]<=sum){
+        ans = (ans + calc(ptr, sum - arr[ptr]) % MOD) % MOD;
+        ans = (ans + calc(ptr - 1, sum) % MOD) % MOD;
+        ans = (ans + calc(ptr - 1, sum - arr[ptr]) % MOD) % MOD;
+    }else{
+        ans =  calc(ptr-1, sum)% MOD;
+    }
+    return ans;
+}
+
 void solve()
 {
-    ll n, x;
-    cin >> n >> x;
-    ll dp[x + 1];
-    ll a[n];
-    for (ll i = 0; i < n; i++)
-    {
-        cin >> a[i];
+    int n,x;
+    cin>>n>>x;
+    // int arr[n];
+    for(int i=0; i<n; i++){
+        cin>>arr[i];
     }
-    memset(dp, 0, sizeof(dp));
-    dp[0] = 1;
-    for (ll i = 1; i <= x; i++)
-    {
-        for (ll j = 0; j < n; j++)
-        {
-            if (a[j] <= i)
-            {
-                dp[i] += dp[i - a[j]];
-                dp[i] %= MOD;
+
+    // cout<<calc(n-1, x)<<"\n";
+    int dp[n+1][x+1];
+    memset(dp,0,sizeof(dp));
+
+    for(int i=0; i<=n; i++){
+        dp[i][0] = 1;
+    }
+
+    for(int i=1; i<=n; i++){
+        for(int j=1; j<=x; j++){
+            int ans = 0;
+
+            if(x > arr[i-1]){
+                ans = (ans + dp[i-1][j] % MOD) % MOD;
+                ans = (ans + dp[i-1][j - arr[i-1]] % MOD) % MOD;
+            }else{
+                ans = dp[i-1][j];
             }
+            // trace(i,j,ans);
+            dp[i][j] = ans;
         }
     }
-    // for (ll i = 0; i <= x; i++)
-    // {
-    //     cout << dp[i] << " ";
-    // }
-    // cout << "\n";
-    cout << dp[x] << "\n";
+
+     for(int i=1; i<=n; i++){
+        for(int j=1; j<=x; j++){
+           cout<<dp[i][j]<<" ";
+        }
+        cout<<"\n";
+    }
+
+    cout<<dp[n][x]<<"\n";
+
 }
 
 int main()

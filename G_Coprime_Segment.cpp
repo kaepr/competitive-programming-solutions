@@ -46,6 +46,53 @@ int powmod(int x, int y, int mod)
 
 const int MOD = 1e9 + 7;
 
+struct custom_stack{
+    vector<ll> s, sgcd = {0};
+
+    void push(ll x){
+        s.PB(x);
+        ll elm = sgcd.back();
+        sgcd.PB(__gcd(elm,x));
+    }
+
+    ll pop(){
+        ll elm = s.back();
+        s.pop_back();
+        sgcd.pop_back();
+        return elm;
+    }
+
+    ll ret_gcd(){
+        return sgcd.back();
+    }
+
+    ll empty(){
+        return s.empty();
+    }
+};
+
+struct custom_stack s1,s2;
+
+ll add(ll x){
+    s2.push(x);
+}
+
+ll remove(){
+    if(s1.empty()){
+        while (!s2.empty())
+        {
+            s1.push(s2.pop());
+        }
+    }
+    s1.pop();
+}
+
+bool good(){
+    ll g1 = s1.ret_gcd();
+    ll g2 = s2.ret_gcd();
+    return __gcd(g1,g2)==1;
+}
+
 void solve()
 {
     ll n;
@@ -57,10 +104,16 @@ void solve()
     }
 
     ll ans = 1e9;
-    ll cur_gcd = a[0];
+    ll l = 0;
     for (ll r = 0; r < n; r++)
     {
         
+    }
+
+    if(ans==1e9){
+        cout<<-1<<"\n";
+    }else{
+        cout<<ans<<"\n";
     }
 }
 

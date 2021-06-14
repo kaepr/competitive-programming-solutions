@@ -48,31 +48,37 @@ const int MOD = 1e9 + 7;
 
 void solve()
 {
-    int n, l, r;
+    ll n, l, r;
     cin >> n >> l >> r;
     vi arr;
-    for (int i = 0; i < n; i++)
+    for (ll i = 0; i < n; i++)
     {
-        int x;
+        ll x;
         cin >> x;
         arr.PB(x);
     }
 
     sort(arr.begin(), arr.end());
 
-    for (auto x : arr)
+    // for (auto x : arr)
+    // {
+    //     cout << x << " ";
+    // }
+    // cout << "\n";
+    // trace(l,r);
+    ll ans = 0;
+    for (ll i = 0; i < n-1; i++)
     {
-        cout << x << " ";
-    }
-    cout << "\n";
+        ll right_index = upper_bound(arr.begin()+i+1,arr.end(), r - arr[i]) - arr.begin();
+        ll left_index = lower_bound(arr.begin()+i+1, arr.end(), l - arr[i]) - arr.begin();
 
-    int ans = 0;
-    for (int i = 0; i < n; i++)
-    {
-        
+        ans += right_index - left_index;
+
+        // trace(i,arr[i]);
+        // trace(left_index, right_index);
+        // trace(ans);
     }
     cout << ans << "\n";
-    // cout << "NEW\n";
 }
 
 int main()
@@ -92,4 +98,4 @@ int main()
     }
 
     return 0;
-}
+}    

@@ -48,24 +48,22 @@ const int MOD = 1e9 + 7;
 
 void solve()
 {
-	int n;
-	cin >> n;
-	vector<int> a(n);
-	vector<int> ans;
-	int cur = 0;
-	ans.PB(0);
-	int prev = a[0];
-
-	for (int i = 1; i < n; i++) {
-		int x = prev ^ a[i];
-		ans.PB(x & a[i]);
-		prev  = x;
+	ll n, k;
+	vector <ll> v(n + 1);
+	vector<pair<ll, ll>> con(k);
+	for (ll i = 0; i < k; i++) {
+		ll x;
+		cin >> x;
+		con[i].F = x;
 	}
 
-	for (auto x : ans) {
-		cout << x << " ";
+	for (ll i = 0; i < k; i++) {
+		ll x;
+		cin >> x;
+		con[i].S = x;
 	}
-	cout << "\n";
+
+
 }
 
 int main()

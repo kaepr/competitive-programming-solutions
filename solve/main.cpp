@@ -51,21 +51,42 @@ void solve()
 	int n;
 	cin >> n;
 	vector<int> a(n);
-	vector<int> ans;
-	int cur = 0;
-	ans.PB(0);
-	int prev = a[0];
+	set<int> st1;
 
-	for (int i = 1; i < n; i++) {
-		int x = prev ^ a[i];
-		ans.PB(x & a[i]);
-		prev  = x;
+	for (int i = 0; i < n; i++) {
+		cin >> a[i];
+		st1.insert(a[i]);
 	}
 
-	for (auto x : ans) {
-		cout << x << " ";
+	if (st1.size() == 1) {
+		cout << 0 << "\n";
+		return;
 	}
-	cout << "\n";
+
+	int steps = 1;
+
+	while (true) {
+		vector<int> b(n);
+		for (int i = 0; i < n; i++) {
+			b[i] = __gcd(a[i], a[(i + 1) % n]);
+		}
+
+		set<int> st;
+		for (auto x : b) {
+			st.insert(x);
+		}
+
+		if (st.size() == 1) {
+			break;
+		}
+
+		for (int i = 0; i < n; i++) {
+			a[i] = b[i];
+		}
+		steps++;
+	}
+
+	cout << steps << "\n";
 }
 
 int main()

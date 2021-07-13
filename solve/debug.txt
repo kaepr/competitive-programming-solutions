@@ -1,3 +1,8 @@
-5 5 5 5
-
-4_ 3_ 2_
+A
+A
+A
+AB
+ B
+ B
+ B
+GGGGGGG

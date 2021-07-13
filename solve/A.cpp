@@ -48,22 +48,32 @@ const int MOD = 1e9 + 7;
 
 void solve()
 {
-	ll n, k;
-	vector <ll> v(n + 1);
-	vector<pair<ll, ll>> con(k);
-	for (ll i = 0; i < k; i++) {
+	ll n;
+	cin >> n;
+	vector<pair<ll, ll>> v;
+	//1 -> right, 0 -> left
+	for (ll i = 0; i < n; i++) {
 		ll x;
 		cin >> x;
-		con[i].F = x;
+		v.PB(MP(x, i));
 	}
 
-	for (ll i = 0; i < k; i++) {
-		ll x;
-		cin >> x;
-		con[i].S = x;
+	vector<ll> swap_cnt(n);
+	fill(swap_cnt.begin(), swap_cnt.end(), 0);
+	sort(v.begin(), v.end());
+	for (auto x : v) {
+		cout << x.F << " " << x.S << "\n";
 	}
 
+	ll positions = n;
+	for (ll i = 0; i < n; i++) {
+		if (abs(i - v[i].S) % 2 != 0) {
+			cout << "NO\n";
+			return;
+		}
+	}
 
+	cout << "YES\n";
 }
 
 int main()

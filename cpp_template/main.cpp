@@ -48,12 +48,7 @@ const ll MOD = 1e9 + 7;
 
 void solve()
 {
-	char str[] = "Limericks";
-	char *s;
-	s = &str[6] - 6;
-	while (*s) {
-		printf("%c", *s++);
-	}
+
 }
 
 int main()

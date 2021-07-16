@@ -48,11 +48,22 @@ const ll MOD = 1e9 + 7;
 
 void solve()
 {
-	char str[] = "Limericks";
-	char *s;
-	s = &str[6] - 6;
-	while (*s) {
-		printf("%c", *s++);
+	ll n;
+	cin >> n;
+	ll fib[n + 1];
+	fib[0] = 1;
+	fib[1] = 1;
+	if (n == 1) {
+		cout << 1 << "\n";
+		return;
+	}
+	for (ll i = 2; i <= n; i++) {
+		fib[i] = fib[i - 1] + fib[i - 2];
+		if (fib[i] >= n) {
+			cout << i << "\n";
+			return;
+			break;
+		}
 	}
 }
 

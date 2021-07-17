@@ -123,7 +123,6 @@ void iterativeInorder(Node* root) {
 	}
 }
 
-
 void iterativePreorder(Node* root) {
 	cout << "\nIterative Preorder\n";
 	if (root == NULL) {
@@ -145,10 +144,6 @@ void iterativePreorder(Node* root) {
 		}
 	}
 }
-
-
-
-
 
 int main() {
 

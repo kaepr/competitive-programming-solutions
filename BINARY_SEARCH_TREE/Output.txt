@@ -1,2 +1,1 @@
-Not Found
-5 10 12 15 16 18 
+K-th Smallest Element is 12

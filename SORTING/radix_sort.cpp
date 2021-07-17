@@ -1,59 +1,58 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-void countSort(int arr[], int n) {
-	int mx = arr[0], mn = arr[0];
+void radixSort(int arr[], int n, int exp) {
+	int cnt[10] = {0};
 	for (int i = 0; i < n; i++) {
-		mx = max(mx, arr[i]);
-		mn = min(mn, arr[i]);
-	}
-	int range = mx - mn + 1;
-	cout << range << "\n";
-	int cnt[range];
-	memset(cnt, 0, sizeof(cnt));
-	for (int i = 0; i < n; i++) {
-		cnt[arr[i] - mn]++;
+		int dig = (arr[i] / exp) % 10;
+		cnt[dig]++;
 	}
 
-	for (int i = 0; i < range; i++) {
+	for (int i = 0; i < 10; i++) {
 		cout << cnt[i] << " ";
 	}
 	cout << "\n";
 
-	for (int i = 1; i < range; i++) {
+	for (int i = 1; i < 10; i++) {
 		cnt[i] = cnt[i] + cnt[i - 1];
 	}
 
-	for (int i = 0; i < range; i++) {
+	for (int i = 0; i < 10; i++) {
 		cout << cnt[i] << " ";
 	}
 	cout << "\n";
+
 	int ans[n];
 	for (int i = n - 1; i >= 0; i--) {
 		int elm = arr[i];
-		int index = cnt[elm - mn] - 1;
+		int dig = (arr[i] / exp) % 10;
+		int index = cnt[dig] - 1;
+		cnt[dig]--;
 		ans[index] = elm;
-		cnt[elm - mn]--;
 	}
 
 	for (int i = 0; i < n; i++) {
-		cout << ans[i] << " ";
+		arr[i] = ans[i];
 	}
-	cout << "\n";
-
-
 }
 
 int main() {
 	int n;
 	cin >> n;
 	int arr[n];
+	int mx = 0;
 	for (int i = 0; i < n; i++) {
 		cin >> arr[i];
+		mx = max(mx, arr[i]);
 	}
 
-	countSort(arr, n);
+	int exp = 1;
+	while (exp < mx) {
+		radixSort(arr, n, exp);
+		exp *= 10;
+	}
 
+	cout << "Final\n";
 	for (int i = 0; i < n; i++) {
 		cout << arr[i] << " ";
 	}

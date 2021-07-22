@@ -1,8 +1,7 @@
-A
-A
-A
-AB
- B
- B
- B
-GGGGGGG
+1 2 3 4 5 6
+1 2 3
+
+n = 5, taken = 4 ( 5 - 5/4 )
+n = 6, taken = 5 ( 6 - 6/4 )
+n = 7, taken = 6 ( 7 - 7/4 )
+n = 8, taken = 6 ( 8 - 8/4 )

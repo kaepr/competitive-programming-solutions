@@ -1,5 +1,4 @@
-4
-1
-8
-7
-42
+3
+vkcup
+abababa
+zzzzzz

@@ -1,4 +1,6 @@
-3
-vkcup
-abababa
-zzzzzz
+5
+1
+9
+10
+34
+880055535

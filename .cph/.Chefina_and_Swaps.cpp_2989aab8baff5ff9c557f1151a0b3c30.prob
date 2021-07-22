@@ -1,1 +1,0 @@
-{"group":"local","interactive":false,"local":true,"memoryLimit":1024,"name":"Local: Chefina_and_Swaps","srcPath":"/home/shagun/competitive-programming-solutions/Chefina_and_Swaps.cpp","tests":[{"id":1594552745511,"input":"3\n1\n1\n2\n2\n1 2\n2 1\n2\n1 1\n2 2","output":"-1\n0\n1"}],"timeLimit":3000,"url":"/home/shagun/competitive-programming-solutions/Chefina_and_Swaps.cpp"}

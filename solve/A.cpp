@@ -46,34 +46,56 @@ int powmod(int x, int y, int mod)
 
 const int MOD = 1e9 + 7;
 
+bool chk1(string a, string b, int n, int m, int ptr) {
+	if (n - ptr + 1 < m) {
+		return false;
+	}
+	int bptr = 0;
+	for (int i = ptr; i < n; i++) {
+		if (a[i] != b[bptr]) {
+			return false;
+		}
+		bptr++;
+	}
+	return true;
+}
+
+bool chk2(string a, string b, int n, int m, int ptr) {
+	if ((ptr + 1) < m) {
+		return false;
+	}
+
+	int bptr = 0;
+	for (int i = ptr; i >= 0; i--) {
+		if (b[bptr] != a[i]) {
+			return false;
+		}
+		bptr++;
+	}
+
+	return true;
+}
+
+bool chk3(string a, string b, int n, int m, int ptr) {
+
+}
+
+
 void solve()
 {
-	ll n;
-	cin >> n;
-	vector<pair<ll, ll>> v;
-	//1 -> right, 0 -> left
-	for (ll i = 0; i < n; i++) {
-		ll x;
-		cin >> x;
-		v.PB(MP(x, i));
-	}
+	string a, b;
+	cin >> a >> b;
+	string c = a;
+	reverse(c.begin(), c.end());
 
-	vector<ll> swap_cnt(n);
-	fill(swap_cnt.begin(), swap_cnt.end(), 0);
-	sort(v.begin(), v.end());
-	for (auto x : v) {
-		cout << x.F << " " << x.S << "\n";
-	}
-
-	ll positions = n;
-	for (ll i = 0; i < n; i++) {
-		if (abs(i - v[i].S) % 2 != 0) {
-			cout << "NO\n";
-			return;
+	bool f = false;
+	int n = a.length(), m = b.length();
+	for (int i = 0; i < n; i++) {
+		if (a[i] == b[0]) {
+			// first characters match
+			// go right, and then go left
 		}
 	}
-
-	cout << "YES\n";
 }
 
 int main()

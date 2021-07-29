@@ -28,9 +28,9 @@ void __f(const char *names, Arg1 &&arg1, Args &&... args)
 #define trace(...)
 #endif
 
-int powmod(int x, int y, int mod)
+ll powmod(ll x, ll y, ll mod)
 {
-	int res = 1;
+	ll res = 1;
 	x %= mod;
 	if (x == 0)
 		return 0;
@@ -44,58 +44,27 @@ int powmod(int x, int y, int mod)
 	return res;
 }
 
-const int MOD = 1e9 + 7;
-
-bool chk1(string a, string b, int n, int m, int ptr) {
-	if (n - ptr + 1 < m) {
-		return false;
-	}
-	int bptr = 0;
-	for (int i = ptr; i < n; i++) {
-		if (a[i] != b[bptr]) {
-			return false;
-		}
-		bptr++;
-	}
-	return true;
-}
-
-bool chk2(string a, string b, int n, int m, int ptr) {
-	if ((ptr + 1) < m) {
-		return false;
-	}
-
-	int bptr = 0;
-	for (int i = ptr; i >= 0; i--) {
-		if (b[bptr] != a[i]) {
-			return false;
-		}
-		bptr++;
-	}
-
-	return true;
-}
-
-bool chk3(string a, string b, int n, int m, int ptr) {
-
-}
-
+const ll MOD = 1e9 + 7;
 
 void solve()
 {
-	string a, b;
-	cin >> a >> b;
-	string c = a;
-	reverse(c.begin(), c.end());
-
+	ll n;
+	cin >> n;
+	vector<ll> a(n);
 	bool f = false;
-	int n = a.length(), m = b.length();
-	for (int i = 0; i < n; i++) {
-		if (a[i] == b[0]) {
-			// first characters match
-			// go right, and then go left
+	for (ll i = 0; i < n; i++) {
+		cin >> a[i];
+		if (a[i] == 0) {
+			f = true;
 		}
 	}
+	if (f) {
+		cout << "YES\n";
+		return;
+	}
+
+
+
 }
 
 int main()

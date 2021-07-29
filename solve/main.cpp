@@ -48,12 +48,28 @@ const ll MOD = 1e9 + 7;
 
 void solve()
 {
-	ll n;
-	cin >> n;
-	if (n % 10 == 9) {
-		cout << n / 10 + 1 << "\n";
+	ll x, y;
+
+	cin >> x >> y;
+
+	if (x == 1 || y == 1) {
+		if (x + y == 2) {
+			cout << 2 << "\n";
+		} else {
+			ll mx = max(x, y);
+			if (mx % 2 == 0) {
+				cout << 1 << "\n";
+			} else {
+				cout << 2 << "\n";
+			}
+		}
+		return;
+	}
+
+	if (x % 2 != 0 && y % 2 != 0) {
+		cout << min((ll)2, min(x, y) - (max(x, y) % min(x, y))) << "\n";
 	} else {
-		cout << n / 10 << "\n";
+		cout << 1 << "\n";
 	}
 }
 

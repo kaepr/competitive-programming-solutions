@@ -45,26 +45,126 @@ ll powmod(ll x, ll y, ll mod)
 }
 
 const ll MOD = 1e9 + 7;
+// const int maxn = 2e5 + 5;
+// vector<int> adj[maxn];
+int n, m, q;
+// vector <set<int>> adj2;
+map<int, set<int>> adj2;
 
+bool isVulnerable(int num) {
+	if (adj2[num].size() == 0) {
+		return false;
+	}
+
+	auto it = adj2[num].end();
+	it--;
+	if (*it > num) {
+		return true;
+	} else {
+		return false;
+	}
+}
 void solve()
 {
-	ll n;
-	cin >> n;
-	vector<ll> a(n);
-	bool f = false;
-	for (ll i = 0; i < n; i++) {
-		cin >> a[i];
-		if (a[i] == 0) {
-			f = true;
+	cin >> n >> m;
+
+	for (int i = 1; i <= n; i++) {
+		adj2[i].insert(0);
+	}
+
+	for (int i = 1; i <= n; i++) {
+		adj2[i].erase(0);
+	}
+
+	for (int i = 0; i < m; i++) {
+		int x, y;
+		cin >> x >> y;
+		// adj[x].PB(y);
+		// adj[y].PB(x);
+		adj2[x].insert(y);
+		adj2[y].insert(x);
+	}
+
+	int cnt = 0;
+	for (int i = 1; i <= n; i++) {
+		if (isVulnerable(i)) {
+			cnt++;
 		}
 	}
-	if (f) {
-		cout << "YES\n";
-		return;
+
+	cin >> q;
+	while (q > 0) {
+		int type;
+		cin >> type;
+		if (type == 1) {
+			int x, y;
+			cin >> x >> y;
+
+			int p1 = 0, p2 = 0;
+			if (isVulnerable(x)) {
+				p1++;
+			}
+			if (isVulnerable(y)) {
+				p2++;
+			}
+
+			cnt -= p1;
+			cnt -= p2;
+
+			adj2[x].insert(y);
+			adj2[y].insert(x);
+
+			p1 = 0, p2 = 0;
+			if (isVulnerable(x)) {
+				p1++;
+			}
+			if (isVulnerable(y)) {
+				p2++;
+			}
+
+			cnt += p1;
+			cnt += p2;
+
+
+
+		} else if (type == 2) {
+			int x, y;
+			cin >> x >> y;
+
+			int p1 = 0, p2 = 0;
+			if (isVulnerable(x)) {
+				p1++;
+			}
+			if (isVulnerable(y)) {
+				p2++;
+			}
+
+			cnt -= p1;
+			cnt -= p2;
+
+			adj2[x].erase(y);
+			adj2[y].erase(x);
+
+			p1 = 0, p2 = 0;
+			if (isVulnerable(x)) {
+				p1++;
+			}
+			if (isVulnerable(y)) {
+				p2++;
+			}
+
+			cnt += p1;
+			cnt += p2;
+
+
+
+		} else {
+			// int ans = calc(adj2);
+			// cout << ans << "\n";
+			cout << n - cnt << "\n";
+		}
+		q--;
 	}
-
-
-
 }
 
 int main()
@@ -75,8 +175,8 @@ int main()
 	cin.tie(NULL);
 	cout.tie(NULL);
 
-	int t;
-	cin >> t;
+	int t = 1;
+	// cin >> t;
 	while (t > 0)
 	{
 		solve();

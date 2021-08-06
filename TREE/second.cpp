@@ -171,3 +171,34 @@ int main() {
 	return 0;
 }
 
+
+vector<int> postorderTraversal(TreeNode* root) {
+	vector<int> ans;
+
+	if (root == NULL) {
+		return ans;
+	}
+
+	TreeNode* pre = NULL;
+	TreeNode* cur = root;
+	stack<TreeNode* > st;
+	while (!st.empty() || cur != NULL) {
+		if (cur != NULL) {
+			st.push(cur);
+			cur = cur->left;
+		} else {
+			cur = st.top();
+			if (cur->right == NULL || cur->right == pre) {
+				ans.push_back(cur->val);
+				st.pop();
+				pre = cur;
+				cur = NULL;
+			} else {
+				cur = cur->right;
+			}
+		}
+	}
+
+
+	return ans;
+}

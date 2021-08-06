@@ -1,0 +1,8 @@
+32 bit number 
+
+
+31 bit number
+coz first bit is sign
+
+total 31 bits
+11111111111111

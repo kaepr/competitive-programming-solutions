@@ -48,29 +48,16 @@ const ll MOD = 1e9 + 7;
 
 void solve()
 {
-	ll x, y;
-
-	cin >> x >> y;
-
-	if (x == 1 || y == 1) {
-		if (x + y == 2) {
-			cout << 2 << "\n";
-		} else {
-			ll mx = max(x, y);
-			if (mx % 2 == 0) {
-				cout << 1 << "\n";
-			} else {
-				cout << 2 << "\n";
-			}
-		}
-		return;
+	ll n;
+	cin >> n;
+	vector<ll> a(n);
+	for (ll i = 0; i < n; i++) {
+		cin >> a[i];
 	}
 
-	if (x % 2 != 0 && y % 2 != 0) {
-		cout << min((ll)2, min(x, y) - (max(x, y) % min(x, y))) << "\n";
-	} else {
-		cout << 1 << "\n";
-	}
+
+
+
 }
 
 int main()

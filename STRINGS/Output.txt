@@ -1,0 +1,16 @@
+
+a
+b
+c
+d
+ab
+ac
+ad
+bc
+bd
+cd
+abc
+abd
+acd
+bcd
+abcd

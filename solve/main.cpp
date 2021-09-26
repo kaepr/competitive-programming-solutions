@@ -9,25 +9,6 @@ using vi = vector<int>;
 #define S second
 #define MP make_pair
 
-#define TRACE
-#ifdef TRACE
-#define trace(...) __f(#__VA_ARGS__, __VA_ARGS__)
-template <typename Arg1>
-void __f(const char *name, Arg1 &&arg1)
-{
-	cout << name << " : " << arg1 << endl;
-}
-template <typename Arg1, typename... Args>
-void __f(const char *names, Arg1 &&arg1, Args &&... args)
-{
-	const char *comma = strchr(names + 1, ',');
-	cout.write(names, comma - names) << " : " << arg1 << " | ";
-	__f(comma + 1, args...);
-}
-#else
-#define trace(...)
-#endif
-
 ll powmod(ll x, ll y, ll mod)
 {
 	ll res = 1;
@@ -46,16 +27,29 @@ ll powmod(ll x, ll y, ll mod)
 
 const ll MOD = 1e9 + 7;
 
+int query(int i, int j) {
+	cout << "? " << i << " " << j << endl;
+	char x;
+	cin >> x;
+	if (x == '<') {
+		return -1; // Size of i'th nut is less than j'th bolt
+	} else if (x == '=') {
+		return 0; // i'th nut and j'th bolt match
+	} else {
+		return 1; // i'th nut is greater than size of j'th bolt
+	}
+}
+
 void solve()
 {
-	ll n;
+	int n;
 	cin >> n;
-	vector<ll> a(n);
-	for (ll i = 0; i < n; i++) {
-		cin >> a[i];
+	vector<int> ans(n, 0);
+	int cnt = 0;
+	while (cnt < 15) {
+
+		cnt++;
 	}
-
-
 
 
 }
@@ -68,8 +62,8 @@ int main()
 	cin.tie(NULL);
 	cout.tie(NULL);
 
-	int t;
-	cin >> t;
+	int t = 1;
+	// cin >> t;
 	while (t > 0)
 	{
 		solve();

@@ -28,8 +28,7 @@ void __f(const char *names, Arg1 &&arg1, Args &&... args)
 #define trace(...)
 #endif
 
-ll powmod(ll x, ll y, ll mod)
-{
+ll powmod(ll x, ll y, ll mod) {
 	ll res = 1;
 	x %= mod;
 	if (x == 0)
@@ -46,73 +45,19 @@ ll powmod(ll x, ll y, ll mod)
 
 const ll MOD = 1e9 + 7;
 
-void solve()
-{
-	ll n;
-	cin >> n;
-	vector<ll> arr;
-	for (ll i = 0; i < n; i++) {
-		ll x;
-		cin >> x;
-		arr.PB(x);
-	}
-
-	ll cost = 0;
-
-	ll mn = *min_element(arr.begin(), arr.end());
-	ll mx = *max_element(arr.begin(), arr.end());
-
-	bool minAdded = false;
-	bool maxAdded = false;
-
-	deque<ll> dq;
-	for (ll i = 0; i < n; i++) {
-		if (arr[i] == mn) {
-			dq.push_front(mn);
-			minAdded = true;
-		} else if (arr[i] == mx) {
-			dq.push_back(mx);
-			maxAdded = true;
-		} else {
-
-
-			if (minAdded && !maxAdded) {
-				dq.push_back(arr[i]);
-			} else if (maxAdded && !minAdded) {
-				dq.push_front(arr[i]);
-			} else if (maxAdded && minAdded) {
-
-				// chose best position to add
-
-			} else {
-
-				// chose best position to add
-
-
-			}
-
-
-		}
-	}
-
-
-
-
-
-
-
-
+void solve() {
+	int i = 5;
+	trace(i);
 }
 
-int main()
-{
+int main() {
 	// freopen("input.txt","r",stdin);
 	// freopen("output.txt","w",stdout);
 	ios_base::sync_with_stdio(0);
 	cin.tie(NULL);
 	cout.tie(NULL);
 
-	int t;
+	int t = 1;
 	cin >> t;
 	while (t > 0)
 	{

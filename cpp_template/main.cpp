@@ -28,8 +28,7 @@ void __f(const char *names, Arg1 &&arg1, Args &&... args)
 #define trace(...)
 #endif
 
-ll powmod(ll x, ll y, ll mod)
-{
+ll powmod(ll x, ll y, ll mod) {
 	ll res = 1;
 	x %= mod;
 	if (x == 0)
@@ -46,20 +45,18 @@ ll powmod(ll x, ll y, ll mod)
 
 const ll MOD = 1e9 + 7;
 
-void solve()
-{
+void solve() {
 
 }
 
-int main()
-{
+int main() {
 	// freopen("input.txt","r",stdin);
 	// freopen("output.txt","w",stdout);
 	ios_base::sync_with_stdio(0);
 	cin.tie(NULL);
 	cout.tie(NULL);
 
-	int t;
+	int t = 1;
 	cin >> t;
 	while (t > 0)
 	{

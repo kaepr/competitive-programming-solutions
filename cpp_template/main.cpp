@@ -1,13 +1,22 @@
 #include <bits/stdc++.h>
+#include<ext/pb_ds/assoc_container.hpp>
+#include<ext/pb_ds/tree_policy.hpp>
+
+using namespace __gnu_pbds;
 using namespace std;
+
 using ll = long long;
 using ull = unsigned long long;
 using vi = vector<int>;
+using vll = vector<long long>;
 
 #define PB push_back
 #define F first
 #define S second
 #define MP make_pair
+
+template <typename T> using o_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+template <typename T, typename R> using o_map = tree<T, R, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 #define TRACE
 #ifdef TRACE

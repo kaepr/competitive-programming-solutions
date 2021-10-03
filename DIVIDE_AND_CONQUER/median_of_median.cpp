@@ -55,46 +55,6 @@ ll powmod(ll x, ll y, ll mod) {
 const ll MOD = 1e9 + 7;
 
 void solve() {
-	ll n, k;
-	cin >> n >> k;
-
-	vll a(n + 1);
-	set<ll> st;
-	ll xr = 0;
-	for (ll i = 1; i <= n; i++) {
-		cin >> a[i];
-		st.insert(a[i]);
-		xr ^= a[i];
-	}
-
-	vector<ll> adj[n + 1];
-
-	for (ll i = 1; i <= n - 1; i++) {
-		ll x, y;
-		cin >> x >> y;
-		adj[x].PB(y);
-		adj[y].PB(x);
-	}
-
-	if (st.size() == 1) {
-		cout << "YES\n";
-		return;
-	}
-
-	trace(n, k, xr);
-
-	if (xr == 0) {
-		cout << "YES\n";
-		return;
-	}
-
-	// need to break into atleast 2 or k components
-	// whose each contribution is Y
-	// thus total xorred should be either 0 or Y
-
-
-
-
 
 }
 

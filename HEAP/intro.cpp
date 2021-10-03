@@ -1,7 +1,23 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+
+
 /*
+
+
+Priority Queue
+A structure which implements a set S of elements each of elements has a key associated with it
+
+for eg {(x,k)}
+
+Operations allowed :
+insert(S,x): insert element x into set S
+max(S) returns element of S with the largest key
+extract_max(S): returns and pops the largest key
+increase_key(S,x,k): increase the specified x
+
+
 Complete Binary tree
 Filled completetly from
 Top to bottom, and then
@@ -102,6 +118,10 @@ public:
 		extractMin();
 	}
 
+	//  Its O(n) in complexity, as the amount of times get called for log(n) times
+	// Is only the final root of the tree
+	// Rest of the times, the amount of times heapify being is called is less
+	// Thus asymptotically its actually O(n)
 	void buildHeap() {
 		for (int i = (size - 2) / 2; i >= 0; i--) {
 			minHeapify(i);
@@ -129,14 +149,23 @@ void heapify(int arr[], int n, int i)
 	}
 }
 
+
+
 void buildheap(int arr[], int n) {
 	for (int i = n / 2 - 1; i >= 0; i--)
 		heapify(arr, n, i);
 }
+
+
 void heapSort(int arr[], int n)
 {
+	// First build the heap
 	buildheap(arr, n);
 
+	// Keep swapping highest element with last
+	// Then decrease array size
+	// Then as there is just one violation,
+	// Call heapify on it
 	for (int i = n - 1; i > 0; i--)
 	{
 		swap(arr[0], arr[i]);

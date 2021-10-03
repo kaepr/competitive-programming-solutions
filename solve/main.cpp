@@ -1,16 +1,43 @@
 #include <bits/stdc++.h>
+#include<ext/pb_ds/assoc_container.hpp>
+#include<ext/pb_ds/tree_policy.hpp>
+
+using namespace __gnu_pbds;
 using namespace std;
+
 using ll = long long;
 using ull = unsigned long long;
 using vi = vector<int>;
+using vll = vector<long long>;
 
 #define PB push_back
 #define F first
 #define S second
 #define MP make_pair
 
-ll powmod(ll x, ll y, ll mod)
+template <typename T> using o_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+template <typename T, typename R> using o_map = tree<T, R, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+
+#define TRACE
+#ifdef TRACE
+#define trace(...) __f(#__VA_ARGS__, __VA_ARGS__)
+template <typename Arg1>
+void __f(const char *name, Arg1 &&arg1)
 {
+	cout << name << " : " << arg1 << endl;
+}
+template <typename Arg1, typename... Args>
+void __f(const char *names, Arg1 &&arg1, Args &&... args)
+{
+	const char *comma = strchr(names + 1, ',');
+	cout.write(names, comma - names) << " : " << arg1 << " | ";
+	__f(comma + 1, args...);
+}
+#else
+#define trace(...)
+#endif
+
+ll powmod(ll x, ll y, ll mod) {
 	ll res = 1;
 	x %= mod;
 	if (x == 0)
@@ -26,121 +53,53 @@ ll powmod(ll x, ll y, ll mod)
 }
 
 const ll MOD = 1e9 + 7;
-int n, fulfilled;
 
-int query(int i, int j) {
-	cout << "? " << i << " " << j << endl;
-	// cout.flush();
-	char x;
-	cin >> x;
-	if (x == '<') {
-		return -1; // Size of i'th nut is less than j'th bolt
-	} else if (x == '=') {
-		return 0; // i'th nut and j'th bolt match
-	} else {
-		return 1; // i'th nut is greater than size of j'th bolt
-	}
-}
-
-int get_rand_bolt_num(set<int> st) {
-	vector<int> v;
-	for (auto x : st) {
-		v.push_back(x);
+void solve() {
+	ll n, H;
+	cin >> n >> H;
+	vll v;
+	for (ll i = 0; i < n; i++) {
+		ll x;
+		cin >> x;
+		v.PB(x);
 	}
 
-	int sz = v.size();
-	int random_index = (int) rand() % sz;
-	return v[random_index];
-}
+	sort(v.begin(), v.end());
 
-void random_quicksort(vector<int>&ans, set<int> &nuts, set<int> &bolts) {
-	if (nuts.empty() || bolts.empty()) {
-		return;
-	}
-	if (nuts.size() == 1 && bolts.size() == 1) {
-		fulfilled++;
-		auto x = nuts.begin();
-		auto y = bolts.begin();
-		ans[*x] = *y;
-		return;
-	}
+	ll mx = v[n - 1];
+	ll mx2 = v[n - 2];
+	ll times = 0;
 
-	if (fulfilled < n) {
-		// Find partition p, and resulting sets for elements
-		int bolt_chosen = get_rand_bolt_num(bolts);
-		bolts.erase(bolt_chosen);
+	ll s = mx2 + mx;
+	// trace(mx2, mx, s);
+	times += (H / s) * 2;
+	H %= s;
 
-		// Partition around this bolt
-		set<int> left_bolts, right_bolts, left_nuts, right_nuts;
-		int correct_nut = 0;
-
-		for (auto x : nuts) {
-			int q = query(x, bolt_chosen);
-			if (q == -1) {
-				// nut at x'th pos is smaller than bolt at bolt chosen
-				left_nuts.insert(x);
-			} else if (q == 1) {
-				// nut at x'th pos is larger than bolt at bolt chosen
-				right_nuts.insert(x);
-			} else {
-				correct_nut = x; // Bolt to be placed here
-			}
+	if (H != 0) {
+		if (H <= mx) {
+			times++;
+		} else {
+			times += 2;
 		}
 
-		ans[correct_nut] = bolt_chosen;
-
-		// Find correct arrangements for the bolts
-		for (auto x : bolts) {
-			int q = query(correct_nut, x);
-			if (q == -1) {
-				// x bolt is bigger than correct nut
-				right_bolts.insert(x);
-			} else if (q == 1) {
-				// x bolt is smaller than correct nut
-				left_bolts.insert(x);
-			}
-		}
-
-		fulfilled++;
-		random_quicksort(ans, left_nuts, left_bolts);
-		random_quicksort(ans, right_nuts, right_bolts);
-	}
-}
-
-void solve()
-{
-	fulfilled = 0;
-	cin >> n;
-
-	vector<int> ans(n + 1, 0);
-	set<int> bolts, nuts;
-
-	for (int i = 1; i <= n; i++) {
-		bolts.insert(i);
-		nuts.insert(i);
 	}
 
-	random_quicksort(ans, nuts, bolts);
 
-	cout << "! ";
-	for (int i = 1; i <= n; i++) {
-		cout << ans[i] << " ";
-	}
-	cout.flush();
+	cout << times << "\n";
+
 
 
 }
 
-int main()
-{
+int main() {
 	// freopen("input.txt","r",stdin);
 	// freopen("output.txt","w",stdout);
 	ios_base::sync_with_stdio(0);
 	cin.tie(NULL);
 	cout.tie(NULL);
-	srand(time(0));
+
 	int t = 1;
-	// cin >> t;
+	cin >> t;
 	while (t > 0)
 	{
 		solve();

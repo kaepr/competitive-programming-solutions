@@ -24,87 +24,70 @@ template <typename T, typename R> using o_map = tree<T, R, less<T>, rb_tree_tag,
 template <typename Arg1>
 void __f(const char *name, Arg1 &&arg1)
 {
-	cout << name << " : " << arg1 << endl;
+    cout << name << " : " << arg1 << endl;
 }
 template <typename Arg1, typename... Args>
 void __f(const char *names, Arg1 &&arg1, Args &&... args)
 {
-	const char *comma = strchr(names + 1, ',');
-	cout.write(names, comma - names) << " : " << arg1 << " | ";
-	__f(comma + 1, args...);
+    const char *comma = strchr(names + 1, ',');
+    cout.write(names, comma - names) << " : " << arg1 << " | ";
+    __f(comma + 1, args...);
 }
 #else
 #define trace(...)
 #endif
 
 ll powmod(ll x, ll y, ll mod) {
-	ll res = 1;
-	x %= mod;
-	if (x == 0)
-		return 0;
-	while (y > 0)
-	{
-		if (y & 1)
-			res = (res * x) % mod;
-		y = y >> 1;
-		x = (x * x) % mod;
-	}
-	return res;
+    ll res = 1;
+    x %= mod;
+    if (x == 0)
+        return 0;
+    while (y > 0)
+    {
+        if (y & 1)
+            res = (res * x) % mod;
+        y = y >> 1;
+        x = (x * x) % mod;
+    }
+    return res;
 }
 
 const ll MOD = 1e9 + 7;
 
 void solve() {
-	ll n, H;
-	cin >> n >> H;
-	vll v;
-	for (ll i = 0; i < n; i++) {
-		ll x;
-		cin >> x;
-		v.PB(x);
-	}
-
-	sort(v.begin(), v.end());
-
-	ll mx = v[n - 1];
-	ll mx2 = v[n - 2];
-	ll times = 0;
-
-	ll s = mx2 + mx;
-	// trace(mx2, mx, s);
-	times += (H / s) * 2;
-	H %= s;
-
-	if (H != 0) {
-		if (H <= mx) {
-			times++;
-		} else {
-			times += 2;
-		}
-
-	}
-
-
-	cout << times << "\n";
+    int n, m;
+    cin >> n >> m;
+    vector<pair<int, int>> adj(n + 1);
+    for (int i = 1; i <= m; i++) {
+        int x, y;
+        cin >> x >> y;
+        string s;
+        cin >> s;
+        if (s == "imposter") {
+            adj[x].PB(MP(y, 1));
+        } else if (s == "crewmate") {
+            adj[x].PB(MP(y, 0));
+        }
+    }
 
 
 
 }
 
 int main() {
-	// freopen("input.txt","r",stdin);
-	// freopen("output.txt","w",stdout);
-	ios_base::sync_with_stdio(0);
-	cin.tie(NULL);
-	cout.tie(NULL);
+    // freopen("input.txt","r",stdin);
+    // freopen("output.txt","w",stdout);
+    ios_base::sync_with_stdio(0);
+    cin.tie(NULL);
+    cout.tie(NULL);
 
-	int t = 1;
-	cin >> t;
-	while (t > 0)
-	{
-		solve();
-		t--;
-	}
+    int t = 1;
+    cin >> t;
+    while (t > 0)
+    {
+        solve();
+        t--;
+    }
 
-	return 0;
+    return 0;
 }

@@ -53,76 +53,66 @@ ll powmod(ll x, ll y, ll mod) {
 }
 
 const ll MOD = 1e9 + 7;
-ll xr, cnt;
 
-ll dfs(ll parent, vector<vector<ll>> &adj, vector<ll> &arr, vector<ll> &vis) {
-	vis[parent] = true;
+void solve() {
+	int n, k;
+	cin >> n >> k;
+	// vector<int> adj(n + 1);
+	// vector<bool> vis(n + 1, false);
+	vector<int> leaves;
+	map<int, set<int>> mp;
 
-	ll cur_xor = arr[parent];
+	for (int i = 1; i <= n - 1; i++) {
+		int x, y;
+		cin >> x >> y;
+		// adj[x].PB(y);
+		// adj[y].PB(x);
+		mp[x].insert(y);
+		mp[y].insert(x);
+	}
 
-	for (auto child : adj[parent]) {
-		if (!vis[child]) {
-			cur_xor ^= dfs(child, adj, arr, vis);
+	if (n == 1) {
+		cout << 0 << "\n";
+		return;
+	}
+
+	int rem = n;
+	set<int> lfs;
+	for (auto x : mp) {
+		if (x.S.size() <= 1) {
+			lfs.insert(x.F);
 		}
 	}
 
-	if (cur_xor == xr) {
-		cnt++;
-		cur_xor = 0;
+	while (k > 0) {
+		if (rem <= 0) {
+			break;
+		}
+
+		// find all current leaves
+		// their adj size shuold be 1
+
+
+
+		rem -= lfs.size();
+		for (auto x : mp) {
+			for (auto y : lfs) {
+				if (x.S.find(y) != x.S.end()) {
+					mp[x.F].erase(y);
+				}
+			}
+		}
+
+		// update maps
+		for (auto y : lfs) {
+			mp.erase(y);
+		}
+
+		k--;
 	}
 
-	return cur_xor;
-}
 
-void solve() {
-	ll n, k;
-	cin >> n >> k;
-	// trace(n, k);
-	// cout << "n,k" << n << " " << k << "\n";
-	xr = 0, cnt = 0;
-	vll arr(n + 1);
-
-	for (ll i = 1; i <= n; i++) {
-		cin >> arr[i];
-		xr ^= arr[i];
-	}
-
-	// for (ll i = 1; i <= n; i++) {
-	// 	cout << arr[i] << " ";
-	// }
-	// cout << "\n";
-
-	vector<vector<ll>> adj(n + 1);
-	vll vis(n + 1, 0);
-
-	for (ll i = 1; i <= n - 1; i++) {
-		ll x, y;
-		cin >> x >> y;
-		adj[x].PB(y);
-		adj[y].PB(x);
-	}
-
-	// trace(xr, k);
-
-	if (xr == 0) {
-		cout << "YES\n";
-		return;
-	}
-
-	if (k <= 2) {
-		cout << "NO\n";
-		return;
-	}
-
-	dfs(1, adj, arr, vis);
-	// trace(xr, cnt);
-
-	if (cnt >= 2) {
-		cout << "YES\n";
-	} else {
-		cout << "NO\n";
-	}
-
+	cout << rem << "\n";
 }
 
 int main() {
@@ -136,8 +126,6 @@ int main() {
 	cin >> t;
 	while (t > 0)
 	{
-
-		// cout << "hello\n";
 		solve();
 		t--;
 	}

@@ -55,23 +55,17 @@ ll powmod(ll x, ll y, ll mod) {
 const ll MOD = 1e9 + 7;
 
 void solve() {
-    int n, m;
-    cin >> n >> m;
-    vector<pair<int, int>> adj(n + 1);
-    for (int i = 1; i <= m; i++) {
-        int x, y;
-        cin >> x >> y;
-        string s;
-        cin >> s;
-        if (s == "imposter") {
-            adj[x].PB(MP(y, 1));
-        } else if (s == "crewmate") {
-            adj[x].PB(MP(y, 0));
-        }
-    }
+    ll n;
+    cin >> n;
+    string s;
+    cin >> s;
+
+    int ans = 0;
 
 
 
+
+    cout << ans << "\n";
 }
 
 int main() {

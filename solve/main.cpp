@@ -53,19 +53,59 @@ ll powmod(ll x, ll y, ll mod) {
 }
 
 const ll MOD = 1e9 + 7;
+int case_no = 1;
 
 void solve() {
-    ll n;
-    cin >> n;
+    int ans = 0;
+    ll n, d, c, m;
+    cin >> n >> d >> c >> m;
     string s;
     cin >> s;
 
-    int ans = 0;
+    int dc = 0, feeded = 0;
+    for (int i = 0; i < n; i++) {
+        if (s[i] == 'D') {
+            dc++;
+        }
+    }
 
+    bool f = true;
+    bool dog = false;
+    for (int i = 0; i < n; i++) {
+        if (s[i] == 'D') {
+            dog = true;
+            if (d > 0) {
+                d--;
+                feeded++;
+                c += m;
+            } else {
+                f = false;
+                break;
+            }
+        } else if (s[i] == 'C') {
+            if (c > 0) {
+                c--;
+            } else {
+                f = false;
+                break;
+            }
+        }
+    }
 
+    // trace(f, dc, feeded);
 
+    string val = "NO";
 
-    cout << ans << "\n";
+    if (dc == feeded) {
+        f = true;
+    }
+
+    if (f) {
+        val = "YES";
+    }
+
+    cout << "Case #" << case_no << ": " << val << "\n";
+    case_no++;
 }
 
 int main() {

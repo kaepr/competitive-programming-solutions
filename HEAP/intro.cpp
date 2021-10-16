@@ -60,7 +60,7 @@ public:
 		// Check if parent is bigger element ( or root condition )
 		// If parent is bigger, then swap with current
 		// and change index to be the parent
-		for (int i = size - 1; i != 0 && arr[parent(i)] > arr[i]) {
+		for (int i = size - 1; i != 0 && (arr[parent(i)] > arr[i]);) {
 			swap(arr[i], arr[parent(i)]);
 			i = parent(i);
 		}
@@ -180,13 +180,37 @@ void printArray(int arr[], int n)
 	cout << "\n";
 }
 
+class Compare {
+public:
+	bool operator()(int a, int b) {
+		return a > b;
+	}
+};
+
 int main() {
-	int arr[] = {12, 11, 13, 5, 6, 7};
-	int n = sizeof(arr) / sizeof(arr[0]);
+	// int arr[] = {12, 11, 13, 5, 6, 7};
+	// int n = sizeof(arr) / sizeof(arr[0]);
 
-	heapSort(arr, n);
+	// heapSort(arr, n);
 
-	cout << "Sorted array is \n";
-	printArray(arr, n);
+	// cout << "Sorted array is \n";
+	// printArray(arr, n);
+
+	int arr[] = {10, 15, 20, 13, 6, 90};
+	int n = sizeof(arr) / sizeof(int);
+	priority_queue <int, vector<int>, Compare> heap;
+
+	for (int x : arr) {
+		heap.push(x);
+	}
+
+	while (!heap.empty()) {
+		cout << heap.top() << " ";
+		heap.pop();
+	}
+
+
+
+
 	return 0;
 }

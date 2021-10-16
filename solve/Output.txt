@@ -1,0 +1,6 @@
+f : 1 |  dc : 3 |  feeded : 3
+Case #1: YES
+f : 0 |  dc : 0 |  feeded : 0
+Case #2: YES
+f : 0 |  dc : 2 |  feeded : 1
+Case #3: NO

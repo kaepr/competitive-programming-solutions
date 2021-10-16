@@ -187,6 +187,96 @@ public:
 	}
 };
 
+class MedianFinder {
+public:
+	priority_queue<int> p1; // max heap
+	priority_queue<int, vector<int>, greater<int>> p2; // min heap
+
+	MedianFinder() {
+		// p1.clear();
+		// p2.clear();
+	}
+
+	void addNum(int num) {
+		if (p1.empty() ||  p1.top() > num) {
+			p1.push(num);
+		} else {
+			p2.push(num);
+		}
+
+		if (p1.size() > p2.size() + 1) {
+			p2.push(p1.top());
+			p1.pop();
+		} else if (p2.size() > p1.size() + 1) {
+			p1.push(p2.top());
+			p2.pop();
+		}
+	}
+
+	double findMedian() {
+		if (p1.size() == p2.size()) {
+			int x = p1.top();
+			int y = p2.top();
+			return (x * 1.0 + y * 1.0) / (2 * 1.0);
+		} else {
+			if (p1.size() > p2.size()) {
+				return p1.top();
+			} else {
+				return p2.top();
+			}
+		}
+	}
+};
+
+struct ListNode {
+	int val;
+	ListNode *next;
+	ListNode() : val(0), next(nullptr) {}
+	ListNode(int x) : val(x), next(nullptr) {}
+	ListNode(int x, ListNode *next) : val(x), next(next) {}
+};
+
+
+class myComparator {
+public:
+	int operator()(ListNode* p1, ListNode* p2) {
+		return p1->val > p2->val;
+	}
+};
+
+class Solution {
+public:
+	ListNode* mergeKLists(vector<ListNode*>& lists) {
+		priority_queue<ListNode*, vector<ListNode*>, myComparator> pq;
+
+		for (int i = 0; i < lists.size(); i++) {
+			if (lists[i]) {
+				pq.push(lists[i]);
+			}
+		}
+
+		ListNode *ptr, *h, *tmp;
+		ptr = new ListNode();
+		head = ptr;
+		while (pq.size()) {
+			if (pq.top() != NULL) {
+				ptr->next = new ListNode(pq.top()->val);
+				ptr = ptr->next;
+				tmp = pq.top();
+				pq.pop();
+
+				if (tmp->next) {
+					pq.push(tmp->next);
+				}
+			} else {
+				pq.pop();
+			}
+			ptr -> next = NULL;
+		}
+		return head->next;
+	}
+};
+
 int main() {
 	// int arr[] = {12, 11, 13, 5, 6, 7};
 	// int n = sizeof(arr) / sizeof(arr[0]);

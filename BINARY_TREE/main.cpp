@@ -31,7 +31,7 @@ public:
 		left = NULL;
 		right = NULL;
 	}
-}
+};
 
 // Input: 1 2 4 -1 -1 5 7 -1 -1 -1 3 -1 6 -1 -1
 node* buildTree() {
@@ -47,7 +47,38 @@ node* buildTree() {
 	return n;
 }
 
+void levelOrder(node* root) {
+	queue<node*> q;
+	q.push(root);
+	q.push(NULL);
+
+	while (!q.empty()) {
+		node* tmp = q.front();
+		if (tmp == NULL) {
+			cout << "\n";
+			q.pop();
+			if (!q.empty()) {
+				q.push(NULL);
+			}
+		} else {
+			q.pop();
+			cout << tmp->data << " ";
+			if (tmp->left) {
+				q.push(tmp->left);
+			}
+
+			if (tmp->right) {
+				q.push(tmp->right);
+			}
+		}
+	}
+}
+
+
 void solve() {
+	// cout << "HI\n";
+	node* root = buildTree();
+	levelOrder(root);
 
 }
 
@@ -59,7 +90,7 @@ int main() {
 	cout.tie(NULL);
 
 	int t = 1;
-	cin >> t;
+	// cin >> t;
 	while (t > 0)
 	{
 		solve();

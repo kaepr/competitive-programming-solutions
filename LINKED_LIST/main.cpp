@@ -297,3 +297,81 @@ int main() {
 // 		return slow;
 // 	}
 // };
+
+// Remove Nth Node From End of List
+// class Solution {
+// public:
+// 	ListNode* removeNthFromEnd(ListNode* head, int n) {
+// 		if (head == NULL) {
+// 			return head;
+// 		}
+
+// 		ListNode* start = new ListNode();
+// 		start->next = head;
+// 		ListNode* fast = start;
+// 		ListNode* slow = start;
+
+// 		for (int i = 1; i <= n; i++) {
+// 			fast = fast->next;
+// 		}
+
+// 		while (fast->next != NULL) {
+// 			fast = fast->next;
+// 			slow = slow->next;
+// 		}
+
+// 		slow->next = slow->next->next;
+// 		return start->next;
+// 	}
+// };
+
+// sort linked list
+// class Solution {
+// public:
+//     ListNode* midPoint(ListNode* head){
+//         ListNode* slow = head;
+//         ListNode* fast = head;
+
+//         while(fast != NULL and fast->next != NULL and fast->next->next != NULL){
+//             slow = slow->next;
+//             fast = fast->next->next;
+//         }
+
+//         return slow;
+//     }
+
+//     ListNode* merge(ListNode* h1, ListNode* h2){
+//         if(h1==NULL){
+//             return h2;
+//         }
+
+//         if(h2==NULL){
+//             return h1;
+//         }
+
+//         ListNode* h;
+//         if(h1->val <= h2->val){
+//             h = h1;
+//             h->next = merge(h1->next, h2);
+//         }else{
+//             h = h2;
+//             h->next = merge(h1, h2->next);
+//         }
+//         return h;
+//     }
+
+//     ListNode* sortList(ListNode* head) {
+//         if(head==NULL or head->next == NULL){
+//             return head;
+//         }
+
+//         ListNode* mid = midPoint(head);
+//         ListNode* h1 = head;
+//         ListNode* h2 = mid->next;
+//         mid->next = NULL;
+
+//         h1 = sortList(h1);
+//         h2 = sortList(h2);
+//         return merge(h1,h2);
+//     }
+// };

@@ -1,6 +1,8 @@
-f : 1 |  dc : 3 |  feeded : 3
-Case #1: YES
-f : 0 |  dc : 0 |  feeded : 0
-Case #2: YES
-f : 0 |  dc : 2 |  feeded : 1
-Case #3: NO
+2
+3 1 
+4
+4 3 1 2 
+9
+1 2 3 4 5 6 7 8 9 
+3
+3 2 1 

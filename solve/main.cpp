@@ -53,59 +53,71 @@ ll powmod(ll x, ll y, ll mod) {
 }
 
 const ll MOD = 1e9 + 7;
-int case_no = 1;
+
+
+bool is_prime(int n)
+{
+    if (n <= 1)
+        return false;
+
+    if (n == 2 || n == 3)
+        return true;
+
+    if (n % 2 == 0 || n % 3 == 0)
+        return false;
+
+    for (int i = 5; i * i <= n; i = i + 6)
+        if (n % i == 0 || n % (i + 2) == 0)
+            return false;
+
+    return true;
+}
 
 void solve() {
-    int ans = 0;
-    ll n, d, c, m;
-    cin >> n >> d >> c >> m;
-    string s;
-    cin >> s;
-
-    int dc = 0, feeded = 0;
+    int n;
+    cin >> n;
+    vi a;
+    int sum = 0;
+    vector<pair<int, int>> v;
     for (int i = 0; i < n; i++) {
-        if (s[i] == 'D') {
-            dc++;
-        }
+        int x;
+        cin >> x;
+        a.PB(x);
+        sum += x;
+        v.PB(MP(x, i));
     }
+    sort(a.begin(), a.end());
+    sort(v.begin(), v.end());
 
-    bool f = true;
-    bool dog = false;
-    for (int i = 0; i < n; i++) {
-        if (s[i] == 'D') {
-            dog = true;
-            if (d > 0) {
-                d--;
-                feeded++;
-                c += m;
-            } else {
-                f = false;
-                break;
-            }
-        } else if (s[i] == 'C') {
-            if (c > 0) {
-                c--;
-            } else {
-                f = false;
+    if (is_prime(sum)) {
+
+        bool oddExists = false;
+        int index = -1;
+        for (auto x : v) {
+            if (x.F % 2 == 1) {
+                oddExists = true;
+                index = x.S;
                 break;
             }
         }
+
+        if (oddExists) {
+            cout << v.size() - 1 << "\n";
+            for (auto x : v) {
+                if (x.S != index) {
+                    cout << x.S + 1 << " ";
+                }
+            }
+            cout << "\n";
+        }
+
+    } else {
+        cout << v.size() << "\n";
+        for (auto x : v) {
+            cout << x.S + 1 << " ";
+        }
+        cout << "\n";
     }
-
-    // trace(f, dc, feeded);
-
-    string val = "NO";
-
-    if (dc == feeded) {
-        f = true;
-    }
-
-    if (f) {
-        val = "YES";
-    }
-
-    cout << "Case #" << case_no << ": " << val << "\n";
-    case_no++;
 }
 
 int main() {

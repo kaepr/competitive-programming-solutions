@@ -55,43 +55,17 @@ ll powmod(ll x, ll y, ll mod) {
 const ll MOD = 1e9 + 7;
 
 void solve() {
-	ll n;
-	cin >> n;
-	vll v;
-	set<ll> st;
-	for (ll i = 0; i < n; i++) {
-		ll x;
-		cin >> x;
-		v.PB(x);
-		st.insert(x);
+	int n, m;
+	cin >> n >> m;
+	vector<vector<int>> adj(n + 1);
+	for (int i = 1; i <= m; i++) {
+		int a, b, c;
+		cin >> a >> b >> c;
+
+		adj[a].PB(c);
+		adj[c].PB(a);
 	}
 
-	if (st.size() == 1) {
-		cout << -1 << "\n";
-		return;
-	}
-
-	vll uniq;
-	for (auto x : st) {
-		uniq.PB(x);
-	}
-
-	sort(uniq.begin(), uniq.end());
-	ll sz = uniq.size();
-
-	vll diffs;
-	for (ll i = 1; i < sz; i++) {
-		diffs.PB(uniq[i] - uniq[i - 1]);
-	}
-
-	ll g = diffs[0];
-
-
-	for (ll i = 1; i < diffs.size(); i++) {
-		g = __gcd(g, diffs[i]);
-	}
-
-	cout << g << "\n";
 }
 
 int main() {

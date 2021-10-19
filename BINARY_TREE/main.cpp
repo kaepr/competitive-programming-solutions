@@ -1,6 +1,49 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+bool getPath(TreeNode* root, vector<int> &arr, int x) {
+	if (root == NULL) {
+		return false;
+	}
+
+	arr.push_back(root->val);
+	if (root->val == x) {
+		return true;
+	}
+
+	if (getPath(root->left, arr, x) || getPath(root->right, arr, x)) {
+		return true;
+	}
+
+	arr.pop_back();
+	return false;
+}
+
+vector<int> Solution::solve(TreeNode* A, int B) {
+	vector<int> ans;
+	getPath(A, ans, B);
+	return ans;
+}
+
+int helper(TreeNode* root, int& mini, int& prev) {
+	if (!root) return mini;
+
+	helper(root->left, mini, prev);
+
+	if (prev != INT_MAX) mini = min(root->val - prev, mini);
+	prev = root->val;
+
+	helper(root->right, mini, prev);
+	return mini;
+}
+
+int getMinimumDifference(TreeNode* root) {
+	int mini = INT_MAX, prev = INT_MAX;
+	helper(root, mini, prev);
+	return mini;
+}
+
+
 class node {
 public:
 	int data;

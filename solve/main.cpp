@@ -54,70 +54,23 @@ ll powmod(ll x, ll y, ll mod) {
 
 const ll MOD = 1e9 + 7;
 
-
-bool is_prime(int n)
-{
-    if (n <= 1)
-        return false;
-
-    if (n == 2 || n == 3)
-        return true;
-
-    if (n % 2 == 0 || n % 3 == 0)
-        return false;
-
-    for (int i = 5; i * i <= n; i = i + 6)
-        if (n % i == 0 || n % (i + 2) == 0)
-            return false;
-
-    return true;
-}
-
 void solve() {
-    int n;
-    cin >> n;
-    vi a;
-    int sum = 0;
-    vector<pair<int, int>> v;
-    for (int i = 0; i < n; i++) {
-        int x;
-        cin >> x;
-        a.PB(x);
-        sum += x;
-        v.PB(MP(x, i));
+    ll x, y, k;
+    cin >> x >> y >> k;
+    ll r = x - 1;
+    ll c = y - 1;
+
+    if (r == 0 and c == 0) {
+        cout << "YES\n";
+        return;
     }
-    sort(a.begin(), a.end());
-    sort(v.begin(), v.end());
 
-    if (is_prime(sum)) {
-
-        bool oddExists = false;
-        int index = -1;
-        for (auto x : v) {
-            if (x.F % 2 == 1) {
-                oddExists = true;
-                index = x.S;
-                break;
-            }
-        }
-
-        if (oddExists) {
-            cout << v.size() - 1 << "\n";
-            for (auto x : v) {
-                if (x.S != index) {
-                    cout << x.S + 1 << " ";
-                }
-            }
-            cout << "\n";
-        }
-
-    } else {
-        cout << v.size() << "\n";
-        for (auto x : v) {
-            cout << x.S + 1 << " ";
-        }
-        cout << "\n";
+    // does there exist X and Y such that r.X + c.Y = k
+    for (ll i = 0; i <= 10000; i++) {
+        ll cost = i * r + (10000 - i)
     }
+
+
 }
 
 int main() {

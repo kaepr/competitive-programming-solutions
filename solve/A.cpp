@@ -55,16 +55,6 @@ ll powmod(ll x, ll y, ll mod) {
 const ll MOD = 1e9 + 7;
 
 void solve() {
-	int n, m;
-	cin >> n >> m;
-	vector<vector<int>> adj(n + 1);
-	for (int i = 1; i <= m; i++) {
-		int a, b, c;
-		cin >> a >> b >> c;
-
-		adj[a].PB(c);
-		adj[c].PB(a);
-	}
 
 }
 

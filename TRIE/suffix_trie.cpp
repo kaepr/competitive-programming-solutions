@@ -14,14 +14,14 @@ public:
 	}
 };
 
-class Trie {
+class SuffixTrie {
 public:
 	Node* root;
-	Trie() {
+	SuffixTrie() {
 		root = new Node('\0');
 	}
 
-	void insert(string word) {
+	void insert_helper(string word) {
 		Node* tmp = root;
 
 		for (char ch : word) {
@@ -47,6 +47,12 @@ public:
 
 		return tmp->isTerminal;
 	}
+
+	void insert(string word) {
+		for (int i = 0; i < word[i] != '\0'; i++) {
+			insert_helper(word.substr(i));
+		}
+	}
 };
 
 
@@ -61,7 +67,7 @@ void solve() {
 		"never"
 	};
 
-	Trie t;
+	SuffixTrie t;
 	for (auto word : words) {
 		t.insert(word);
 	}

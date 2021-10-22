@@ -50,22 +50,6 @@ const ll N = 1e6 + 10;
 ll fact[N], invfact[N];
 ll n, a, b;
 
-bool check(ll val, ll a, ll b)
-{
-    while (val > 0)
-    {
-        if (val % 10 == a || val % 10 == b)
-        {
-            val /= 10;
-        }
-        else
-        {
-            return false;
-        }
-    }
-    return true;
-}
-
 void init()
 {
     fact[0] = 1;
@@ -110,12 +94,11 @@ int main()
 }
 
 const ll mod = 998244353;
-ll n;
 
-const ll N = 300005;
 
-ll fact[N], invfact[N];
-void init()
+
+// ll fact[N], invfact[N];
+void init2()
 {
     fact[0] = 1;
     ll i;
@@ -145,7 +128,7 @@ ll ncr(ll n, ll r)
     return ans;
 }
 
-ll getC(int n, int i)
+ll getC2(int n, int i)
 {
     ll res = fact[n];
     ll div = fact[n - i] * fact[i];

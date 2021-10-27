@@ -55,20 +55,42 @@ ll powmod(ll x, ll y, ll mod) {
 const ll MOD = 1e9 + 7;
 
 void solve() {
-    ll x, y, k;
-    cin >> x >> y >> k;
-    ll r = x - 1;
-    ll c = y - 1;
-
-    if (r == 0 and c == 0) {
-        cout << "YES\n";
-        return;
+    string t;
+    cin >> t;
+    set<char> st;
+    vector<char> arr;
+    int n = t.length();
+    map<char, int> mp;
+    for (int i = n - 1; i >= 0; i--) {
+        if (st.find(t[i]) == st.end()) {
+            st.insert(t[i]);
+            arr.PB(t[i]);
+        }
+        mp[t[i]]++;
     }
 
-    // does there exist X and Y such that r.X + c.Y = k
-    for (ll i = 0; i <= 10000; i++) {
-        ll cost = i * r + (10000 - i)
+    // arr stores c a b
+    int grps = st.size();
+    int cnt = 0;
+
+    int sz = grps;
+    for (auto elm : arr) {
+        int freq = mp[elm];
+
+        if (freq % sz != 0) {
+            cout << -1 << "\n";
+            return;
+        }
+
+        cnt += freq / sz;
+        sz--;
     }
+
+    // cnt is the length of possible string s
+
+    trace(cnt);
+
+
 
 
 }

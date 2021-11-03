@@ -54,89 +54,81 @@ ll powmod(ll x, ll y, ll mod) {
 
 const ll MOD = 1e9 + 7;
 
-bool isPalindrome(string s) {
-	ll n = s.length();
-	for (ll i = 0; i < n / 2; i++) {
-		if (s[i] != s[n - i - 1]) {
-			return false;
-		}
+ll dfs(
+    ll node,
+    vector<vector<ll>> &adj,
+    vector<bool> &vis,
+    vector<ll> &gcd,
+    vector<ll> &val)
+{
+	vis[node] = true;
+	if (adj[node].size() == 1) {
+		// its a leaf node
+		gcd[node] = val[node];
+		return gcd[node];
 	}
-	if (s.length() > 0) {
-		return true;
-	}
-	return false;
-}
 
-ll getIndex(string tmp, string s, ll pos) {
-	ll sz = tmp.length();
-	char midChar = tmp[pos];
-	ll f = 0;
-	for (ll i = 0; i <= pos ; i++) {
-		if (tmp[i] == midChar) {
-			f++;
+	ll g = val[node];
+	for (auto child : adj[node]) {
+		if (!vis[child]) {
+			g = __gcd(g, dfs(child, adj, vis, gcd, val));
 		}
 	}
 
-	ll n = s.length();
-
-	for (ll i = 0; i < n; i++) {
-		if (s[i] == midChar) {
-			f--;
-			if (f <= 0) {
-				return i;
-			}
-		}
-	}
-	return 0;
+	gcd[node] = g;
+	return g;
 }
 
 void solve() {
-	int n;
+	ll n;
 	cin >> n;
-	string s;
-	cin >> s;
-	set<char> st;
+	vector<vector<ll>> adj(n + 1);
+	vector<ll> v(n + 1, 0);
 
-	for (int i = 0; i < n; i++) {
-		st.insert(s[i]);
+	for (ll i = 1; i <= n - 1; i++) {
+		ll x, y;
+		cin >> x >> y;
+		adj[x].PB(y);
+		adj[y].PB(x);
 	}
 
-	int cost = 1e9;
-	bool f = false;
+	for (ll i = 1; i <= n; i++) {
+		cin >> v[i];
+	}
 
-	for (auto toDelete : st) {
+	// for (ll i = 1; i <= n; i++) {
+	// 	trace(i);
+	// 	for (auto x : adj[i]) {
+	// 		cout << x << " ";
+	// 	}
+	// 	cout << "\n";
+	// }
 
-		int left = 0, right = n - 1;
-		int deleted = 0;
-		bool notFound = false;
-		while (left < right) {
-			if (s[left] == s[right]) {
-				left++;
-				right--;
-			} else if (s[left] == toDelete and s[left] != s[right]) {
-				left++;
-				deleted++;
-			} else if (s[right] == toDelete and s[right] != s[left]) {
-				right--;
-				deleted++;
-			} else {
-				notFound = true;
-				break;
-			}
+	vector<ll> gcd(n + 1, 0);
+	vector<bool> vis(n + 1, false);
+
+	dfs(1, adj, vis, gcd, v);
+
+	// for (ll i = 1; i <= n; i++) {
+	// 	cout << gcd[i] << " ";
+	// }
+	// cout << "\n";
+
+	ll mx = -1e9;
+	for (ll i = 1; i <= n; i++) {
+		ll sum = 0;
+		for (auto x : adj[i]) {
+			sum += gcd[x];
 		}
-
-		if (!notFound) {
-			cost = min(cost, deleted);
-			f = true;
+		// trace(i, sum);
+		if (adj[i].size() > 1) {
+			mx = max(mx, sum + gcd[i]);
+		} else {
+			mx = max(sum, mx);
 		}
 	}
 
-	if (f) {
-		cout << cost << "\n";
-	} else {
-		cout << -1 << "\n";
-	}
-
+	cout << mx << "\n";
 }
 
 int main() {

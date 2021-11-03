@@ -55,44 +55,23 @@ ll powmod(ll x, ll y, ll mod) {
 const ll MOD = 1e9 + 7;
 
 void solve() {
-    string t;
-    cin >> t;
-    set<char> st;
-    vector<char> arr;
-    int n = t.length();
+    string s, t;
+    cin >> s >> t;
+    // trace(s, t);
+    int ans  = 0;
+    int n = s.length();
     map<char, int> mp;
-    for (int i = n - 1; i >= 0; i--) {
-        if (st.find(t[i]) == st.end()) {
-            st.insert(t[i]);
-            arr.PB(t[i]);
-        }
-        mp[t[i]]++;
+    for (int i = 0; i < n; i++) {
+        mp[s[i]] = i + 1;
     }
-
-    // arr stores c a b
-    int grps = st.size();
-    int cnt = 0;
-
-    int sz = grps;
-    for (auto elm : arr) {
-        int freq = mp[elm];
-
-        if (freq % sz != 0) {
-            cout << -1 << "\n";
-            return;
-        }
-
-        cnt += freq / sz;
-        sz--;
+    int prev = mp[t[0]];
+    for (int i = 1; i < t.length(); i++) {
+        int cur = mp[t[i]];
+        // trace(cur)
+        ans += abs(cur - prev);
+        prev = cur;
     }
-
-    // cnt is the length of possible string s
-
-    trace(cnt);
-
-
-
-
+    cout << ans << "\n";
 }
 
 int main() {

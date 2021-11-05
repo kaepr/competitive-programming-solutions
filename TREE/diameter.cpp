@@ -53,8 +53,48 @@ ll powmod(ll x, ll y, ll mod) {
 }
 
 const ll MOD = 1e9 + 7;
+int farthest_node = -1;
+int mxDistance = 0;
+
+void dfs(int node, int dist, vector<vector<int>> &adj, vector<bool> &vis) {
+    vis[node] = true;
+    if (dist >= mxDistance) {
+        mxDistance = dist;
+        farthest_node = node;
+    }
+
+    for (auto child : adj[node]) {
+        if (!vis[child]) {
+            dfs(child, dist + 1, adj, vis);
+        }
+    }
+}
 
 void solve() {
+    int n;
+    cin >> n;
+    vector<vector<int>> adj(n + 1);
+    for (int i = 1; i <= n - 1; i++) {
+        int x, y;
+        cin >> x >> y;
+        adj[x].PB(y);
+        adj[y].PB(x);
+    }
+
+    if (n == 1) {
+        cout << 0 << "\n";
+        return;
+    }
+
+    vector<bool> vis(n + 1, false);
+
+    dfs(1, 0, adj, vis);
+    // trace(mxDistance, farthest_node);
+    fill(vis.begin(), vis.end(), false);
+
+    mxDistance = 0;
+    dfs(farthest_node, 0, adj, vis);
+    cout << mxDistance * 3 << "\n";
 
 }
 
@@ -66,7 +106,7 @@ int main() {
     cout.tie(NULL);
 
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t > 0)
     {
         solve();

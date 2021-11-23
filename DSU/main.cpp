@@ -2,14 +2,14 @@
 using namespace std;
 using ll = long long;
 
-vector<int> smallestRange(vector<vector<int>> nums) {
+void solve() {
 
 }
 
 int main() {
 
 	int t = 1;
-	// cin >> t;
+	cin >> t;
 	while (t > 0) {
 		solve();
 		t--;

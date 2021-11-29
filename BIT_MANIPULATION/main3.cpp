@@ -54,7 +54,6 @@ ll powmod(ll x, ll y, ll mod) {
 
 const ll MOD = 1e9 + 7;
 
-
 int getIthBit(int n, int i) {
 	int mask = (1 << i);
 	return (n & mask) > 0 ? 1 : 0;

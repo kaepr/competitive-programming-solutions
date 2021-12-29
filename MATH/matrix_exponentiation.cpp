@@ -53,11 +53,64 @@ ll powmod(ll x, ll y, ll mod) {
 }
 
 const ll MOD = 1e9 + 7;
+const ll SZ = 2;
+
+struct Mat {
+	ll m[SZ][SZ];
+	Mat() {
+		memset(m, 0LL, sizeof(m));
+	}
+
+	void identity() {
+		for (ll i = 0; i < SZ; i++) {
+			m[i][i] = 1;
+		}
+	}
+
+	Mat operator*(Mat a) {
+		Mat res;
+		for (ll i = 0; i < SZ; i++) {
+			for (ll j = 0; j < SZ; j++) {
+				for (ll k = 0; k < SZ; k++) {
+					res.m[i][j] += m[i][k] * a.m[k][j];
+					res.m[i][j] %= MOD;
+				}
+			}
+		}
+
+		return res;
+	}
+};
+
+ll Fib(ll n) {
+	Mat res;
+	res.identity();
+	Mat T;
+	T.m[0][0] = 1;
+	T.m[0][1] = 1;
+	T.m[1][0] = 1;
+
+	n -= 2;
+	if (n <= 2) {
+		return 1;
+	}
+
+	while (n) {
+		if (n & 1) {
+			res = res * T;
+		}
+		T = T * T;
+		n /= 2;
+	}
+
+	ll ans = (res.m[0][0] + res.m[0][1]) % MOD;
+
+	return ans;
+}
 
 void solve() {
-	int n;
-	cin >> n;
-	cout << n;
+	ll n = 10;
+	cout << Fib(n) << "\n";
 }
 
 int main() {

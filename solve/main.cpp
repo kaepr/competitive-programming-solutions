@@ -55,62 +55,7 @@ ll powmod(ll x, ll y, ll mod) {
 const ll MOD = 1e9 + 7;
 
 void solve() {
-	int n, k;
-	cin >> n >> k;
-	string s;
-	cin >> s;
-	int blks = n / k;
-	int ans = 0;
-	vector<string> v;
-	for (int i = 0; i < blks; i++) {
-		string tmp = "";
-		for (int j = i * k; j < i * k + k; j++) {
-			tmp += s[j];
-		}
-		v.PB(tmp);
-	}
 
-
-	int left = 0, right = k - 1;
-	while (left < right) {
-		map<char, int> mp;
-		int total = 0;
-		for (int i = 0; i < blks; i++) {
-			mp[v[i][left]]++;
-			mp[v[i][right]]++;
-			total += 2;
-		}
-
-		int freq = 0;
-		for (auto x : mp) {
-			freq = max(freq, x.S);
-		}
-		ans += total - freq;
-
-		left++;
-		right--;
-	}
-
-	// handle odd case
-	if (k % 2 != 0) {
-		map<char, int> mp;
-		int total = 0;
-		for (int i = 0; i < blks; i++) {
-			mp[v[i][left]]++;
-			total += 1;
-		}
-
-		int freq = 0;
-		for (auto x : mp) {
-			freq = max(freq, x.S);
-		}
-		ans += total - freq;
-
-		left++;
-		right--;
-	}
-
-	cout << ans << "\n";
 }
 
 int main() {

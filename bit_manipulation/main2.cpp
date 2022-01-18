@@ -111,33 +111,33 @@ void xorrr() {
 int main() {
 	int num = 6;
 	printBinary(num);
-	num = setBit(num, 0);
-	printBinary(num);
-	num = unsetBit(num, 0);
-	printBinary(num);
-	num = bitToggle(num, 5);
-	printBinary(num);
-	cout << cntBits(num) << "\n";
-	cout << __builtin_popcount(num) << "\n";
+	// num = setBit(num, 0);
+	// printBinary(num);
+	// num = unsetBit(num, 0);
+	// printBinary(num);
+	// num = bitToggle(num, 5);
+	// printBinary(num);
+	// cout << cntBits(num) << "\n";
+	// cout << __builtin_popcount(num) << "\n";
 
-	num = 59;
-	printBinary(num);
-	num = clear_lsb_till_pos(num, 4);
-	printBinary(num);
-	num = 59;
-	printBinary(num);
-	num = clear_msb_till_pos(num, 3);
-	printBinary(num);
+	// num = 59;
+	// printBinary(num);
+	// num = clear_lsb_till_pos(num, 4);
+	// printBinary(num);
+	// num = 59;
+	// printBinary(num);
+	// num = clear_msb_till_pos(num, 3);
+	// printBinary(num);
 
-	if (checkPower2(16)) {
-		cout << "yes\n";
-	}
+	// if (checkPower2(16)) {
+	// 	cout << "yes\n";
+	// }
 
-	if (!checkPower2(14)) {
-		cout << "not power of 2\n";
-	}
+	// if (!checkPower2(14)) {
+	// 	cout << "not power of 2\n";
+	// }
 
-	xorrr();
+	// xorrr();
 
 
 

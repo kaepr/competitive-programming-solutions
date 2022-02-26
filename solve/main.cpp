@@ -17,6 +17,7 @@ using vll = vector<long long>;
 
 template <typename T> using o_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 template <typename T, typename R> using o_map = tree<T, R, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+template <class T> using m_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 #define TRACE
 #ifdef TRACE
@@ -55,8 +56,12 @@ ll powmod(ll x, ll y, ll mod) {
 const ll MOD = 1e9 + 7;
 
 void solve() {
-	ll n, k;
-	cin >> n >> k;
+	ll n, x;
+	cin >> n >> x;
+	vll a(n);
+	for (ll i = 0; i < n; i++) {
+		cin >> a[i];
+	}
 
 
 

@@ -56,13 +56,18 @@ ll powmod(ll x, ll y, ll mod) {
 const ll MOD = 1e9 + 7;
 
 void solve() {
-	ll n, x;
-	cin >> n >> x;
-	vll a(n);
+	ll n;
+	cin >> n;
+	vll L(n), R(n);
 	for (ll i = 0; i < n; i++) {
-		cin >> a[i];
+		cin >> L[i];
 	}
 
+	for (ll i = 0; i < n; i++) {
+		cin >> R[i];
+	}
+
+	ll ans = 0;
 
 
 }

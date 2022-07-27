@@ -10,10 +10,10 @@ node *head = NULL;
 
 int main() {
 	// (*head).data = 5;
-	head->data = 5;
-	cout << head->data << "\n";
+	// head->data = 5;
+	// cout << head->data << "\n";
 	// cout << head << "\n";
-	cout << "Hello\n";
+	// cout << "Hello\n";
 	// int x = 2;
 	// cout << x << "\n";
 	// cout << &x << "\n";
@@ -27,6 +27,17 @@ int main() {
 	// cout << a << "\n";
 	// cout << &a[0] << "\n";
 	// cout << *a << "\n";
+
+
+
+	int x = 1;
+	cout << &x << "\n";
+
+	int* p_x;
+	p_x = x;
+	cout << p_x << "\n";
+
+
 
 	return 0;
 }

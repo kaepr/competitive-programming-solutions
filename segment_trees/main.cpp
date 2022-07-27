@@ -1,15 +1,23 @@
 #include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+
+using namespace __gnu_pbds;
 using namespace std;
+
 using ll = long long;
 using ull = unsigned long long;
 using vi = vector<int>;
+using vll = vector<long long>;
 
-const int MOD = 1e9 + 7;
-
-#define pb push_back
+#define PB push_back
 #define F first
 #define S second
-#define mp make_pair
+#define MP make_pair
+
+template <typename T> using o_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+template <typename T, typename R> using o_map = tree<T, R, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+template <class T> using m_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 #define TRACE
 #ifdef TRACE
@@ -18,7 +26,6 @@ template <typename Arg1>
 void __f(const char *name, Arg1 &&arg1)
 {
     cout << name << " : " << arg1 << endl;
-    //use cerr if u want to display at the bottom
 }
 template <typename Arg1, typename... Args>
 void __f(const char *names, Arg1 &&arg1, Args &&... args)
@@ -31,9 +38,8 @@ void __f(const char *names, Arg1 &&arg1, Args &&... args)
 #define trace(...)
 #endif
 
-int powmod(int x, int y, int mod)
-{
-    int res = 1;
+ll powmod(ll x, ll y, ll mod) {
+    ll res = 1;
     x %= mod;
     if (x == 0)
         return 0;
@@ -47,126 +53,80 @@ int powmod(int x, int y, int mod)
     return res;
 }
 
-struct segtree
-{
-    int size;
-    vector<ll> sums;
+const ll MOD = 1e9 + 7;
 
-    void init(int n)
-    {
-        size = 1;
-        while (size < n)
-        {
-            size *= 2;
-        }
-        sums.assign(2 * size, 0LL);
+// summation
+struct segtree {
+    vector<int> st;
+    int n;
+
+    void init(int _n) {
+        this->n = _n;
+        // default value set to 0
+        st.resize(4 * n, 0);
     }
 
-    void build(vector<int> &a, int x, int lx, int rx)
-    {
-        if (rx - lx == 1)
-        {
-            if (lx < (int)a.size())
-            {
-                sums[x] = a[lx];
-            }
+    void build(int start, int ending, int node, vector<int> &v) {
+        if (start == ending) {
+            st[node] = v[start];
             return;
         }
-        int m = (lx + rx) / 2;
-        build(a, 2 * x + 1, lx, m);
-        build(a, 2 * x + 2, m, rx);
-        sums[x] = sums[2 * x + 1] + sums[2 * x + 2];
+
+        int mid = (start + ending) / 2;
+        build(start, mid, 2 * node + 1, v);
+        build(mid + 1, ending, 2 * node + 2, v);
+        st[node] = st[node * 2 + 1] + st[node * 2 + 2];
     }
 
-    void build(vector<int> &a)
-    {
-        build(a, 0, 0, size);
+    void build(vector<int> &v) {
+        build(0, v.size() - 1, 0 , v);
     }
 
-    void set(int i, int v, int x, int lx, int rx)
-    {
-        if (rx - lx == 1)
-        {
-            sums[x] = v;
-            return;
-        }
-        int m = (lx + rx) / 2;
-        if (i < m)
-        {
-            set(i, v, 2 * x + 1, lx, m);
-        }
-        else
-        {
-            set(i, v, 2 * x + 2, m, rx);
-        }
-        sums[x] = sums[2 * x + 1] + sums[2 * x + 2];
-    }
 
-    void set(int i, int v)
-    {
-        set(i, v, 0, 0, size);
-    }
 
-    ll sum(int l, int r, int x, int lx, int rx)
-    {
-        if (lx >= r || l >= rx)
-        {
+    int query(int start, int ending, int l, int r, int node) {
+        if (start > r || ending < l) {
+            // change based on case
             return 0;
         }
-        if (lx >= l && rx <= r)
-        {
-            return sums[x];
+
+
+        if (start >= l and ending <= r) {
+            return st[node];
         }
-        int m = (lx + rx) / 2;
-        ll s1 = sum(l, r, 2 * x + 1, lx, m);
-        ll s2 = sum(l, r, 2 * x + 2, m, rx);
-        return s1 + s2;
+
+        int mid = (start + ending) / 2;
+        int q1 = query(start, mid, l, r, 2 * node + 1);
+        int q2 = query(mid + 1, ending, l, r, 2 * node + 2);
+        // change based on problem
+        return q1 + q2;
     }
 
-    ll sum(int l, int r)
-    {
-        return sum(l, r, 0, 0, size);
+    int query(int l, int r) {
+        return query(0, n - 1, l, r, 0);
+    }
+
+    void update(int start, int ending, int node, int index, int value) {
+
+    }
+
+    void update(int x, int y) {
+        update(0, n - 1, 0, x, y);
     }
 };
 
-void solve()
-{
-    int n, m;
-    cin >> n >> m;
-    segtree st;
-    st.init(n);
-    vector<int> a(n);
+void solve() {
+    vector<int> v = {1, 2, 3, 4, 5, 6, 7, 8};
+    trace(v.size());
 
-    for (int i = 0; i < n; i++)
-    {
-        cin >> a[i];
-    }
-
-    st.build(a);
-
-    while (m--)
-    {
-        int op;
-        cin >> op;
-        if (op == 1)
-        {
-            int i, v;
-            cin >> i >> v;
-            st.set(i, v);
-        }
-        else
-        {
-            int l, r;
-            cin >> l >> r;
-            cout << st.sum(l, r) << "\n";
-        }
-    }
+    segtree tree;
+    tree.init(v.size());
+    tree.build(v);
 }
 
-int main()
-{
-    // freopen("filename.in","r",stdin);
-    // freopen("filename.out","w",stdout);
+int main() {
+    // freopen("input.txt","r",stdin);
+    // freopen("output.txt","w",stdout);
     ios_base::sync_with_stdio(0);
     cin.tie(NULL);
     cout.tie(NULL);

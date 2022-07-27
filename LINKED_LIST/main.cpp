@@ -120,7 +120,6 @@ void insertInMiddle(node* &head, int data, int pos) {
 	node* new_node = new node(data);
 	new_node->next = tmp->next;
 	tmp->next = new_node;
-
 }
 
 void basicOperations() {

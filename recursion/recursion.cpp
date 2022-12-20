@@ -62,13 +62,10 @@ int countSubsetsEqualToX(vector<int> &arr, int n, int i, int X) {
 // 			curr -= to_remove;
 // 			curr += v[ptr];
 // 		}
-
 // 		ans = max(ans, curr);
 // 		ptr++;
 // 	} else {
-
 // 		}
-
 // 		return ans;
 // 	}
 // }

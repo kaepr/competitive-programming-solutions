@@ -57,10 +57,12 @@ void solve() {
 
   if (can_odd and !can_even) {
     // oeoeoeoeeoeoeoeoe
+    
   }
 
   if (!can_odd and can_even) {
     // eoeoeoeoeooeoeoeoeo
+    
   }
 
   // both even and odd are possible

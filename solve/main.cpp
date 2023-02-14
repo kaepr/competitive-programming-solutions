@@ -22,25 +22,28 @@ ll powmod(ll x, ll y, ll mod) {
 
 const ll MOD = 1e9 + 7;
 
+
+
 void solve() {
-    ll n;
-    long double m;
+    ll h;
+    cin>>h;
 
-    cin >> n >> m;
+    ll sz = h * (h + 1)/2;
+    vll v(sz);
 
-    long double Y = floor(m);
-    long double Z = m - Y;
-
-    while (true) {
-        long double dec = Z - floor(Z);
-        cout << Z << "\n";
-        if (dec <= 0.0) {
-            break;
-        }
-        Z *= 10;
+    for(ll i=0; i<n; i++) {
+        cin>>v[i];
     }
+    
+    sort(v.begin(), v.end());
 
-    cout << Z << "\n";
+    bool res = rec(0, v); 
+    if(res) {
+        cout<<"YES\n";
+    } else {
+        cout<<"NO\n";
+    }
+    
 }
 
 signed main() {
@@ -49,9 +52,10 @@ signed main() {
     cout.tie(NULL);
 
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t > 0) {
         solve();
         t--;
     }
 }
+

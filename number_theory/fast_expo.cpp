@@ -1,27 +1,24 @@
 #include <bits/stdc++.h>
-#include <utility>
 using namespace std;
 
 using ll = long long;
 using ull = unsigned long long;
-using vi = vector<int>;
-using vll = vector<long long>;
-
-ll powmod(ll x, ll y, ll mod) {
-    ll res = 1;
-    x %= mod;
-    if (x == 0)
-        return 0;
-    while (y > 0) {
-        if (y & 1)
-            res = (res * x) % mod;
-        y = y >> 1;
-        x = (x * x) % mod;
-    }
-    return res;
-}
 
 const ll MOD = 1e9 + 7;
+
+ll fast_expo(ll a, ll b, ll mod) {
+    ll ans = 1;
+
+    while (b) {
+        if (b % 2 == 1) {
+            ans = (ans * a) % mod;
+        }
+        a = (a * a) % mod;
+        b /= 2;
+    }
+
+    return ans;
+}
 
 void solve() {}
 

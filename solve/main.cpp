@@ -1,11 +1,13 @@
 #include <bits/stdc++.h>
-
 using namespace std;
 
 using ll = long long;
 using ull = unsigned long long;
 using vi = vector<ll>;
 using vll = vector<long long>;
+
+#define fst first
+#define snd second
 
 ll powmod(ll x, ll y, ll mod) {
     ll res = 1;
@@ -31,7 +33,7 @@ signed main() {
     cout.tie(NULL);
 
     ll t = 1;
-    cin >> t;
+    // cin >> t;
     while (t > 0) {
         solve();
         t--;

@@ -1,11 +1,9 @@
 #include <bits/stdc++.h>
-#include <queue>
-#include <utility>
 using namespace std;
 
 using ll = long long;
 using ull = unsigned long long;
-using vi = vector<ll>;
+using vi = vector<int>;
 using vll = vector<long long>;
 
 #define fst first
@@ -27,65 +25,15 @@ ll powmod(ll x, ll y, ll mod) {
 
 const ll MOD = 1e9 + 7;
 
-ll n, m;
-vector<vector<pair<ll, int>>> g;
-vector<bool> vis;
-vector<ll> dist;
-
-void solve() {
-    cin >> n >> m;
-
-    g.resize(n + 1);
-    vis.assign(n + 1, false);
-    dist.assign(n + 1, 1e18);
-
-    for (ll i = 0; i < m; i++) {
-        ll a, b, c;
-        cin >> a >> b >> c;
-
-        g[a].push_back(make_pair(b, c));
-    }
-
-    priority_queue<pair<ll, ll>, vector<pair<ll, ll>>, greater<pair<ll, ll>>>
-        pq;
-
-    // distance , node
-    pq.push(make_pair(0, 1));
-    dist[1] = 0;
-
-    while (!pq.empty()) {
-        auto cur = pq.top();
-
-        ll node = cur.snd;
-        ll c_dist = cur.fst;
-
-        pq.pop();
-        if (vis[node])
-            continue;
-
-        vis[node] = true;
-
-        for (auto neighbor : g[node]) {
-            if (dist[neighbor.fst] > dist[node] + neighbor.snd) {
-                dist[neighbor.fst] = dist[node] + neighbor.snd;
-                pq.push(make_pair(dist[neighbor.fst], neighbor.fst));
-            }
-        }
-    }
-
-    for (ll i = 1; i <= n; i++) {
-        cout << dist[i] << " ";
-    }
-    cout << "\n";
-}
+void solve() {}
 
 signed main() {
     ios_base::sync_with_stdio(0);
     cin.tie(NULL);
     cout.tie(NULL);
 
-    ll t = 1;
-    // cin >> t;
+    int t = 1;
+    cin >> t;
     while (t > 0) {
         solve();
         t--;

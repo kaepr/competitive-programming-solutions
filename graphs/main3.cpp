@@ -1,31 +1,43 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+using ll = long long;
+using ull = unsigned long long;
+using vi = vector<int>;
+using vll = vector<long long>;
 
-// ===== Custom Node Class, if required
-class Node {
-public:
-	string name;
-	list<string> nbrs;
+#define fst first
+#define snd second
 
-	Node(string name) {
-		this->name = name;
-	}
-};
+ll powmod(ll x, ll y, ll mod) {
+    ll res = 1;
+    x %= mod;
+    if (x == 0)
+        return 0;
+    while (y > 0) {
+        if (y & 1)
+            res = (res * x) % mod;
+        y = y >> 1;
+        x = (x * x) % mod;
+    }
+    return res;
+}
 
-class GraphWithNode {
-	unordered_map<string, Node*> m;
-public:
-	Graph(vector<string> cities) {
-		for (auto city : cities) {
-			m[city] = new Node(city);
-		}
-	}
+const ll MOD = 1e9 + 7;
 
-	void addEdge(string x, string y, bool undir = false) {
-		m[x]->nbrs.push_back(y);
-		if (undir) {
-			m[y]->nbrs.push_back(x);
-		}
-	}
-};
+void solve() {
+}
+
+signed main() {
+    ios_base::sync_with_stdio(0);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
+    int t = 1;
+    cin >> t;
+    while (t > 0) {
+        solve();
+        t--;
+    }
+}
+

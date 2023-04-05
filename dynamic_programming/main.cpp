@@ -6,21 +6,19 @@ using ull = unsigned long long;
 
 const ll MOD = 1e9 + 7;
 
-void solve() {
-
-}
+void solve() {}
 
 int main() {
-  ios_base::sync_with_stdio(0);
-  cin.tie(NULL);
-  cout.tie(NULL);
+    ios_base::sync_with_stdio(0);
+    cin.tie(NULL);
+    cout.tie(NULL);
 
-  int t = 1;
-  // cin >> t;
-  while (t > 0) {
-    solve();
-    t--;
-  }
+    int t = 1;
+    // cin >> t;
+    while (t > 0) {
+        solve();
+        t--;
+    }
 
-  return 0;
+    return 0;
 }

@@ -15,9 +15,10 @@ save values of states that overlap
 - Decide Transition 
 - Complexity Cost
 
-### general code form
+### General Code Form
 
 ```cpp
+
 // pruning
 
 // base case
@@ -27,6 +28,7 @@ save values of states that overlap
 // compute / transition
 
 // save and return
+
 ```
 
 ### Form 1
